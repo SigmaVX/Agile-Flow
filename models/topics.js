@@ -1,7 +1,8 @@
 module.exports = function(sequelize, DataTypes) {
 
     var Topics = sequelize.define("Topics", {
-        topic_name: {
+
+        topic_title: {
             type: DataTypes.STRING,
             allowNull: false
         },
@@ -16,8 +17,40 @@ module.exports = function(sequelize, DataTypes) {
             validate: {
                 isUrl: true
             }
+        },
+        topic_answer: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        topic_answer_url:{
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        topic_state: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: "Open"
+        },
+        topic_interest: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0
+        },
+        topic_votes: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0
+        },
+        topic_assigned_to: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
         }
+      },
+
+      {
+        freezeTableName: true
       });
-    
+
       return Topics;
+
 };
