@@ -1,0 +1,29 @@
+{
+  "name": "nuggets",
+  "version": "1.0.0",
+  "description": "Accelerate your learning of new tech with a community that lets you get to the heart of burning tech questions.  Stop wasting time and get to the core of things in less than 15 minutes.",
+  "main": "server.js",
+  "scripts": {
+    "test": "test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SigmaVX/Nuggets.git"
+  },
+  "author": "Tony Wible, Fabian Flores, and Edgar Santos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SigmaVX/Nuggets/issues"
+  },
+  "homepage": "https://github.com/SigmaVX/Nuggets#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "handlebars": "^4.0.11",
+    "mysql": "^2.15.0",
+    "sequelize": "^4.37.7",
+    "uuid": "^3.2.1"
+  }
+}
