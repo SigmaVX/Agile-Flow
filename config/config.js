@@ -1,9 +1,9 @@
+module.exports = {
 
-{
   "development": {
     "username": "root",
-    "password": "",
-    "database": "nuggets_db",
+    "password": process.env.DBPW,
+    "database": process.env.DBDEV,
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
