@@ -1,0 +1,1 @@
+INSERT INTO list (list_item) VALUES ("This is where we store notes!");

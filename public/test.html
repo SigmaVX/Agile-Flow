@@ -1,0 +1,15 @@
+
+// {
+    //   "use_env_variable": "DB_HOST"
+    // }
+
+
+    module.exports = function(sequelize, DataTypes) {
+
+        var Topics = sequelize.define("Topics", {
+            topic_name: DataTypes.STRING,
+          });
+        
+          return Topics;
+    };
+    
