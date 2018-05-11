@@ -150,12 +150,13 @@ var userSeeds = [
 
       $.post("/api/topics", topic, function(topicData) {
         console.log("created new topic: " + topicData);
+        if (numTopic === topicSeeds.length) {
+          location.reload();
+        }
       });
       numTopic++;
       loadTopics();
-      if (numTopic === topicSeeds.length) {
-        location.reload();
-      }
+
 
       return true;
     }
