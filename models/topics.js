@@ -41,9 +41,14 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             defaultValue: 0
         },
+        topic_created_by: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
         topic_assigned_to: {
             type: DataTypes.INTEGER,
             allowNull: true,
+            defaultValue: null
         }
       },
 
