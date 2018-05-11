@@ -15,7 +15,16 @@ app.use(bodyParser.json());
 // Setup Handlebars View Engine
 // =============================================================
 var exphbs = require("express-handlebars");
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.engine("handlebars", exphbs({
+    "defaultLayout": "main",
+    // handlebars 'helpers' functions not used yet but may come in handy
+    // later, addOne is a sample handlebar helper function, not used yet
+    "helpers": {
+      // not used yet
+      "addOne": (value) => parseInt(value, 10) + 1
+    }
+  }));
+
 app.set("view engine", "handlebars");
 
 // Database & Static Directory
