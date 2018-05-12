@@ -20,7 +20,7 @@ function createTopic(){
     var topicTitle = $("#topic_title").val().trim();
     var topicBody = $("#topic_body").val().trim();
     var titleLength = topicTitle.length;
-    var bodyLength = topicBody.lenght;
+    var bodyLength = topicBody.length;
 
     if(topicTitle !== "" && topicBody !== "" && titleLength < 101 && bodyLength < 281){
 
