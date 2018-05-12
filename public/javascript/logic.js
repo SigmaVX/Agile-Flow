@@ -1,5 +1,18 @@
 $(document).ready(function() {
 
+
+// ===================================================================== 
+// These four lines here are just until we build a front end.  it mimics the process of storing data with 
+// the data method, which what we should use when we build out our DOM with jQuery. 
+$("#user").data("user-id", 1);
+$("#user-topic").data("topic-id", 3);
+console.log("user id: ", $("#user").data("user-id"));
+console.log("topic id: ", $("#user-topic").data("topic-id"));
+
+// =====================================================================
+
+
+
 // Create A Topic - For Admin Users
 function createTopic(){
 
@@ -206,6 +219,17 @@ function interestVote(){
 
 // Event Listeners
 // ====================================================================
+
+$("#answer-topic-btn").on("click", function(event){
+    event.preventDefault();
+    function postAnswer();
+});
+
+
+$("#add-topic-btn").on("click", function(event){
+    event.preventDefault();
+    function createTopic();
+})
 
 
 
