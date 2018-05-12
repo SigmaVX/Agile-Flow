@@ -6,7 +6,9 @@ module.exports = function(app) {
   // API GET ROUTES FOR TOPICS
   //
 
+  // ----------------------------------------------------------------------------
   // get all topics
+  // ----------------------------------------------------------------------------
   app.get("/api/topics", function (req, res) {
     // var hbsObject = {};
 
@@ -22,9 +24,30 @@ module.exports = function(app) {
 
   });
 
-  // get specific topic
+  // ----------------------------------------------------------------------------
+  // get specific topic by topicId req.param
+  // ----------------------------------------------------------------------------
   app.get("/api/topics/:topicId", function(req, res) {
-    db.Topics.findAll({"where": {"id": req.params.topicId}}).
+    db.Topics.findAll({"where": {"topic_state": req.params.topicId}}).
+    then(function (topicData) {
+      if (topicData.length === 0) {
+        // return 404 if no row was found, this means id does not exist
+        return res.status(404).end();
+      }
+
+      res.json(topicData);
+
+      return true;
+      });
+  });
+
+  // ----------------------------------------------------------------------------
+  // get open topics by topic state
+  // ----------------------------------------------------------------------------
+  app.get("/api/topics/:topic_state", function(req, res) {
+    var topicState = req.params.state.toString();
+
+    db.Topics.findAll({"where": {"topic_state": topicState}}).
     then(function (topicData) {
       if (topicData.length === 0) {
         // return 404 if no row was found, this means id does not exist

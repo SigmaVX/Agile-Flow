@@ -166,4 +166,22 @@ var userSeeds = [
 
   });
 
+  $("#get-uservotes-btn").on("click", function(event) {
+    event.preventDefault();
+    console.log("in get-uservotes-btn()");
+    $("#numVotes").html(540);
+  });
+
+  $("#get-topicvotes-btn").on("click", function(event) {
+    event.preventDefault();
+    console.log("in get-topicvotes-btn()");
+    $("#numTopicVotes").html(143);
+  });
+
+  $("#get-topicinterests-btn").on("click", function(event) {
+    event.preventDefault();
+    console.log("in get-topicinterests-btn()");
+    $("#numTopicInterests").html(225);
+  });
+
 });

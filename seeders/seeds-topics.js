@@ -14,8 +14,8 @@ module.exports = {
         topic_interest: 20, 
         topic_votes: 0,
         topic_created_by: 1,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        created_at: new Date(),
+        updated_at: new Date()
       },
       {
         topic_title: "What Is Ruby On Rails?",
@@ -24,8 +24,8 @@ module.exports = {
         topic_interest: 10, 
         topic_votes: 0,
         topic_created_by: 1,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        created_at: new Date(),
+        updated_at: new Date()
       },
       {
         topic_title: "How Do I Add Payments To My Site?",
@@ -35,8 +35,8 @@ module.exports = {
         topic_votes: 0,
         topic_assigned_to: 1,
         topic_created_by: 2,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        created_at: new Date(),
+        updated_at: new Date()
       },
       {
         topic_title: "How Do I Do Responsive Design?",
@@ -46,8 +46,8 @@ module.exports = {
         topic_votes: 0,
         topic_assigned_to: 2,
         topic_created_by: 2,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        created_at: new Date(),
+        updated_at: new Date()
       },
       {
         topic_title: "How Can I Use React To Build iOS Apps?",
@@ -59,8 +59,8 @@ module.exports = {
         topic_answer_url:"http://google.com",
         topic_assigned_to: 3,
         topic_created_by: 1,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        created_at: new Date(),
+        updated_at: new Date()
       },
       {
         topic_title: "What Is The Difference Between MongoDB and SQL?",
@@ -72,8 +72,8 @@ module.exports = {
         topic_answer_url:"http://google.com",
         topic_assigned_to: 4,
         topic_created_by: 1,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        created_at: new Date(),
+        updated_at: new Date()
       },
       
     ], {});
