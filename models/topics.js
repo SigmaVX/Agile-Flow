@@ -43,7 +43,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         topic_created_by: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
         topic_assigned_to: {
             type: DataTypes.INTEGER,
@@ -53,7 +53,8 @@ module.exports = function(sequelize, DataTypes) {
       },
 
       {
-        freezeTableName: true
+        freezeTableName: true,
+        underscored: true
       });
 
       return Topics;

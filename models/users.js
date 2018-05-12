@@ -27,7 +27,8 @@ module.exports = function(sequelize, DataTypes) {
       },
       
       {
-        freezeTableName: true
+        freezeTableName: true,
+        underscored: true
       });
 
       return Users;
