@@ -222,14 +222,14 @@ function interestVote(){
 
 $("#answer-topic-btn").on("click", function(event){
     event.preventDefault();
-    function postAnswer();
+    postAnswer();
 });
 
 
 $("#add-topic-btn").on("click", function(event){
     event.preventDefault();
-    function createTopic();
-})
+    createTopic();
+});
 
 
 
