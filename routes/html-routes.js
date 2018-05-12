@@ -15,15 +15,15 @@ module.exports = function(app) {
 
     db.Topics.findAll({}).
     then(function (topicData) {
-      hbsObject = {"topics": topicData};
+      hbsObject = {topics: topicData};
       db.Users.findAll({}).
 
       then(function (userData) {
 
-/*         hbsObject = {
-          "topics": topicData,
-          "users": userData
-        }; */
+        hbsObject = {
+          topics: topicData,
+          users: userData
+        };
         hbsObject.users = userData;
 
         console.log("hbs topics: " + JSON.stringify(hbsObject.topics));

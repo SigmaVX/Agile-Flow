@@ -56,13 +56,19 @@
 
 
 {{!-- KEEP - Closed Cards --}}
-<div id="closedCards">
+<div class="card-deck" id="closedCards">
   
 </div>
 
-
-
-
+{{#each hbsObject}}
+<div class="card">
+  <iframe class="card-img-top" src="https://youtu.be/qsDvJrGMSUY" alt="Video For Topic">
+  <div class="card-body">
+    <h5 class="card-title">{{this.topic_title}}</h5>
+    <a href="#" class="btn btn-block">See Details</a>
+  </div>
+</div>
+{{/each}}
 
 
 
