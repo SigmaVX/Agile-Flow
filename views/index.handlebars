@@ -1,35 +1,3 @@
 <h1 class="d-flex display-4 justify-content-center">Helpflow</h1>
 
-{{!-- Proxy for user profie div  --}}
-<div class="row" id="user">
-  <h2>User Image</h2>
-  <img class="col-2 img-fluid" src="https://placem.at/things?w=250&h=250&random=some_seed">
-</div>
 
-
-{{!-- Open & Pending Section --}}
-<div class="row card-deck text-center justify-cotent-around open-topics">
-  <h2 class="col-12">Open & PendingTopics</h2>
-  {{#each topics}}
-    <div class="card col-3">
-        <h5 class="card-title">{{this.topic_title}}</h5>
-        <button class="btn btn-block">See Details</button>
-      </div>
-    </div>
-  {{/each}}
-</div>
-
-
-{{!-- Closed Topics Section --}}
-<div class="row text-center closed-topics">
-  <h2>Closed Topics</h2>
-  {{#each topics}}
-    <div class="card col-3">
-      <iframe class="card-img-top" src="https://www.youtube.com/embed/8AIMskRMxOM" alt="Video For Topic"></iframe>
-      <div class="card-body">
-        <h5 class="card-title">{{this.topic_title}}</h5>
-        <button class="btn btn-block">See Details</button>
-      </div>
-    </div>
-  {{/each}}
-</div>
