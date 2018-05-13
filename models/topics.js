@@ -35,11 +35,6 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             defaultValue: 0
         },
-        topic_votes: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            defaultValue: 0
-        },
         topic_created_by: {
             type: DataTypes.INTEGER,
             allowNull: true,
@@ -48,6 +43,14 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: true,
             defaultValue: null
+        },
+        // ===================================================================================
+        // topic_votes may not be necessary to store here, we'll leave it in for now
+        // ==================================================================================
+        topic_votes: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          defaultValue: 0
         }
       },
 

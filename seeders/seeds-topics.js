@@ -82,7 +82,6 @@ module.exports = {
   },
 
 
-
   down: (queryInterface, Sequelize) => {
     /*
       Add reverting commands here.
