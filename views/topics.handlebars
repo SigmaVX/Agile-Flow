@@ -20,7 +20,7 @@
   <h2 class="col-12">Closed Topics</h2>
   {{#each closed}}
     <div class="card col-3">
-      <iframe class="card-img-top" src="https://www.youtube.com/embed/8AIMskRMxOM" alt="Video For Topic"></iframe>
+      <iframe class="card-img-top" src={{this.topic_video}} alt="Video For Topic"></iframe>
       <div class="card-body">
         <h5 class="card-title">{{this.topic_title}}</h5>
         <button class="btn btn-block">See Details</button>
