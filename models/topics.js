@@ -59,6 +59,7 @@ module.exports = function(sequelize, DataTypes) {
         underscored: true
       });
 
+
 /*       Topics.associate = function(models) {
         // topics have many users
         // A topic can't be created without a user due to the foreign key constraint

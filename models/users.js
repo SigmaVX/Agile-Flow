@@ -52,15 +52,11 @@ module.exports = function(sequelize, DataTypes) {
         underscored: true
       });
 
-/*       Users.associate = function(models) {
+    Users.associate = function(models) {
         // users can have many topics
-        Users.hasMany(models.Topics, {
-          "foreignKey": {"allowNull": false}
-          // when a user is deleted, also delete any associated Topics, commented out for now
-          // "onDelete": "cascade"
-        });
-      }; */
+        Users.belongsTo(models.Topics, {});
+    };
 
-      return Users;
+    return Users;
 
 };
