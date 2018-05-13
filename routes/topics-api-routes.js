@@ -63,8 +63,10 @@ module.exports = function(app) {
   // ============================================================================
   // API POST ROUTES FOR TOPICS
   //
-  // Add Routes
-  // post topics
+
+  // ----------------------------------------------------------------------------
+  // post topics when a topic is created
+  // ----------------------------------------------------------------------------
   app.post("/api/topics", function(req, res) {
     // var condition = "user_name = '" + req.body.user_name + "'";
 
@@ -72,6 +74,34 @@ module.exports = function(app) {
         res.json(topicData);
     });
 
+  });
+
+
+  // ----------------------------------------------------------------------------
+  // put route for updating topics
+  // ----------------------------------------------------------------------------
+  app.put("/api/topics", function(req, res) {
+    db.Topics.update(
+      req.body,
+      {"where": {"id": req.body.id}}
+    ).then(function(dbTopic) {
+      res.json(dbTopic);
+    });
+  });
+
+
+  // ============================================================================
+  // API DELETE ROUTES FOR TOPICS
+  //
+
+  // ----------------------------------------------------------------------------
+  // delete topics route
+  // ----------------------------------------------------------------------------
+  app.delete("/api/topics/:id", function(req, res) {
+    db.Post.destroy({"where": {"id": req.params.id}}).
+    then(function(dbPost) {
+      res.json(dbPost);
+    });
   });
 
 };
