@@ -12,8 +12,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         topic_video: {
             type: DataTypes.STRING,
-            allowNull: false,
-            defaultValue: "https://youtu.be/embed/8AIMskRMxOM",
+            allowNull: true,
             validate: {
                 isUrl: true
             }

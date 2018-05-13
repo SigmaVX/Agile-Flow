@@ -2,7 +2,7 @@ $("div")
 
 function createClosedCards(){
 
-    
+
 // add loop and DB query
 var data = [{
     title: "test title",
@@ -10,6 +10,7 @@ var data = [{
     vote: 3,
     id: 2
 }];
+
 
 // Modify YouTube URL
 var rawURL = data[0].topic_video;
@@ -20,25 +21,30 @@ console.log(cleanURL);
 
 var newCard = $("<div>").attr("class","col-3 card");        
 $("#closedCards").append(newCard);
+
+
         
     var newVideoWrap = $("<div>").attr("class", "embed-responsive embed-responsive-16by9");
     newCard.append(newVideoWrap);
 
         var newVideo = $("<iframe>").attr({
             src: "https://www.youtube.com/embed"+cleanURL,
-            width: "560",
-            height: "315"
+            class: "card-img-top"
         });
         newVideoWrap.append(newVideo);
 
+    var newBodyDiv = $("<div>").attr("class","card-body");  
+    newCard.append(newBodyDiv);
+    
+
     var newTitle= $("<div>").html("Test Title");
-    newTitle.attr("class", "col-12 card-topic-title");
-    newCard.append(newTitle);
+    newTitle.attr("class", "col-12 card-topic-title card-title text-center");
+    newBodyDiv.append(newTitle);
 
     var newVote= $("<div>").html("5");
     newVote.attr("class", "col-12 card-topic-vote");
-    newCard.append(newVote);
+    newBodyDiv.append(newVote);
 
 }
 
-createClosedCards();
+// createClosedCards();

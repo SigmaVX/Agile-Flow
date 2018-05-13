@@ -22,13 +22,13 @@ module.exports = function(app) {
 
     db.Topics.findAll({}).
     then(function (topicData) {
-      hbsObject = {"topics": topicData};
+      hbsObject = {topics: topicData};
       db.Users.findAll({}).
 
       then(function (userData) {
 
         hbsObject.users = userData;
-
+        
         console.log("hbs topics: " + JSON.stringify(hbsObject.topics));
         console.log("hbs users: " + JSON.stringify(hbsObject.users));
 
@@ -55,9 +55,9 @@ module.exports = function(app) {
         db.Users.findAll({}).
         then(function (uData) {
           hbsObject.users = uData;
-          console.log("open and pending topics: " + JSON.stringify(hbsObject.openAndPending));
-          console.log("closed topics: " + JSON.stringify(hbsObject.closed));
-          console.log("users data: " + JSON.stringify(hbsObject.users));
+          console.log("Open And Pending Topics: " + JSON.stringify(hbsObject.openAndPending));
+          console.log("Closed Topics: " + JSON.stringify(hbsObject.closed));
+          console.log("usersData: " + JSON.stringify(hbsObject.users));
 
           res.render("topics", hbsObject);
         });

@@ -105,9 +105,17 @@ function postAnswer(){
 
     if(answer !== "" && answerVideo !== "" && youTubeCheck === true){
         
+        // Modify YouTube URL
+        var rawURL = data[0].topic_video;
+        var spot = rawURL.lastIndexOf("/");
+        var cleanURL = rawURL.slice(spot);
+        var fixedURL = "https://www.youtube.com/embed"+cleanURL;
+        // console.log(cleanURL);
+
+
         var topicData = {    
             topic_answer: answer,
-            topic_answer_url: answerURL,
+            topic_answer_url: fixedURL,
             topic_video: answerVideo,
             topic_state: "Closed"
         };
