@@ -84,7 +84,7 @@ function editTopic(){
 // Delete Topic For Admin
 
     // Assumes admin will have someting on each card they can click to delete
-    var topicId = $(this).data("topic-id");
+/*     var topicId = $(this).data("topic-id");
 
     $.ajax({
         url: "/api/topics/"+topicId,
@@ -92,7 +92,7 @@ function editTopic(){
     }).then(function(data) {
         console.log("Data Stored: ", data);
         location.reload();
-    });    
+    }); */
 
 // Post An Answer To Pending
 function postAnswer(){
