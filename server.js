@@ -40,7 +40,7 @@ require("./routes/users-api-routes.js")(app);
 
 // Syncing DB & Start Express
 // =============================================================
-db.sequelize.sync({ force: true }).then(function() {
+db.sequelize.sync().then(function() {
     app.listen(PORT, function() {
         console.log("App listening on PORT " + PORT);
     });

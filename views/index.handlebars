@@ -2,106 +2,34 @@
 
 {{!-- Proxy for user profie div  --}}
 <div class="row" id="user">
-  <h2 class="col-12">
-    This is a proxy for our user card <br> Logged In As Sigma
-  </h2>  
+  <h2>User Image</h2>
+  <img class="col-2 img-fluid" src="https://placem.at/things?w=250&h=250&random=some_seed">
 </div>
 
-{{!-- Proxy for assigned topic div --}}
-<div class="row" id="user-topic">
-  <h2 class="col-12">
-    This is a proxy for the card that shows topic assigned to user <br> Assigned topic 3
-  </h2>  
-  <form>
-  <div class="form-group">
-    <label for="topic_answer">Enter Answer Text</label>
-    <input type="text" class="form-control" id="topic_answer" placeholder="">
-  </div>
-  <div class="form-group">
-    <label for="topic_answer_url">Enter URL Resource - Optional</label>
-    <input type="url" class="form-control" id="topic_answer_url" placeholder="https://www.google.com">
-  </div>
-  <div class="form-group">
-    <label for="topic_video">Enter YouTube Link </label>
-    <input type="url" class="form-control" id="topic_video" placeholder="https://youtu.be/T2gbxz8_oAc">
-  </div>
-  <div class="form-group">
-    <button type="submit" class="btn btn-primary" id="answer-topic-btn">Submit</button>  
-  </div>
-</form>
 
-
-
-  {{!-- Temp Add New Topic Form --}}
-  <h2>Create New Topic</h2>
-  <form>
-    <div class="form-group">
-      <label for="topic_title">Enter Topic Title - Up To 100 Characters</label>
-      <input type="text" class="form-control" id="topic_title" placeholder="Title">
+{{!-- Open & Pending Section --}}
+<div class="row card-deck text-center justify-cotent-around open-topics">
+  <h2 class="col-12">Open & PendingTopics</h2>
+  {{#each topics}}
+    <div class="card col-3">
+        <h5 class="card-title">{{this.topic_title}}</h5>
+        <button class="btn btn-block">See Details</button>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="topic_body">Enter Description - Up To 250 Characters</label>
-      <input type="text" class="form-control" id="topic_body" placeholder="Description">
+  {{/each}}
+</div>
+
+
+{{!-- Closed Topics Section --}}
+<div class="row text-center closed-topics">
+  <h2>Closed Topics</h2>
+  {{#each topics}}
+    <div class="card col-3">
+      <iframe class="card-img-top" src="https://www.youtube.com/embed/8AIMskRMxOM" alt="Video For Topic"></iframe>
+      <div class="card-body">
+        <h5 class="card-title">{{this.topic_title}}</h5>
+        <button class="btn btn-block">See Details</button>
+      </div>
     </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary" id="add-topic-btn">Submit</button>  
-    </div>
-  </form>
-</div>
-
-{{!-- KEEP - Open & Pending Cards --}}
-<div id="opCards">
-  
-</div>
-
-
-{{!-- KEEP - Closed Cards --}}
-<div class="card-deck" id="closedCards">
-  
-</div>
-
-{{#each hbsObject}}
-<div class="card">
-  <iframe class="card-img-top" src="https://youtu.be/qsDvJrGMSUY" alt="Video For Topic">
-  <div class="card-body">
-    <h5 class="card-title">{{this.topic_title}}</h5>
-    <a href="#" class="btn btn-block">See Details</a>
-  </div>
-</div>
-{{/each}}
-
-
-
-
-
-
-<div class="row mb-2">
-  <div class="col-xs-12 col-sm-5">
-    <h2 class="d-flex display-5 justify-content-center">Users List</h2>
-    <section class="row">
-      <table class="col-xs-12 col-sm-12 mb-1">
-      {{#each users}}
-          {{> users/user-block id=this.id user_name=this.user_name user_rank=this.user_rank user_votes=this.user_votes}}
-      {{/each}}
-      </table>
-    </section>
-  </div>
-
-  <div class="col-xs-12 offset-sm-1 col-sm-6">
-    <h2 class="d-flex display-5 justify-content-center">Topics</h2>
-    <section class="row">
-      <table class="col-xs-12 col-sm-12 burger-tbl devoured-tbl mb-1">
-        {{#each topics}}
-            {{> topics/topic-block id=this.id topic_title=this.topic_title topic_state=this.topic_state topic_interest=this.topic_interest topic_votes=this.topic_votes topic_answer=this.topic_answer topic_answer_url=this.topic_answer_url}}
-        {{/each}}
-      </table>
-    </section>
-  </div>
-
-</div>
-
-<div class="row">
-  <section class="col-xs-12 col-sm-6">
-      <button class="btn-lg btn-primary" id="insert-seeds-btn">Insert Seed Data</button>\
-  </section>
+  {{/each}}
 </div>

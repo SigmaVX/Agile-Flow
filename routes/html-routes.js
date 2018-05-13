@@ -25,7 +25,7 @@ module.exports = function(app) {
           users: userData
         };
         hbsObject.users = userData;
-
+        
         console.log("hbs topics: " + JSON.stringify(hbsObject.topics));
         console.log("hbs users: " + JSON.stringify(hbsObject.users));
 
