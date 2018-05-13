@@ -56,6 +56,16 @@ module.exports = function(sequelize, DataTypes) {
         underscored: true
       });
 
+/*       Topics.associate = function(models) {
+        // topics have many users
+        // A topic can't be created without a user due to the foreign key constraint
+        Topics.belongsTo(models.Users, {
+          "foreignKey": {"allowNull": false}
+          // when a topic is deleted, also delete any associated Users, commented out for now
+          // "onDelete": "cascade"
+        });
+      }; */
+
       return Topics;
 
 };
