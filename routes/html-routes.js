@@ -1,11 +1,6 @@
 // Requiring our topics and users models
 var db = require("../models");
 
-// import seeds
-// const topicSeeds = require("../seeders/topic_seeds.js");
-// const userSeeds = require("../seeders/user_seeds.js");
-
-
 module.exports = function(app) {
   var Sequelize = require("sequelize");
   const Op = Sequelize.Op;
@@ -15,23 +10,29 @@ module.exports = function(app) {
   //
 
   // ----------------------------------------------------------------------------
-  // get start page information
+  // get start page information, returns topics and users
   // ----------------------------------------------------------------------------
   app.get("/", function (req, res) {
     var hbsObject = {};
 
     db.Topics.findAll({}).
     then(function (topicData) {
-      hbsObject = {topics: topicData};
+      // return 404 if no row was found, this means no data exists
+      if (!topicData) return res.status(404).end();
+
+      hbsObject.topics = topicData;
       db.Users.findAll({}).
 
       then(function (userData) {
+        // return 404 if no row was found, this means no data exists
+        if (!userData) return res.status(404).end();
 
         hbsObject.users = userData;
-        
-        console.log("hbs topics: " + JSON.stringify(hbsObject.topics));
-        console.log("hbs users: " + JSON.stringify(hbsObject.users));
 
+        console.log(hbsObject.topics.length + " topics found.");
+        console.log(hbsObject.users.length + " users found. ");
+
+        // for testing res.json(hbsObject);
         res.render("index", hbsObject);
       });
     });
@@ -46,19 +47,23 @@ module.exports = function(app) {
 
     db.Topics.findAll({"where": {"topic_state": {[Op.or]: ["open", "pending"]}}}).
     then(function (topicData) {
+      if (!topicData) res.status(404).end();
       hbsObject.openAndPending = topicData;
 
       db.Topics.findAll({"where": {"topic_state": "closed"}}).
       then(function (closedData) {
+        if (!closedData) res.status(404).end();
         hbsObject.closed = closedData;
 
         db.Users.findAll({}).
         then(function (uData) {
+          if (!uData) res.status(404).end();
           hbsObject.users = uData;
-          console.log("Open And Pending Topics: " + JSON.stringify(hbsObject.openAndPending));
-          console.log("Closed Topics: " + JSON.stringify(hbsObject.closed));
-          console.log("usersData: " + JSON.stringify(hbsObject.users));
+          console.log(hbsObject.openAndPending.length + " Open And Pending items found.");
+          console.log(hbsObject.closed.length + " Closed Topics found.");
+          console.log(hbsObject.users.length + " users found.");
 
+          // for testing res.json(hbsObject);
           res.render("topics", hbsObject);
         });
       });

@@ -10,18 +10,12 @@ module.exports = function(app) {
   // get all topics
   // ----------------------------------------------------------------------------
   app.get("/api/topics", function (req, res) {
-    // var hbsObject = {};
-
     db.Topics.findAll({}).
     then(function (topicData) {
+      console.log("# get api/topics: " + topicData.length);
 
-        // hbsObject = {"users": userData};
-
-        console.log("get api/users: " + JSON.stringify(topicData));
-
-        res.json(topicData);
+      res.json(topicData);
     });
-
   });
 
   // ----------------------------------------------------------------------------
@@ -30,15 +24,11 @@ module.exports = function(app) {
   app.get("/api/topics/:topicId", function(req, res) {
     db.Topics.findAll({"where": {"topic_state": req.params.topicId}}).
     then(function (topicData) {
-      if (topicData.length === 0) {
-        // return 404 if no row was found, this means id does not exist
-        return res.status(404).end();
-      }
+      // return 404 if no row was found, this means topicId does not exist
+      if (!topicData) return res.status(404).end();
 
       res.json(topicData);
-
-      return true;
-      });
+    });
   });
 
   // ----------------------------------------------------------------------------
@@ -49,16 +39,13 @@ module.exports = function(app) {
 
     db.Topics.findAll({"where": {"topic_state": topicState}}).
     then(function (topicData) {
-      if (topicData.length === 0) {
-        // return 404 if no row was found, this means id does not exist
-        return res.status(404).end();
-      }
+      // return 404 if no row was found, this means id does not exist
+      if (!topicData) return res.status(404).end();
 
       res.json(topicData);
-
-      return true;
-      });
+    });
   });
+
 
   // ============================================================================
   // API POST ROUTES FOR TOPICS
@@ -68,10 +55,10 @@ module.exports = function(app) {
   // post topics when a topic is created
   // ----------------------------------------------------------------------------
   app.post("/api/topics", function(req, res) {
-    // var condition = "user_name = '" + req.body.user_name + "'";
-
     db.Topics.create(req.body).then(function(topicData) {
-        res.json(topicData);
+      console.log("topic_id " + topicData.id + " created successfully.");
+
+      res.json(topicData);
     });
 
   });
@@ -85,6 +72,8 @@ module.exports = function(app) {
       req.body,
       {"where": {"id": req.body.id}}
     ).then(function(dbTopic) {
+      console.log("topic_id " + req.body.id + " updated successfully.");
+
       res.json(dbTopic);
     });
   });
@@ -100,6 +89,8 @@ module.exports = function(app) {
   app.delete("/api/topics/:id", function(req, res) {
     db.Post.destroy({"where": {"id": req.params.id}}).
     then(function(dbPost) {
+      console.log("topic_id " + req.params.id + " deleted successfully");
+
       res.json(dbPost);
     });
   });
