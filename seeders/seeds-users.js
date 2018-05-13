@@ -5,10 +5,14 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
 
     require("dotenv").config();
-    
+
       return queryInterface.bulkInsert('Users', [
       {
         user_name: "Sigma",
+        first_name: "Sigma",
+        last_name: "Lastname",
+        email: "sigma_test@example.com",
+        user_pw: "1234567",
         user_rank: "Admin",
         user_votes: 10,
         created_at: new Date(),
@@ -16,6 +20,10 @@ module.exports = {
       },
       {
         user_name: "User One",
+        first_name: "User",
+        last_name: "One",
+        email: "user_one@example.com",
+        user_pw: "1234567",
         user_rank: "User",
         user_votes: 7,
         created_at: new Date(),
@@ -23,6 +31,10 @@ module.exports = {
       }, 
       {
         user_name: "User Two",
+        first_name: "User",
+        last_name: "Two",
+        email: "user_two@example.com",
+        user_pw: "1234567",
         user_rank: "User",
         user_votes: 3,
         created_at: new Date(),
@@ -30,6 +42,10 @@ module.exports = {
       },
       {
         user_name: "User Three",
+        first_name: "User",
+        last_name: "Three",
+        email: "user_three@example.com",
+        user_pw: "1234567",
         user_rank: "User",
         user_votes: 0,
         created_at: new Date(),
