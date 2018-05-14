@@ -22,11 +22,11 @@ module.exports = function(app) {
   // get specific topic by topicId req.param
   // ----------------------------------------------------------------------------
   app.get("/api/topics/:topicId", function(req, res) {
-    db.Topics.findAll({"where": {"topic_state": req.params.topicId}}).
+    db.Topics.findAll({"where": {"id": req.params.topicId}}).
     then(function (topicData) {
       // return 404 if no row was found, this means topicId does not exist
       if (!topicData) return res.status(404).end();
-
+      console.log(topicData[0]);
       res.json(topicData);
     });
   });
@@ -68,6 +68,8 @@ module.exports = function(app) {
   // put route for updating topics
   // ----------------------------------------------------------------------------
   app.put("/api/topics", function(req, res) {
+
+    console.log("put id", req.body.id);
     db.Topics.update(
       req.body,
       {"where": {"id": req.body.id}}
@@ -87,7 +89,7 @@ module.exports = function(app) {
   // delete topics route
   // ----------------------------------------------------------------------------
   app.delete("/api/topics/:id", function(req, res) {
-    db.Post.destroy({"where": {"id": req.params.id}}).
+    db.Topics.destroy({"where": {"id": req.params.id}}).
     then(function(dbPost) {
       console.log("topic_id " + req.params.id + " deleted successfully");
 

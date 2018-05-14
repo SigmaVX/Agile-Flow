@@ -13,9 +13,6 @@ module.exports = function(sequelize, DataTypes) {
         topic_video: {
             type: DataTypes.STRING,
             allowNull: true,
-            validate: {
-                isUrl: true
-            }
         },
         topic_answer: {
             type: DataTypes.STRING,

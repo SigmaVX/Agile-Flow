@@ -1,24 +1,12 @@
 $(document).ready(function() {
 
 
-// ===================================================================== 
-// These four lines here are just until we build a front end.  it mimics the process of storing data with 
-// the data method, which what we should use when we build out our DOM with jQuery. 
-$("#user").data("user-id", 1);
-$("#user-topic").data("topic-id", 3);
-console.log("user id: ", $("#user").data("user-id"));
-console.log("topic id: ", $("#user-topic").data("topic-id"));
-
-// =====================================================================
-
-
-
-// Create A Topic - For Admin Users
+// Create A Topic - For Admin
 function createTopic(){
 
     var userId = $("#user").data("user-id");
-    var topicTitle = $("#topic_title").val().trim();
-    var topicBody = $("#topic_body").val().trim();
+    var topicTitle = $("#add_topic_title").val().trim();
+    var topicBody = $("#add_topic_body").val().trim();
     var titleLength = topicTitle.length;
     var bodyLength = topicBody.length;
 
@@ -43,12 +31,80 @@ function createTopic(){
         $("#errorModal").modal("show");
         $("#modal-title").text("Please Check Your Title And Description");
         $("#modal-body").text("A title and description are required and must be less than 100 and 280 characters, respectively.");
-    }
+    };
+};
 
-}
 
-// Update Topic For Admin
-function editTopic(){
+// Fill Values In Edit Modal - For Admin
+function fillEditModal(topicID){
+
+    $.ajax({
+        url: "/api/topics/"+topicID,
+        type: "GET"
+    }).then(function(data) {
+        console.log("Data Stored: ", data);
+        console.log("data ", data[0].topic_title);
+        $("input[id='topic_title']").val(data[0].topic_title);
+        $("textarea[id='topic_body']").val(data[0].topic_body);
+        $("textarea[id='topic_answer']").val(data[0].topic_answer);
+        $("input[id='topic_video']").val(data[0].topic_video);
+        $("input[id='topic_answer_url']").val(data[0].topic_answer_url);
+        $("#update-topic-btn").attr("data-id", topicID);
+    });
+    $("#editModal").modal("show");
+};
+
+
+// Update Any Topic - For Admin
+function editAnyTopic(){
+
+    // Grab Info
+    var userId = $("#user").data("user-id");
+    var topicID = $("#update-topic-btn").attr("data-id");
+    var topicTitle = $("input[id='topic_title']").val().trim();
+    var topicBody = $("textarea[id='topic_body']").val().trim();
+    var topicAnswer = $("textarea[id='topic_answer']").val().trim();
+    var topicVideo = $("input[id='topic_video']").val().trim();
+    var topicAnswerUrl = $("input[id='topic_answer_url']").val().trim();
+    
+    console.log(topicTitle);
+
+    // Validation
+    var titleLength = topicTitle.length;
+    var bodyLength = topicBody.lenght;
+
+    if(topicTitle === "" || topicBody === "" || titleLength > 100 || bodyLength > 280){
+        
+        $("#error-txt").text("Error: Please Check Your Title And Description");
+        return;
+
+    } else {
+
+        var newTopicData = {
+            id: topicID,
+            topic_title: topicTitle,
+            topic_body: topicBody,
+            topic_answer: topicAnswer,
+            topic_video: topicVideo,
+            topic_answer_url: topicAnswerUrl
+        };
+
+        console.log(topicID);
+
+        $.ajax({
+            url: "/api/topics",
+            type: "PUT",
+            data: newTopicData
+        }).then(function(data) {
+            // console.log("Data Stored: ", data);
+            location.reload();
+        });    
+    };
+};
+
+
+// Update Open Topic - For User
+function editOpenTopic(){
 
     var userId = $("#user").data("user-id");
     var topicTitle = $("#topic_title").val().trim();
@@ -81,18 +137,22 @@ function editTopic(){
 
 }
 
-// Delete Topic For Admin
 
-    // Assumes admin will have someting on each card they can click to delete
-/*     var topicId = $(this).data("topic-id");
+// Delete Topic
+function deleteTopic(topicID){
+
+    // var topicId = $(this).attr("id");
+    // console.log(topicId);
 
     $.ajax({
-        url: "/api/topics/"+topicId,
+        url: "/api/topics/"+topicID,
         type: "DELETE",
     }).then(function(data) {
         console.log("Data Stored: ", data);
         location.reload();
-    }); */
+    });
+};
+
 
 // Post An Answer To Pending
 function postAnswer(){
@@ -101,7 +161,7 @@ function postAnswer(){
     var answer =  $("#topic_answer").val().trim();
     var answerURL = $("#topic_answer_url").val().trim();
     var answerVideo = $("#topic_video").val().trim();
-    var youTubeCheck = answerURL.includes("https://youtu.be/");
+    var youTubeCheck = answerVideo.includes("https://youtu.be/");
 
     if(answer !== "" && answerVideo !== "" && youTubeCheck === true){
         
@@ -222,7 +282,10 @@ function interestVote(){
         location.reload();
     });
     
-} 
+};
+
+
+
 
 
 // Event Listeners
@@ -233,13 +296,31 @@ $("#answer-topic-btn").on("click", function(event){
     postAnswer();
 });
 
-
+// Add New Topic - Admin Page
 $("#add-topic-btn").on("click", function(event){
     event.preventDefault();
     createTopic();
 });
 
+// Open Edit Topic Modal & Get Data
+$(".admin-edit-btn").on("click", function(event){
+    event.preventDefault();
+    var topicID = $(this).attr("id");
+    fillEditModal(topicID);
+});
 
+// Update Topic - Edit Event Model
+$("#update-topic-btn").on("click", function(event){
+    event.preventDefault();
+    editAnyTopic();
+});
+
+// Delete Topic
+$(".admin-delete-btn").on("click", function(event){
+    event.preventDefault();
+    var topicID = $(this).attr("id");
+    deleteTopic(topicID);
+});
 
 
 // End For Document Ready Function

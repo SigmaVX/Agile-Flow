@@ -70,6 +70,43 @@ module.exports = function(app) {
     });
   });
 
+
+  // ----------------------------------------------------------------------------
+  // get admin page information
+  // ----------------------------------------------------------------------------
+  app.get("/admin", function (req, res) {
+    var hbsObject = {};
+
+    db.Topics.findAll({"where": {"topic_state": "open"}, "order": [["created_at", "DESC"]]}).
+    then(function (openData) {
+      if (!openData) res.status(404).end();
+      hbsObject.open = openData;
+
+      db.Topics.findAll({"where": {"topic_state": "pending"}, "order": [["created_at", "DESC"]]}).
+      then(function (pendingData) {
+        if (!pendingData) res.status(404).end();
+        hbsObject.pending = pendingData;
+      
+        db.Topics.findAll({"where": {"topic_state": "closed"}, "order": [["created_at", "DESC"]]}).
+          then(function (closedData) {
+          if (!closedData) res.status(404).end();
+          hbsObject.closed = closedData;
+
+            console.log(hbsObject.open.length + " Open items found.");
+            console.log(hbsObject.pending.length + " Pending items found.");
+            console.log(hbsObject.closed.length + " Closed Topics found.");
+
+            // for testing res.json(hbsObject);
+            res.render("admin", hbsObject);
+
+        });
+      });
+    });
+  });
+
+
+
+
   // ----------------------------------------------------------------------------
   // get signup page
   // ----------------------------------------------------------------------------
