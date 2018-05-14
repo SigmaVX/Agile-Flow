@@ -40,7 +40,7 @@
         </div>
     </footer>
 
-    <!-- Modal -->
+    <!-- Modal - Error Msg-->
     <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -54,6 +54,28 @@
                         
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-block" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal - Confirm Delete -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirm-modal-title">Confirm Delete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                        Are you sure you want to delete this?  Select 'Delete Topic' below to permanently remove this topic. 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-block" data-dismiss="modal" id="confirm-delete-btn">Delete Topic</button><br>
                     <button type="button" class="btn btn-block" data-dismiss="modal">Close</button>
                 </div>
             </div>

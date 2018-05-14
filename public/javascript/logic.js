@@ -141,15 +141,18 @@ function editOpenTopic(){
 // Delete Topic
 function deleteTopic(topicID){
 
-    // var topicId = $(this).attr("id");
-    // console.log(topicId);
+    $("#confirmModal").modal("show");
 
-    $.ajax({
-        url: "/api/topics/"+topicID,
-        type: "DELETE",
-    }).then(function(data) {
-        console.log("Data Stored: ", data);
-        location.reload();
+    $("#confirm-delete-btn").on("click", function(Event){
+        event.preventDefault();
+
+        $.ajax({
+            url: "/api/topics/"+topicID,
+            type: "DELETE",
+        }).then(function(data) {
+            console.log("Data Stored: ", data);
+            location.reload();
+        });        
     });
 };
 
