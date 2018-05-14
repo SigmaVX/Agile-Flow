@@ -1,16 +1,124 @@
 {{!-- Temp Add New Topic Form --}}
-  <h2>Create New Topic</h2>
-  <form>
-    <div class="form-group">
-      <label for="topic_title">Enter Topic Title - Up To 100 Characters</label>
-      <input type="text" class="form-control" id="topic_title" placeholder="Title">
+  <div class="container-fluid">
+    <div class="row jumbotron">
+        <h1 class="col-12">Create A New Topic</h1>
+        <form class="col-12">
+            <div class="form-group">
+                <label for="topic_title">Enter Topic Title - Up To 100 Characters</label>
+                <input type="text" class="form-control" id="add_topic_title" placeholder="Title">
+            </div>
+            <div class="form-group">
+                <label for="topic_body">Enter Description - Up To 250 Characters</label>
+                <textarea type="text" rows="5" class="form-control" id="add_topic_body" placeholder="Description"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" id="add-topic-btn">Submit</button>  
+            </div>
+        </form>
     </div>
-    <div class="form-group">
-      <label for="topic_body">Enter Description - Up To 250 Characters</label>
-      <input type="text" class="form-control" id="topic_body" placeholder="Description">
+  </div>
+
+
+{{!-- Open Topics --}}
+<div class="container-fluid text-center">
+    <h2 class="col-12">Open Topics</h2>
+    <div class="row text-center open-topics">
+        {{#each open}}
+            <div class="col-12 col-md-8">
+                <h5 class="col-12">{{this.topic_title}}</h5>
+                <p>Created: {{this.created_at}}</p>
+                <p>Updated: {{this.updated_at}}</p>
+                <p class="col-12">{{this.topic_body}}</p>
+            </div>
+            <div class="col-12 col-md-4 align-middle">
+                <p>Votes: {{this.topic_votes}} Interest: {{this.topic_interest}}</p>
+                <button class="my-1 mx-1 col-md-10 col-12 btn admin-edit-btn" id="{{this.id}}">Edit</button><br>
+                <button class="my-1 mx-1 col-md-10 col-12 btn admin-delete-btn" id="{{this.id}}">Delete</button>
+            </div>
+        {{/each}}
     </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary" id="add-topic-btn">Submit</button>  
-    </div>
-  </form>
 </div>
+
+{{!-- Pending Topics --}}
+<div class="container-fluid text-center">
+    <h2 class="col-12">Pending Topics</h2>
+    <div class="row text-center pending-topics">
+        {{#each pending}}
+            <div class="col-12 col-md-8">
+                <h5 class="col-12">{{this.topic_title}}</h5>
+                <p>Created: {{this.created_at}}</p>
+                <p>Updated: {{this.updated_at}}</p>
+                <p class="col-12">{{this.topic_body}}</p>
+            </div>
+            <div class="col-12 col-md-4 align-middle">
+                <p>Votes: {{this.topic_votes}} Interest: {{this.topic_interest}}</p>
+                <button class="my-1 mx-1 col-md-10 col-12 btn admin-edit-btn" id="{{this.id}}">Edit</button><br>
+                <button class="my-1 mx-1 col-md-10 col-12 btn admin-delete-btn" id="{{this.id}}">Delete</button>
+            </div>
+        {{/each}}
+    </div>
+</div>
+
+{{!-- Closed Topics --}}
+<div class="row text-center closed-topics">
+    <h2 class="col-12">Closed Topics</h2>
+    {{#each closed}}
+        <div class="card col-3">
+        <iframe class="card-img-top" src={{this.topic_video}} alt="Video For Topic"></iframe>
+        <div class="card-body">
+            <h5 class="card-title">{{this.topic_title}}</h5>
+            <p>Created: {{this.created_at}}</p>
+            <p>Updated: {{this.updated_at}}</p>
+            <p>Votes: {{this.topic_votes}} Interest: {{this.topic_interest}}</p>
+            <button class="btn btn-block view-btn" id="{{this.id}}">View Details</button>
+            <button class="btn btn-block admin-edit-btn" id="{{this.id}}">Edit</button>
+            <button class="btn btn-block admin-delete-btn" id="{{this.id}}">Delete</button>
+        </div>
+        </div>
+    {{/each}}
+</div>
+
+
+<!-- Modal - Edit Content -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title">Enter Updated Information</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                   <form class="col-12">
+                        <div class="form-group">
+                            <label for="topic_title">Title - Up To 100 Characters</label>
+                            <input type="text" class="form-control" id="topic_title" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="topic_video">YouTube Link</label>
+                            <input type="text" class="form-control" id="topic_video" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="topic_answer_url">Useful Link</label>
+                            <input type="text" class="form-control" id="topic_answer_url" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="topic_body">Question Description - Up To 250 Characters</label>
+                            <textarea type="text" rows="5" class="form-control" id="topic_body" placeholder=""></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="topic_answer">Answer</label>
+                            <textarea type="text" rows="5" class="form-control" id="topic_answer" placeholder=""></textarea>
+                        </div>
+                    </form> 
+                </div>
+                <div class="modal-footer">
+                    <span id="error-txt"></span>
+                    <span id="yt-error-txt"></span>
+                    <button type="submit" class="btn btn-block" id="update-topic-btn">Update</button> 
+                    <button type="close" class="btn btn-block" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
