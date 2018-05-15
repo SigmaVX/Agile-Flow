@@ -40,6 +40,7 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: true,
             defaultValue: null
         },
+        // maybe add vote_val boolean and interest_val boolean here
         // ===================================================================================
         // topic_votes may not be necessary to store here, we'll leave it in for now
         // ==================================================================================
@@ -61,7 +62,7 @@ module.exports = function(sequelize, DataTypes) {
 
 
     Topics.associate = function(models) {
-        // topics have many choices
+        // Topics have many Users
         Topics.belongsToMany(models.Users, {
           through: {
             model: models.Choices,
