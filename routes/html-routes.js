@@ -59,6 +59,7 @@ module.exports = function(app) {
         then(function (uData) {
           if (!uData) res.status(404).end();
           hbsObject.users = uData;
+
           console.log(hbsObject.openAndPending.length + " Open And Pending items found.");
           console.log(hbsObject.closed.length + " Closed Topics found.");
           console.log(hbsObject.users.length + " users found.");
@@ -68,6 +69,32 @@ module.exports = function(app) {
         });
       });
     });
+  });
+
+
+  // =====
+  // BETA
+  // get total votes and total interests per topic
+  // =====
+  app.get("/totals", function (req, res) {
+    var totals = {};
+
+    db.Choices.findAll(
+      {
+        attributes:
+        {
+          include:
+            [[Sequelize.fn("COUNT", Sequelize.col("vote_state")), "total_votes"]]
+        }, 
+          where: {vote_state: 1, 
+                  topic_id: 2}
+        
+      }).then(function(data) {
+        if (!data) console.log("no votes found... strange");
+        
+        res.json(data);
+
+    })
   });
 
 

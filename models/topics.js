@@ -1,5 +1,4 @@
 module.exports = function(sequelize, DataTypes) {
-
     var Topics = sequelize.define("Topics", {
 
         topic_title: {
@@ -44,6 +43,10 @@ module.exports = function(sequelize, DataTypes) {
         // ===================================================================================
         // topic_votes may not be necessary to store here, we'll leave it in for now
         // ==================================================================================
+        // ==
+        // do 'before hook' to set topic_votes to a function that calculates topic_votes by
+        // doing a query on the choices database
+        // ==
         topic_votes: {
           type: DataTypes.INTEGER,
           allowNull: false,
@@ -57,15 +60,18 @@ module.exports = function(sequelize, DataTypes) {
       });
 
 
-/*       Topics.associate = function(models) {
-        // topics have many users
-        // A topic can't be created without a user due to the foreign key constraint
-        Topics.belongsTo(models.Users, {
-          "foreignKey": {"allowNull": false}
-          // when a topic is deleted, also delete any associated Users, commented out for now
-          // "onDelete": "cascade"
+    Topics.associate = function(models) {
+        // topics have many choices
+        Topics.belongsToMany(models.Users, {
+          through: {
+            model: models.Choices,
+            unique: false
+          },
+          foreignKey: "topic_id",
+          constraints: false
         });
-      }; */
+    };
+
 
       return Topics;
 
