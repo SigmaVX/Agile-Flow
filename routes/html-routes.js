@@ -10,36 +10,6 @@ module.exports = function(app) {
   //
 
   // ----------------------------------------------------------------------------
-  // get topics information, returns topics and users
-  // ----------------------------------------------------------------------------
-  app.get("/topics", function (req, res) {
-    var hbsObject = {};
-
-    db.Topics.findAll({}).
-    then(function (topicData) {
-      // return 404 if no row was found, this means no data exists
-      if (!topicData) return res.status(404).end();
-
-      hbsObject.topics = topicData;
-      db.Users.findAll({}).
-
-      then(function (userData) {
-        // return 404 if no row was found, this means no data exists
-        if (!userData) return res.status(404).end();
-
-        hbsObject.users = userData;
-
-        console.log(hbsObject.topics.length + " topics found.");
-        console.log(hbsObject.users.length + " users found. ");
-
-        // for testing res.json(hbsObject);
-        res.render("topics", hbsObject);
-      });
-    });
-  });
-
-
-  // ----------------------------------------------------------------------------
   // get main landing page information
   // ----------------------------------------------------------------------------
   app.get("/", function (req, res) {
@@ -71,30 +41,33 @@ module.exports = function(app) {
     });
   });
 
+  // ----------------------------------------------------------------------------
+  // get topics information, returns topics and users
+  // ----------------------------------------------------------------------------
+  app.get("/topics", function (req, res) {
+    var hbsObject = {};
 
-  // =====
-  // BETA
-  // get total votes and total interests per topic
-  // =====
-  app.get("/totals", function (req, res) {
-    var totals = {};
+    db.Topics.findAll({}).
+    then(function (topicData) {
+      // return 404 if no row was found, this means no data exists
+      if (!topicData) return res.status(404).end();
 
-    db.Choices.findAll(
-      {
-        attributes:
-        {
-          include:
-            [[Sequelize.fn("COUNT", Sequelize.col("vote_state")), "total_votes"]]
-        }, 
-          where: {vote_state: 1, 
-                  topic_id: 2}
-        
-      }).then(function(data) {
-        if (!data) console.log("no votes found... strange");
-        
-        res.json(data);
+      hbsObject.topics = topicData;
+      db.Users.findAll({}).
 
-    })
+      then(function (userData) {
+        // return 404 if no row was found, this means no data exists
+        if (!userData) return res.status(404).end();
+
+        hbsObject.users = userData;
+
+        console.log(hbsObject.topics.length + " topics found.");
+        console.log(hbsObject.users.length + " users found. ");
+
+        // for testing res.json(hbsObject);
+        res.render("topics", hbsObject);
+      });
+    });
   });
 
 
@@ -130,8 +103,6 @@ module.exports = function(app) {
       });
     });
   });
-
-
 
 
   // ----------------------------------------------------------------------------
