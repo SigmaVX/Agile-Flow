@@ -10,9 +10,9 @@ module.exports = function(app) {
   //
 
   // ----------------------------------------------------------------------------
-  // get start page information, returns topics and users
+  // get topics information, returns topics and users
   // ----------------------------------------------------------------------------
-  app.get("/", function (req, res) {
+  app.get("/topics", function (req, res) {
     var hbsObject = {};
 
     db.Topics.findAll({}).
@@ -33,16 +33,16 @@ module.exports = function(app) {
         console.log(hbsObject.users.length + " users found. ");
 
         // for testing res.json(hbsObject);
-        res.render("index", hbsObject);
+        res.render("topics", hbsObject);
       });
     });
   });
 
 
   // ----------------------------------------------------------------------------
-  // get topics page information
+  // get main landing page information
   // ----------------------------------------------------------------------------
-  app.get("/topics", function (req, res) {
+  app.get("/", function (req, res) {
     var hbsObject = {};
 
     db.Topics.findAll({"where": {"topic_state": {[Op.or]: ["open", "pending"]}}}).
@@ -59,15 +59,42 @@ module.exports = function(app) {
         then(function (uData) {
           if (!uData) res.status(404).end();
           hbsObject.users = uData;
+
           console.log(hbsObject.openAndPending.length + " Open And Pending items found.");
           console.log(hbsObject.closed.length + " Closed Topics found.");
           console.log(hbsObject.users.length + " users found.");
 
           // for testing res.json(hbsObject);
-          res.render("topics", hbsObject);
+          res.render("index", hbsObject);
         });
       });
     });
+  });
+
+
+  // =====
+  // BETA
+  // get total votes and total interests per topic
+  // =====
+  app.get("/totals", function (req, res) {
+    var totals = {};
+
+    db.Choices.findAll(
+      {
+        attributes:
+        {
+          include:
+            [[Sequelize.fn("COUNT", Sequelize.col("vote_state")), "total_votes"]]
+        }, 
+          where: {vote_state: 1, 
+                  topic_id: 2}
+        
+      }).then(function(data) {
+        if (!data) console.log("no votes found... strange");
+        
+        res.json(data);
+
+    })
   });
 
 

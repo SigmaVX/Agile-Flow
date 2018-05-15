@@ -52,11 +52,17 @@ module.exports = function(sequelize, DataTypes) {
         underscored: true
       });
 
-    Users.associate = function(models) {
-        // users can have many topics
-        Users.belongsTo(models.Topics, {});
+      Users.associate = function(models) {
+        // topics have many choices
+        Users.belongsToMany(models.Topics, {
+          through: {
+            model: models.Choices,
+            unique: false
+          },
+          foreignKey: "user_id",
+          constraints: false
+        });
     };
 
     return Users;
-
 };
