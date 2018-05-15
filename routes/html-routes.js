@@ -10,9 +10,9 @@ module.exports = function(app) {
   //
 
   // ----------------------------------------------------------------------------
-  // get start page information, returns topics and users
+  // get topics information, returns topics and users
   // ----------------------------------------------------------------------------
-  app.get("/", function (req, res) {
+  app.get("/topics", function (req, res) {
     var hbsObject = {};
 
     db.Topics.findAll({}).
@@ -33,16 +33,16 @@ module.exports = function(app) {
         console.log(hbsObject.users.length + " users found. ");
 
         // for testing res.json(hbsObject);
-        res.render("index", hbsObject);
+        res.render("topics", hbsObject);
       });
     });
   });
 
 
   // ----------------------------------------------------------------------------
-  // get topics page information
+  // get main landing page information
   // ----------------------------------------------------------------------------
-  app.get("/topics", function (req, res) {
+  app.get("/", function (req, res) {
     var hbsObject = {};
 
     db.Topics.findAll({"where": {"topic_state": {[Op.or]: ["open", "pending"]}}}).
@@ -65,7 +65,7 @@ module.exports = function(app) {
           console.log(hbsObject.users.length + " users found.");
 
           // for testing res.json(hbsObject);
-          res.render("topics", hbsObject);
+          res.render("index", hbsObject);
         });
       });
     });
