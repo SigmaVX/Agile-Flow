@@ -1,10 +1,6 @@
 $(document).ready(function() {
 
-// Page load function
-// on page load 
-// query db for user
-// loop through data
-// update page where answers are only true
+// Run on page load to turn vote and interest state to true where applicable 
 function loadChoices(){
 
     var userId = $("#user").attr("data-id");
@@ -20,7 +16,7 @@ function loadChoices(){
             
             // Loop through choices data to change topics to true
             for (var i = 0; i < data.choices.length; i++){
-                console.log("Topic Piced For Loop Test: ", data.choices[i].topic_id);
+                console.log("Topic Picked For Loop Test: ", data.choices[i].topic_id);
                 $("#user-interest-"+data.choices[i].topic_id).text("I'm Interested");
                 $("#interest-btn-"+data.choices[i].topic_id).attr("interest-state", "true");
             };  
@@ -94,17 +90,17 @@ function answerVote(vote_state, topic_id){
             
             var sendObject ={
                 id: topicId,
-                topic_vote: totalVote
+                topic_votes: totalVote
             };
 
             // Update topics total vote
             $.ajax({
-                url: "/api/topics",
+                url: "/api/topics/total",
                 type: "PUT",
                 data: sendObject
             }).then(function(data) {
                 console.log("Data Stored: ", data);    
-                location.reload();
+                // location.reload();
             });
         });
     });

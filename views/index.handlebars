@@ -26,7 +26,7 @@
         <h5 class="card-title">{{this.topic_title}}</h5>
         <h5>Total Votes: {{this.topic_votes}} | <span id="vote-text-{{this.id}}">I Did Not Vote</span></h5>
         <button class="btn btn-block details-btn" topic-id={{this.id}}>See Details</button>
-        <button class="btn btn-block vote-btn" topic-id={{this.id}} vote-state="false">Change Vote</button>
+        <button class="btn btn-block vote-btn" id="vote-btn-{{this.id}}" topic-id={{this.id}} vote-state="false">Change Vote</button>
       </div>
     </div>
   {{/each}}

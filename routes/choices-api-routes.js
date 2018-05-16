@@ -152,8 +152,16 @@ app.get("/api/votes/user/:user_id/", function (req, res) {
     // vote_state, user_id, topic_id in req.body if updating a vote value;
     // if there is an update for an interest value, the put request requires
     // interest_state, user_id, and topic_id
+
+    // var updateObj = {
+    //   user_id: req.body.user_id,
+    //   topic_id: req.body.topic_id,
+    //   vote_state: req.body.vote_state
+    // };
+
+
     db.Choices.update(
-        req.body,
+        {"vote_state": req.body.vote_state},
         {
           "where": {
                   "user_id": req.body.user_id,
