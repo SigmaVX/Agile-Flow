@@ -1,14 +1,15 @@
 
-
-
-
 {{!-- Open & Pending Section --}}
 <div class="row card-deck text-center open-topics">
   <h2 class="col-12">Open & PendingTopics</h2>
   {{#each openAndPending}}
     <div class="card col-3">
         <h5 class="card-title">{{this.topic_title}}</h5>
-        <button class="btn btn-block">See Details</button>
+        <h5>Total Interest: {{this.topic_interest}}</h5>
+        <h5>My Interest: <span id="user-interest-{{this.id}}">Not Interested</span></h5>
+        <button class="btn btn-block interest-btn" id="interest-btn-{{this.id}}" interest-state="false">Change Interest</button>
+        <button class="btn btn-block" id="details-btn-{{this.id}}">See Details</button>
+        <button class="btn btn-block" id="claim-btn-{{this.id}}">Claim Topic</button>
       </div>
     </div>
   {{/each}}
@@ -23,8 +24,11 @@
       <iframe class="card-img-top" src={{this.topic_video}} alt="Video For Topic"></iframe>
       <div class="card-body">
         <h5 class="card-title">{{this.topic_title}}</h5>
-        <button class="btn btn-block">See Details</button>
+        <h5>Total Votes: {{this.topic_votes}} | <span id="vote-text-{{this.id}}">I Did Not Vote</span></h5>
+        <button class="btn btn-block details-btn" topic-id={{this.id}}>See Details</button>
+        <button class="btn btn-block vote-btn" topic-id={{this.id}} vote-state="false">Change Vote</button>
       </div>
     </div>
   {{/each}}
 </div>
+
