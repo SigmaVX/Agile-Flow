@@ -82,6 +82,23 @@ module.exports = function(app) {
     });
   });
 
+
+  // ----------------------------------------------------------------------------
+  // put route for updating topic total
+  // ----------------------------------------------------------------------------
+  app.put("/api/topics/total", function(req, res) {
+
+    console.log("put id", req.body.id);
+    db.Topics.update(
+      {"topic_votes": req.body.topic_votes},
+      {"where": {"id": req.body.id}}
+    ).then(function(dbTopic) {
+      console.log("topic_id " + req.body.id + " updated successfully.");
+
+      res.json(dbTopic);
+    });
+  });
+
   // ----------------------------------------------------------------------------
   // put update route for changing topic states
   // ----------------------------------------------------------------------------

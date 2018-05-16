@@ -161,7 +161,7 @@ function deleteTopic(topicID){
 function postAnswer(){
 
     var topicId = $("#user-topic").data("topic-id");
-    var answer =  $("#topic_answer").val().trim();
+    var answer = $("#topic_answer").val().trim();
     var answerURL = $("#topic_answer_url").val().trim();
     var answerVideo = $("#topic_video").val().trim();
     var youTubeCheck = answerVideo.includes("https://youtu.be/");
@@ -223,70 +223,6 @@ function cancelPending(){
 
 }
     
-// Post Answer Vote
-function answerVote(){
-
-    // Store The state of the vote for topic selected 
-    var voteState = $(this).attr("vote-state");
-    
-    // Toggles vote state
-    if(voteState === true){
-        voteState = false;
-    } else{
-        voteState = true;
-    };
-
-    // Stores vote, user id, and topic id.  
-    // Assumes ids are stored in the data() method in DOM
-    var userVote = {
-        user_id: $("#user").data("user-id"),
-        topic_id: $(this).data("topic-id"),
-        vote_state: voteState
-    };   
-
-    $.ajax({
-        url: "/api/topics/vote",
-        type: "PUT",
-        data: userVote
-    }).then(function(data) {
-        console.log("Data Stored: ", data);
-        location.reload();
-    });
-    
-} 
-
-// Post Interest Vote
-function interestVote(){
-
-    // Store The state of the vote for topic selected 
-    var interestState = $(this).attr("interest-state");
-    
-    // Toggles vote state
-    if(interestState === true){
-        interestState = false;
-    } else{
-        interestState = true;
-    };
-
-    // Stores vote, user id, and topic id.  
-    // Assumes ids are stored in the data() method in DOM
-    var userInterest = {
-        user_id: $("#user").data("user-id"),
-        topic_id: $(this).data("topic-id"),
-        vote_state: interestState
-    };   
-
-    $.ajax({
-        url: "/api/topics/interest",
-        type: "PUT",
-        data: userInterest
-    }).then(function(data) {
-        console.log("Data Stored: ", data);
-        location.reload();
-    });
-    
-};
-
 
 
 
