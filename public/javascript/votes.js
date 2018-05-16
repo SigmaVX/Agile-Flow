@@ -58,15 +58,13 @@ function answerVote(vote_state, topic_id){
     var topicId = topic_id;
     var userId = $("#user").attr("data-id");
 
-    console.log(topicId, voteState, userId);
-
     // Pull total vote for this topic
     $.ajax({
         url: "/api/choices/totals/vote/"+topicId,
         type: "GET",
     }).then(function(data) {
-        console.log("Total Vote Data Stored: ", data);
-        var totalVote = data;
+        console.log("Total Vote Data Stored: ", data[0].total_votes);
+        var totalVote = parseInt(data[0].total_votes);
 
         // Toggles vote state
         if(voteState === "true"){
@@ -83,6 +81,8 @@ function answerVote(vote_state, topic_id){
             topic_id: topicId,
             vote_state: voteState
         };   
+        console.log("User Vote: ", userVote);
+
 
         // Update choices table
         $.ajax({
@@ -104,11 +104,11 @@ function answerVote(vote_state, topic_id){
                 data: sendObject
             }).then(function(data) {
                 console.log("Data Stored: ", data);    
-                // location.reload();
+                location.reload();
             });
         });
     });
-} 
+}; 
 
 
 // Post Interest Vote
