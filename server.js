@@ -37,11 +37,12 @@ app.use(express.static("public"));
 require("./routes/html-routes.js")(app);
 require("./routes/topics-api-routes.js")(app);
 require("./routes/users-api-routes.js")(app);
+require("./routes/choices-api-routes.js")(app);
 
 // Syncing DB & Start Express
 // =============================================================
-// db.sequelize.sync({ force: true }).then(function() {
-db.sequelize.sync().then(function() {
+db.sequelize.sync({ force: true }).then(function() {
+// db.sequelize.sync().then(function() {
     app.listen(PORT, function() {
         console.log("App listening on PORT " + PORT);
     });

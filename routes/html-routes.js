@@ -10,9 +10,41 @@ module.exports = function(app) {
   //
 
   // ----------------------------------------------------------------------------
-  // get start page information, returns topics and users
+  // get main landing page information
   // ----------------------------------------------------------------------------
   app.get("/", function (req, res) {
+    var hbsObject = {};
+
+    db.Topics.findAll({"where": {"topic_state": {[Op.or]: ["open", "pending"]}}}).
+    then(function (topicData) {
+      if (!topicData) res.status(404).end();
+      hbsObject.openAndPending = topicData;
+
+      db.Topics.findAll({"where": {"topic_state": "closed"}}).
+      then(function (closedData) {
+        if (!closedData) res.status(404).end();
+        hbsObject.closed = closedData;
+
+        db.Users.findAll({}).
+        then(function (uData) {
+          if (!uData) res.status(404).end();
+          hbsObject.users = uData;
+
+          console.log(hbsObject.openAndPending.length + " Open And Pending items found.");
+          console.log(hbsObject.closed.length + " Closed Topics found.");
+          console.log(hbsObject.users.length + " users found.");
+
+          // for testing res.json(hbsObject);
+          res.render("index", hbsObject);
+        });
+      });
+    });
+  });
+
+  // ----------------------------------------------------------------------------
+  // get topics information, returns topics and users
+  // ----------------------------------------------------------------------------
+  app.get("/topics", function (req, res) {
     var hbsObject = {};
 
     db.Topics.findAll({}).
@@ -33,39 +65,7 @@ module.exports = function(app) {
         console.log(hbsObject.users.length + " users found. ");
 
         // for testing res.json(hbsObject);
-        res.render("index", hbsObject);
-      });
-    });
-  });
-
-
-  // ----------------------------------------------------------------------------
-  // get topics page information
-  // ----------------------------------------------------------------------------
-  app.get("/topics", function (req, res) {
-    var hbsObject = {};
-
-    db.Topics.findAll({"where": {"topic_state": {[Op.or]: ["open", "pending"]}}}).
-    then(function (topicData) {
-      if (!topicData) res.status(404).end();
-      hbsObject.openAndPending = topicData;
-
-      db.Topics.findAll({"where": {"topic_state": "closed"}}).
-      then(function (closedData) {
-        if (!closedData) res.status(404).end();
-        hbsObject.closed = closedData;
-
-        db.Users.findAll({}).
-        then(function (uData) {
-          if (!uData) res.status(404).end();
-          hbsObject.users = uData;
-          console.log(hbsObject.openAndPending.length + " Open And Pending items found.");
-          console.log(hbsObject.closed.length + " Closed Topics found.");
-          console.log(hbsObject.users.length + " users found.");
-
-          // for testing res.json(hbsObject);
-          res.render("topics", hbsObject);
-        });
+        res.render("topics", hbsObject);
       });
     });
   });
@@ -103,8 +103,6 @@ module.exports = function(app) {
       });
     });
   });
-
-
 
 
   // ----------------------------------------------------------------------------
