@@ -169,3 +169,13 @@ body {
   }
   
   /* End of Sidebar CSS */
+
+  /* ------------------------------------ */
+
+  /* Cards CSS */
+  .card {
+      float: left;
+      /* min-width: 40%; */
+  }
+
+  /* End of Cards CSS */
