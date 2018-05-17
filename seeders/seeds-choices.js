@@ -54,6 +54,22 @@ module.exports = {
         topic_id: 2,
         created_at: new Date(),
         updated_at: new Date()
+      },
+      {
+        vote_state: 1,
+        interest_state: 1,
+        user_id: 3,
+        topic_id: 5,
+        created_at: new Date(),
+        updated_at: new Date()
+      },
+      {
+        vote_state: 1,
+        interest_state: 1,
+        user_id: 1,
+        topic_id: 5,
+        created_at: new Date(),
+        updated_at: new Date()
       }
       
     ], {});
