@@ -63,7 +63,7 @@ module.exports = function(app) {
   //  button user pressed on front end). When user clicks the interest or vote
   //  button, the first step is to obtain the value
   // ----------------------------------------------------------------------------
-  app.get("/api/choices/:choice_type/:user_id/:topic_id", function (req, res) {
+  app.get("/api/choices/Xchoice_type/:user_id/:topic_id", function (req, res) {
     var userId = parseInt(req.params.user_id, 10),
         topicId = parseInt(req.params.topic_id, 10),
         choiceType = req.params.choice_type,
@@ -139,6 +139,60 @@ app.get("/api/votes/user/:user_id/", function (req, res) {
 });
 
 
+// Check if user and topic id exist
+// ========================================================
+app.get("/api/choices/check/:user_id/:topic_id", function (req, res) {
+  userId = parseInt(req.params.user_id),
+  topicId = parseInt(req.params.topic_id),
+  choiceObj = {};
+
+  db.Choices.findOne({
+    "where": {
+              "user_id": userId,
+              "topic_id": topicId
+            }
+  }).then(function(data){
+    if(data == null){
+      choiceObj.exists = false;
+    } else{
+      choiceObj.exists = true;
+    }
+    // console.log("Data Exists: ", choiceObj.exists);
+    res.json(choiceObj.exists);
+  });
+});
+
+
+// Create new Choice when user votes
+app.post("/api/choices/updates/vote", function(req, res) {    
+  db.Choices.create(
+      {
+      "vote_state": req.body.vote_state,
+      "user_id": req.body.user_id,
+      "topic_id": req.body.topic_id
+    }
+  ).then(function(data) {
+    console.log("choices table updated successfully.");
+    res.json(data);
+  });
+});
+
+
+// Create new Choice when user votes
+app.post("/api/choices/updates/interest", function(req, res) {    
+  db.Choices.create(
+      {
+      "interest_state": req.body.vote_state,
+      "user_id": req.body.user_id,
+      "topic_id": req.body.topic_id
+    }
+  ).then(function(data) {
+    console.log("choices table updated successfully.");
+    res.json(data);
+  });
+});
+
+
   // ============================================================================
   // UPDATE ROUTES for choices API choices
   //
@@ -147,21 +201,32 @@ app.get("/api/votes/user/:user_id/", function (req, res) {
   // put route for updating choice type on vote_state or interest_state in 
   // Choices through table
   // ----------------------------------------------------------------------------
-  app.put("/api/choices/updates/:choice_type", function(req, res) {
-    // this function expects the put request from the front end to include
-    // vote_state, user_id, topic_id in req.body if updating a vote value;
-    // if there is an update for an interest value, the put request requires
-    // interest_state, user_id, and topic_id
-
-    // var updateObj = {
-    //   user_id: req.body.user_id,
-    //   topic_id: req.body.topic_id,
-    //   vote_state: req.body.vote_state
-    // };
-
-
+  app.put("/api/choices/updates/vote", function(req, res) {
+    
     db.Choices.update(
         {"vote_state": req.body.vote_state},
+        {
+          "where": {
+                  "user_id": req.body.user_id,
+                  "topic_id": req.body.topic_id
+        }
+      }
+    ).then(function(data) {
+      console.log("choices table updated successfully.");
+
+      res.json(data);
+    });
+  });
+
+
+
+  // ----------------------------------------------------------------------------
+  // put route for updating interest_state 
+  // ----------------------------------------------------------------------------
+  app.put("/api/choices/updates/interest", function(req, res) {
+    
+    db.Choices.update(
+        {"interest_state": req.body.interest_state},
         {
           "where": {
                   "user_id": req.body.user_id,
