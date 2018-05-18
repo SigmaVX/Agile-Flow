@@ -15,6 +15,11 @@ cloudinary.config({
 });
 
 module.exports = function(app) {
+  var Sequelize = require("sequelize");
+  const Op = Sequelize.Op;
+
+  const MAX_NAME_LENGTH = 100;
+  const MIN_PASS_LENGTH = 7;
 
   // ============================================================================
   // API GET ROUTES FOR USERS
@@ -60,4 +65,197 @@ module.exports = function(app) {
 
   });
 
+  // ========================================================================================
+  // AUTHENTICATION SECTION
+  //
+
+  // Using the passport.authenticate middleware with our local strategy.
+  // If the user has valid login credentials, send them to the members page.
+  // Otherwise the user will be sent an error
+  app.post("/api/login", passport.authenticate("local"), function (req, res) {
+    // Since we're doing a POST with javascript, we can't actually redirect that post into a GET request
+    // So we're sending the user back the route to the members page because the redirect will happen on the front end
+    // They won't get this or even be able to access this page if they aren't authed
+    console.log("req.user: " + req.user);
+    res.json("/member");
+  });
+
+
+  // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
+  // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
+  // otherwise send back an error
+  app.post("/api/signup/user", function (req, res) {
+    var validName = false,
+      validEmail = false,
+      validPswd = false,
+      pswdsMatch = false,
+      signupSuccess = false,
+      noDuplicateUserName = false,
+      errorText = "";
+
+    // Create a new instance of formidable to handle the request info
+    var form = new formidable.IncomingForm();
+
+    // =============================================================================
+    // helper validation functions
+    // -----------------------------------------------------------------------------
+    // hasAlpha() checks if a string has at least one alphabetic character, lower
+    // or upper case
+    //
+    function hasAlpha(str) {
+      return str.match(/[a-z]/i);
+    }
+
+    // -----------------------------------------------------------------------------
+    // hasNum() checks if a string has at least one numeric character
+    //
+    function hasNum(str) {
+      return str.match(/\d+/g);
+    }
+
+    // -----------------------------------------------------------------------
+    // validateEmail() checks if an email is valid
+    // source code for regular expression:
+    // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript/1373724#1373724
+    //
+    function validateEmail(email) {
+      var re = /^(?:[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
+
+      return re.test(email);
+    }
+
+    // -----------------------------------------------------------------------------
+    // validatePassword() checks for password validity, the password must
+    // be greater than MinPassLength, have alpha characters and at least one digit
+    //
+    function validatePassword(pswd) {
+      if (pswd.length >= MIN_PASS_LENGTH && hasAlpha(pswd) && hasNum(pswd)) {
+        return true;
+      }
+
+      return false;
+    }
+
+    // parse information for form fields and incoming files
+    form.parse(req, function (err, fields, files) {
+      console.log(fields);
+      console.log(files.photo);
+
+      // validate front end input
+      // check name validity
+      if (hasAlpha(fields.firstName) && hasAlpha(fields.lastName) && 
+      (fields.firstName + fields.lastName).length <= MAX_NAME_LENGTH) {
+        validName = true;
+      } else {
+        errorText += "First Name does not not meet requirements.<br>";
+        validName = false;
+      }
+
+      // check email validity
+      if (validateEmail(fields.email)) {
+        validEmail = true;
+      } else {
+        errorText += "Please enter valid email.<br />";
+        validEmail = false;
+      }
+
+      // check password validity
+      if (validatePassword(fields.password)) {
+        validPswd = true;
+      } else {
+        errorText += "Please enter valid password. Must be at least " +
+                    MIN_PASS_LENGTH +
+                    " characters long and have at least one digit and one alphabetic character.<br />";
+        validPswd = false;
+      }
+
+      // check if passwords match
+      if (fields.password === fields.confirmPassword) {
+        pswdsMatch = true;
+      } else {
+        errorText += "Passwords do not match. Please enter them again.<br />";
+        pswdsMatch = false;
+      }
+
+      // TODO: check if email already exists in database
+      db.Users.findOne({
+        "where": {user_name: fields.userName}
+      }).then(function(dbUsers){
+        if (dbUsers) {
+          noDuplicateUserName = false;
+          errorText += "Duplicate email.<br>";
+        } else {
+          noDuplicateUserName = true;
+        }
+        signupSuccess = validName && validEmail && validPswd && pswdsMatch && noDuplicateUserName
+        ? true
+        : false;
+        if (!signupSuccess) {
+          res.statusMessage = errorText;
+          res.status(400).end();
+         } else if (files.photo) {
+            // upload file to cloudinary, which'll return an object for the new image
+            cloudinary.uploader.upload(files.photo.path, function (result) {
+            console.log(result);
+            // create new user
+            db.Users.create({
+              user_name: fields.userName,
+              first_name: fields.firstName,
+              last_name: fields.lastName,
+              email: fields.email,
+              user_pw: fields.password,
+              user_photo: result.secure_url
+            }).then(function () {
+              // res.json(true);
+              res.json("/");
+            }).catch(function (err) {
+              console.log(err);
+              res.json(err);
+            });
+          });
+        } else {
+          db.Users.create({
+            user_name: fields.userName,
+            email: fields.email,
+            user_pw: fields.password,
+            first_name: fields.firstName,
+            last_name: fields.lastName
+          }).then(function () {
+            res.json(true);
+            // res.redirect(307, "/api/login");
+          }).catch(function (err) {
+            console.log(err);
+            res.json(err);
+            // res.status(422).json(err.errors[0].message);
+          });
+        }
+      });
+
+    });
+
+  });
+
+  // Route for logging user out
+  app.get("/logout", function (req, res) {
+    console.log("in logout");
+    req.logout();
+    res.redirect("/");
+  });
+
+  // Route for getting some data about our user to be used client side
+  app.get("/api/user_data", function (req, res) {
+    console.log("in api/user_data");
+    if (!req.user) {
+      // The user is not logged in, send back an empty object
+      res.json({});
+    } else {
+      // Otherwise send back the user's email and id
+      // Sending back a password, even a hashed password, isn't a good idea
+      res.json({
+        email: req.user.email,
+        id: req.user.id,
+        photo: req.user.user_photo
+      });
+    }
+  });
 };
