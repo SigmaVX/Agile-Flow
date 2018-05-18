@@ -186,4 +186,47 @@ body {
       margin-right: 2%;
   }
 
+  .questionCards {
+    padding: 10px 10px 10px 10px !important;
+  }
   /* End of Cards CSS */
+
+#target {
+  background:#05c1ff;
+  width:100%;
+  height:2px;
+  padding:2px;
+  display:none;
+  border: 1px solid black;
+  border-radius:20px;
+}
+
+/* Card Buttons CSS */
+.Hide
+{
+  display:none;
+}
+/* End of Cards Buttons CSS */
+
+  /* Profile Image */
+  .profile-image img {
+  width: 50px;
+  border-radius: 50%;
+  padding: 3px;
+  border: 2px solid rgb(60, 245, 133);
+  height: auto;
+  float: left;
+  cursor: pointer;
+  -moz-transition: 0.3s border ease;
+  -o-transition: 0.3s border ease;
+  -webkit-transition: 0.3s border ease;
+  transition: 0.3s border ease;
+ 
+}
+
+.profile-image img:hover {
+  border-color: blue;
+  color: blue;
+
+}
+
