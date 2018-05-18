@@ -86,18 +86,43 @@ module.exports = function(app) {
   // ----------------------------------------------------------------------------
   // put route for updating topic total
   // ----------------------------------------------------------------------------
-  app.put("/api/topics/total", function(req, res) {
+  app.put("/api/topics/total/votes", function(req, res) {
+
+    var topicID = parseInt(req.body.id);
 
     console.log("put id", req.body.id);
     db.Topics.update(
       {"topic_votes": req.body.topic_votes},
-      {"where": {"id": req.body.id}}
+      {"where": {"id": topicID}}
     ).then(function(dbTopic) {
       console.log("topic_id " + req.body.id + " updated successfully.");
 
       res.json(dbTopic);
     });
   });
+
+
+  // ----------------------------------------------------------------------------
+  // put route for updating topic total
+  // ----------------------------------------------------------------------------
+  app.put("/api/topics/total/interest", function(req, res) {
+
+    var topicID = parseInt(req.body.id);
+
+    console.log("put id", req.body.id);
+
+    db.Topics.update(
+      {"topic_interest": req.body.topic_interest},
+      {"where": {"id": topicID}}
+    ).then(function(dbTopic) {
+      console.log("topic_id " + req.body.id + " updated successfully.");
+
+      res.json(dbTopic);
+    });
+  });
+
+
+
 
   // ----------------------------------------------------------------------------
   // put update route for changing topic states
