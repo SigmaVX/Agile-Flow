@@ -60,4 +60,57 @@ module.exports = function(app) {
 
   });
 
+  // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
+  // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
+  // otherwise send back an error
+  app.post("/api/signup/user", function (req, res) {
+
+    // Create a new instance of formidable to handle the request info
+    var form = new formidable.IncomingForm();
+
+    // parse information for form fields and incoming files
+    form.parse(req, function (err, fields, files) {
+      console.log(fields);
+      console.log(files.photo);
+
+      if (files.photo) {
+        // upload file to cloudinary, which'll return an object for the new image
+        cloudinary.uploader.upload(files.photo.path, function (result) {
+          console.log(result);
+          // create new user
+          db.Users.create({
+            user_name: fields.userName,
+            first_name: fields.firstName,
+            last_name: fields.lastName,
+            email: fields.email,
+            user_pw: fields.password,
+            user_photo: result.secure_url
+          }).then(function () {
+            res.json(true);
+            // res.json("/login");
+          }).catch(function (err) {
+            console.log(err);
+            res.json(err);
+          });
+        });
+      } else {
+        db.Users.create({
+          user_name: fields.userName,
+          email: fields.email,
+          user_pw: fields.password,
+          first_name: fields.firstName,
+          last_name: fields.lastName
+        }).then(function () {
+          res.json(true);
+          // res.redirect(307, "/api/login");
+        }).catch(function (err) {
+          console.log(err);
+          res.json(err);
+          // res.status(422).json(err.errors[0].message);
+        });
+      }
+    });
+
+  });
+
 };

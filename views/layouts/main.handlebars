@@ -181,12 +181,15 @@
                                         <span class="h6 signup-or-separator--text">or</span>
                                         <hr>
                                     </div> --}}
-                                    <form>
+                                    <form id="modal-signup-form">
                                         <div class="form-group">
                                             <input type="text" class="form-control-form " id="first-name" placeholder="First Name">
                                         </div>
                                         <div class="form-group">
                                             <input type="text" class="form-control-form " id="last-name" placeholder="Last Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control-form " id="user-name" placeholder="username">
                                         </div>
                                         <div class="form-group">
                                             <input type="email" class="form-control-form " id="user-email" placeholder="Email">
@@ -196,6 +199,10 @@
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control-form " id="confirm-password" placeholder="Confirm Password">
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="fileImage">File Image</label>
+                                          <input type="file" class="form-control" id="file-input">
                                         </div>
 
                                         <div class="row">
@@ -323,6 +330,8 @@
     <script src="./javascript/userprofile.js"></script>
     <!-- Navbar JS -->
     <script src="./javascript/nav.js"></script>
+    <!-- Authentication JS -->
+    <script src="./javascript/signup.js"></script>
 
 
   </body>
