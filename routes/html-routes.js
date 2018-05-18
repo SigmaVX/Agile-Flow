@@ -24,9 +24,10 @@ module.exports = function(app) {
    // console.log("inside /: req: " + JSON.stringify(req));
     // If the user already has an account send them to the members page
     // TODO -- if member is of type admin redirect to "/admin" route
-    // if (req.user) {
-    //  res.redirect("/member");
-    // }
+    console.log("req.user: " + req.user);
+    if (req.user !== undefined) {
+      res.redirect("/member");
+   }
 
     db.Topics.findAll({"where": {"topic_state": {[Op.or]: ["open", "pending"]}}}).
     then(function (topicData) {
@@ -102,11 +103,11 @@ module.exports = function(app) {
 
   // Here we've add our isAuthenticated middleware to this route.
   // If a user who is not logged in tries to access this route they will be redirected to the signup page
-/*   app.get("/member", isAuthenticated, function(req, res) {
+  app.get("/member", isAuthenticated, function(req, res) {
     console.log("in /member route");
     // console.log("req: " + JSON.stringify(req));
-    res.render("topics");
-  }); */
+    res.render("index");
+  });
 
 
   // ----------------------------------------------------------------------------
@@ -146,11 +147,11 @@ module.exports = function(app) {
   // ----------------------------------------------------------------------------
   // get signup page
   // ----------------------------------------------------------------------------
-  app.get("/signup", function(req, res) {
+/*   app.get("/signup", function(req, res) {
     // user can update password, photo or email
     // res.json();
     res.render("signup");
-  });
+  }); */
 
   // ----------------------------------------------------------------------------
   // route for editing user profile based on user_id
@@ -170,7 +171,7 @@ module.exports = function(app) {
   // ============================================================================
   // html POST ROUTES
   //
-  app.post("/signup", function(req, res) {
+/*   app.post("/signup", function(req, res) {
     var email = req.body.email;
     var user_pw = req.body.user_pw;
 
@@ -200,37 +201,8 @@ module.exports = function(app) {
       res.json(newUser);
     });
 
-  });
+  }); */
 
-  // ----------------------------------------------------------------------------
-  // route for updating user login
-  // ----------------------------------------------------------------------------
-  app.post("/login", function(req, res) {
-    var email = req.body.email;
-    var user_pw = req.body.user_pw;
-
-    // validate email
-    // on email error return status 404 (with message?)
-
-    // validate password
-    // on password error return status 404 (with message?)
-
-    req.body.email = email;
-    req.body.user_pw = user_pw;
-
-    db.Users.findOne({
-      "where": {
-        "email": req.body.email,
-        "user_pw": req.body.user_pw
-      }
-    }).then(function(authenticatedUser) {
-      if (!authenticatedUser) res.status(404).end();
-      console.log("user_id " + authenticatedUser.id + " logged in successfully.");
-
-      res.json(authenticatedUser);
-    });
-
-  });
 
   // ============================================================================
   // html UPDATE ROUTES

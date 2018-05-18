@@ -1,4 +1,7 @@
 $(document).ready(function () {
+  // hide logout button
+  $("#session-logout").hide();
+
   // Getting references to our form and input
   var signUpForm = $("#modal-signup-form"),
       firstNameInput = $("input#first-name"),

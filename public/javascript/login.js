@@ -16,8 +16,9 @@ $(document).ready(function () {
       return;
     }
 
+    console.log("user data: " + JSON.stringify(userData));
     // If we have an email and password we run the loginUser function and clear the form
-    // loginUser(userData.email, userData.password);
+    loginUser(userData.email, userData.password);
     clearLoginInfo();
   });
 
@@ -26,11 +27,13 @@ $(document).ready(function () {
     $.post("/api/login", {
       email: email,
       password: password
-    }).then(function (data) {
+    }).done(function (data) {
       console.log("login data: " + JSON.stringify(data));
-      // window.location.replace(data);
+      $("#at-login").modal("hide");
+      $("#session-logout").show();
+      window.location.replace(data);
       // If there's an error, log the error
-    }).catch(function (err) {
+    }).fail(function (err) {
       console.log(err);
     });
   }
