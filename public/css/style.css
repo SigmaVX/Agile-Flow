@@ -173,11 +173,17 @@ body {
   /* ------------------------------------ */
 
   /* Cards CSS */
-  .card {
-      float: left;
+  .cards {
+      /* float: left; */
       /* max-height: 300px;
       min-width: 250px; */
       /* min-width: 40%; */
+      background-color: rgb(255, 255, 255);
+      background-clip: border-box;
+      border: 1px solid rgba(0,0,0,.125);
+      border-radius: .25rem;
+      margin-left: 2%; 
+      margin-right: 2%;
   }
 
   /* End of Cards CSS */
