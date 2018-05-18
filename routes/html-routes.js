@@ -43,10 +43,17 @@ module.exports = function(app) {
 
   // ----------------------------------------------------------------------------
   // get navbar (TESTING NAVBAR ROUTE!!!!!!!!)
+  // get demouserprofile (TESTING USER PROFILE ROUTE!!!!!!!!!)
   // ----------------------------------------------------------------------------
   app.get('/nav', function (req, res) {
     res.render('nav');
   });
+
+  app.get('/demouserprofile', function (req, res) {
+    res.render('demouserprofile');
+  });
+
+ 
 
   // ----------------------------------------------------------------------------
   // get topics information, returns topics and users
