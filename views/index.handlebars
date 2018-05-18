@@ -1,9 +1,11 @@
+
 <!-- Left Navbar -->
 <nav id="sidebar">
     <div class="sidebar-header">
         <h3 class="navTitle">Help
             <span class="titleColor">Flow</span>
         </h3>
+
     </div>
     <ul class="list-unstyled components">
         <li class="active">
@@ -89,25 +91,23 @@
     </nav>
 
 
-        <div class="row card-deck text-center open-topics">
-            <h2 class="col-12">Open & PendingTopics</h2>
-            <div class="container">
-            <div class="row d-flex justify-content-around">
-                {{#each openAndPending}}
-                <div class="card p-4" style="min-width: 250px; width:100%; margin-bottom:2%;" >
-                    <h5 class="card-title">{{this.topic_title}}</h5>
-                    <h5>Total Interest: {{this.topic_interest}}</h5>
-                    <h5>My Interest:
-                    <span id="user-interest-{{this.id}}">Not Interested</span>
-                    </h5>
-                    <button class="btn btn-block interest-btn" id="interest-btn-{{this.id}}" interest-state="false">Change Interest</button>
-                    <button class="btn btn-block" id="details-btn-{{this.id}}">See Details</button>
-                    <button class="btn btn-block" id="claim-btn-{{this.id}}">Claim Topic</button>
-                </div>
-                {{/each}}
+    <div class="row card-deck text-center open-topics">
+        <h2 class="col-12">Open & PendingTopics</h2>
+        <div class="container">
+          <div class="row">
+            {{#each openAndPending}}
+            <div class="card col-md-4">
+                <h5 class="card-title">{{this.topic_title}}</h5>
+                <h5>Total Interest: {{this.topic_interest}}</h5>
+                <h5>My Interest: <span id="user-interest-{{this.id}}">Not Interested</span></h5>
+                <button class="btn btn-block interest-btn" id="interest-btn-{{this.id}}" topic-id={{this.id}} interest-state="false">Change Interest</button>
+                <button class="btn btn-block" id="details-btn-{{this.id}}">See Details</button>
+                <button class="btn btn-block" id="claim-btn-{{this.id}}">Claim Topic</button>
             </div>
-            </div>
+            {{/each}}
+          </div>
         </div>
+    </div>
 
     <div class="row text-center closed-topics">
         <h2 class="col-12">Closed Topics</h2>
