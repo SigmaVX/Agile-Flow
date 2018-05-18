@@ -53,6 +53,9 @@ module.exports = function(app) {
     res.render('demouserprofile');
   });
 
+  app.get('/demoadmin', function (req, res) {
+    res.render('demoadmin');
+  });
  
 
   // ----------------------------------------------------------------------------
