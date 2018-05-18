@@ -13,25 +13,25 @@
 
      <!-- CSS, Font, & Icon Files --> 
     <link type="text/css" rel="stylesheet" href="./css/style.css">
+    <!-- CSS, Font, & Icon Files for Admin and User Profile Pages --> 
+    <link type="text/css" rel="stylesheet" href="./css/userprofile.css">
+    <!-- Modal CSS --> 
+    <link type="text/css" rel="stylesheet" href="./css/modal.css">
 
 </head>
 
     <body>
 
     {{!-- Proxy for user profie div  --}}
-    <div id="user" data-id="3">
+    {{!-- <div id="user" data-id="3">
         <h2>User Stuff</h2>
         <img class="col-1 img-fluid" src="https://placem.at/things?w=50&h=50&random=some_seed">
-    </div>
+    </div>  --}}
 
     {{{ body }}}
 
 
-    <footer class="footer container">
-        <div class="row text-center">
-            <h5 class="col-12">© Copyright 2018 FET</h5>
-        </div>
-    </footer>
+    <!-- Modal Section Start -->
 
     <!-- Modal - Error Msg-->
     <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
@@ -53,7 +53,7 @@
         </div>
     </div>
 
-
+ 
     <!-- Modal - Confirm Delete -->
     <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -74,6 +74,238 @@
             </div>
         </div>
     </div>
+    <!-- MODAL Confirm Delete ENDS -->
+    <!-- Modal Container -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- <header class="header-tp"> -->
+                <!-- </header> -->
+                <section class="at-login-form">
+                    <!-- MODAL LOGIN -->
+                    <div class="modal fade" id="at-login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                </div>
+                                <div class="modal-body">
+                                    <button class="btn-fb"> <i class="fa fa-fw fa-facebook pull-left" aria-hidden="true"></i> Login with Facebook </button>
+                                    <br>
+                                    <button class="btn-gp"> <i class="fa fa-fw fa-google-plus pull-left" aria-hidden="true"></i> Login with Google </button>
+                                    <br>
+                                    <div class="signup-or-separator">
+                                        <span class="h6 signup-or-separator--text">or</span>
+                                        <hr>
+                                    </div>
+                                    <form>
+                                        <div class="form-group">
+                                            <input type="email" class="form-control-form " id="exampleInputEmaillog" placeholder="Email">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control-form " id="exampleInputPasswordpas" placeholder="Password">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox"> Remember me
+                                                        </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-md-offset-2">
+                                                <p class="frgt-pswd" data-toggle="modal" data-dismiss="modal" data-target="#at-reset-pswd">Forgot Password ?</p>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn-lgin">Login</button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p class="ta-l">Don't have an account ? </p>
+                                        </div>
+                                        <div class="col-md-4 col-md-offset-2">
+                                            <button class="btn-gst" data-toggle="modal" data-dismiss="modal" data-target="#at-signup">Sign Up </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- MODAL LOGIN ENDS -->
+                    <!-- MODAL SIGNUP -->
+                    <div class="modal fade" id="at-signup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                </div>
+                                <div class="modal-body">
+                                    <button class="btn-fb"> <i class="fa fa-fw fa-facebook pull-left" aria-hidden="true"></i> Signup with Facebook </button>
+                                    <br>
+                                    <button class="btn-gp"> <i class="fa fa-fw fa-google-plus pull-left" aria-hidden="true"></i> Signup with Google </button>
+                                    <br>
+                                    <div class="signup-or-separator">
+                                        <span class="h6 signup-or-separator--text">or</span>
+                                        <hr>
+                                    </div>
+                                    <button type="submit" class="btn-lgin" data-toggle="modal" data-dismiss="modal" data-target="#at-signup-filling">Signup with Email</button>
+                                    <hr>
+                                    <p>By signing up, I agree to HELPFLOWS’s <a href="#">Terms of Service</a>, and <a href="#">Privacy Policy</a></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p class="ta-l">Already a Member? </p>
+                                        </div>
+                                        <div class="col-md-4 col-md-offset-2">
+                                            <button class="btn-gst" data-toggle="modal" data-dismiss="modal" data-target="#at-login">Login</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- MODAL SIGNUP ENDS -->
+                    <!-- MODAL SIGNUP FORM FILLING -->
+                    <div class="modal fade" id="at-signup-filling" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Sign up with <a href="#">Facebook</a> or <a href="#">Google</a></p>
+                                    <div class="signup-or-separator">
+                                        <span class="h6 signup-or-separator--text">or</span>
+                                        <hr>
+                                    </div>
+                                    <form>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control-form " id="exampleInputEmaillog" placeholder="Full Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" class="form-control-form " id="exampleInputEmaillog" placeholder="Email">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control-form " id="exampleInputPasswordpas" placeholder="Password">
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="checkbox">
+                                                    <label>
+                                                            <input type="checkbox"> I’d like to receive email notifications
+                                                        </label>
+                                                </div>
+
+                                                <p>By signing up, I agree to HELPFLOW'S<a href="#">Terms of Service</a>, and <a href="#">Privacy Policy</a></p>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn-lgin">Signup</button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p class="ta-l">Already a Member? </p>
+                                        </div>
+                                        <div class="col-md-4 col-md-offset-2">
+                                            <button class="btn-gst" data-toggle="modal" data-dismiss="modal" data-target="#at-login">Login</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- MODAL SIGNUP FORM FILLING ENDS -->
+                    <!-- MODAL FORGOT PASSWORD -->
+                    <div class="modal fade" id="at-reset-pswd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <p> Enter the email address associated with your account, and we’ll email you a link to reset your password. </p>
+                                        <div class="form-group">
+
+                                            <input type="email" class="form-control-form " id="exampleInputEmaillog" placeholder="Email">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- MODAL FORGOT PASSWORD END-->
+                    <!-- MODAL HELP -->
+                    <div class="modal fade" id="at-helping" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control-form " id="exampleInputEmaillog" placeholder="Enter Your Question">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="row">
+                                        <button class="btn-gst" data-toggle="modal" data-dismiss="modal">Send a reset Link</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- MODAL HELP END -->
+                    <!-- MODAL POST QUESTION -->
+                    <div class="modal fade" id="at-question" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <h1>Post a Question</h1>
+                                            <input type="text" class="form-control-form " id="exampleInputEmaillog" placeholder="Enter Your Question ">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="row">
+                                        <button class="btn-gst" data-toggle="modal" data-dismiss="modal">Submit Question</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- MODAL POST QUESTION END -->
+                </section>
+            </div>
+        </div>
+    </div>
+
+<!-- Modal Container End -->
+<!-- Modal Section End -->
+
+
+       {{!-- Footer --}}
+    <footer class="footer container">
+        <div class="row text-center">
+            <h5 class="col-12">© Copyright 2018 FET</h5>
+        </div>
+    </footer>
+    
+    
 
     {{!-- CDN and JS Links --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -81,8 +313,11 @@
     <script src="./javascript/insert_data.js"></script>
     <script src="./javascript/choices.js"></script>
     <script src="./javascript/logic.js"></script>
+    <!-- User Profile JS -->
+    <script src="./javascript/userprofile.js"></script>
     <!-- Navbar JS -->
     <script src="./javascript/nav.js"></script>
+
 
   </body>
 </html>
