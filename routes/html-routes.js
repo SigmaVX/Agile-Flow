@@ -1,6 +1,12 @@
 // Requiring our topics and users models
 var db = require("../models");
 
+// Requiring path to so we can use relative routes to our HTML files
+var path = require("path");
+
+// Requiring our custom middleware for checking if a user is logged in
+var isAuthenticated = require("../config/middleware/isAuthenticated");
+
 module.exports = function(app) {
   var Sequelize = require("sequelize");
   const Op = Sequelize.Op;
@@ -14,6 +20,13 @@ module.exports = function(app) {
   // ----------------------------------------------------------------------------
   app.get("/", function (req, res) {
     var hbsObject = {};
+
+   // console.log("inside /: req: " + JSON.stringify(req));
+    // If the user already has an account send them to the members page
+    // TODO -- if member is of type admin redirect to "/admin" route
+    // if (req.user) {
+    //  res.redirect("/member");
+    // }
 
     db.Topics.findAll({"where": {"topic_state": {[Op.or]: ["open", "pending"]}}}).
     then(function (topicData) {
@@ -86,6 +99,14 @@ module.exports = function(app) {
       });
     });
   });
+
+  // Here we've add our isAuthenticated middleware to this route.
+  // If a user who is not logged in tries to access this route they will be redirected to the signup page
+/*   app.get("/member", isAuthenticated, function(req, res) {
+    console.log("in /member route");
+    // console.log("req: " + JSON.stringify(req));
+    res.render("topics");
+  }); */
 
 
   // ----------------------------------------------------------------------------

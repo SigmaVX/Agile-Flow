@@ -98,7 +98,8 @@
                                         <span class="h6 signup-or-separator--text">or</span>
                                         <hr>
                                     </div> --}}
-                                    <form>
+                                    <div id="successful-signup"></div>
+                                    <form id="login-form">
                                         <div class="form-group">
                                             <input type="email" class="form-control-form " id="login-email" placeholder="Email">
                                         </div>
@@ -216,6 +217,9 @@
 {{!--                                                 <p>By signing up, I agree to HELPFLOW'S<a href="#">Terms of Service</a>, and <a href="#">Privacy Policy</a></p> --}}
                                             </div>
                                         </div>
+                                        <div class="row">
+                                          <div id="signup-error"></div>
+                                        </div>
                                         <button type="submit" class="btn-lgin">Signup</button>
                                     </form>
                                 </div>
@@ -245,7 +249,7 @@
                                         <p> Enter the email address associated with your account, and we’ll email you a link to reset your password. </p>
                                         <div class="form-group">
 
-                                            <input type="email" class="form-control-form " id="exampleInputEmaillog" placeholder="Email">
+                                            <input type="email" class="form-control-form " id="email-address" placeholder="Email">
                                         </div>
                                     </form>
                                 </div>
@@ -289,7 +293,7 @@
                                     <form>
                                         <div class="form-group">
                                             <h1>Post a Question</h1>
-                                            <input type="text" class="form-control-form " id="exampleInputEmaillog" placeholder="Enter Your Question ">
+                                            <input type="text" class="form-control-form " id="post-question" placeholder="Enter Your Question ">
                                         </div>
                                     </form>
                                 </div>
@@ -323,7 +327,6 @@
     {{!-- CDN and JS Links --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="./javascript/insert_data.js"></script>
     <script src="./javascript/choices.js"></script>
     <script src="./javascript/logic.js"></script>
     <!-- User Profile JS -->
@@ -332,6 +335,8 @@
     <script src="./javascript/nav.js"></script>
     <!-- Authentication JS -->
     <script src="./javascript/signup.js"></script>
+{{!--     <script src="./javascript/login.js"></script>
+    <script src="./javascript/member.js"></script> --}}
 
 
   </body>
