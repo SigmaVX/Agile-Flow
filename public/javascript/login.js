@@ -27,10 +27,10 @@ $(document).ready(function () {
       email: email,
       password: password
     }).done(function (data) {
-      console.log("login data: " + JSON.stringify(data));
+       // console.log("login data: " + JSON.stringify(data));
       $("#at-login").modal("hide");
       $("#session-logout").show();
-      window.location.replace(data);
+      location.reload();
       // If there's an error, log the error
     }).fail(function (err) {
       console.log(err);

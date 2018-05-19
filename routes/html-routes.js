@@ -24,10 +24,14 @@ module.exports = function(app) {
     // If the user already has an account send them to the members page
     // TODO -- if member is of type admin redirect to "/admin" route
     console.log("req.user: " + req.user);
-    if (req.user !== undefined) {
+/*     if (req.user !== undefined) {
       // res.redirect("/member");
-      res.redirect("/admin");
-   }
+      if (req.user.user_rank === "Admin") {
+        res.redirect("/admin");
+      } else if (req.user.user_rank === "user") {
+        res.redirect("/");
+      }
+    } */
 
     db.Topics.findAll({"where": {"topic_state": {[Op.or]: ["open", "pending"]}}}).
     then(function (topicData) {
@@ -66,7 +70,7 @@ module.exports = function(app) {
       console.log("req.user: " + req.user);
       if (req.user !== undefined) {
         res.redirect("/member");
-    };
+      }
 
       db.Topics.findAll({"where": {"topic_created_by": userId,"topic_state":"open"}}).
       then(function (topicData) {
@@ -194,10 +198,10 @@ module.exports = function(app) {
             });
           });
         });
+      } else {
+        // a user who is not authenticated as admin will get redirected to index route
+        res.redirect("/");
       }
-    } else {
-      // a user who is not authenticated as admin will get redirected to index
-      res.render("index");
     }
   });
 

@@ -16,10 +16,12 @@ $(document).ready(function() {
   $.get("/api/user_data").then(function(data) {
     var usrImg = $("<img>"),
         userId;
+    console.log("in /api/user_data");
 
     if (!isEmptyObject(data)) {
       // user is signed in
-
+      console.log("in /api/user_data user is signed in");
+      
       initSessionRoutine();
       // prepend an image to user navbar
       usrImg.attr("src", data.photo).
@@ -43,6 +45,7 @@ $(document).ready(function() {
 
       // display user email
       $("#appuser-name").html(data.email);
+
     } // temporary fix to hardcode user id as 1
     else {
       $("#user").data("user-id", 1);
@@ -82,6 +85,7 @@ $(document).ready(function() {
   function initSessionRoutine() {
     // since user has successfully logged in hide login modal and
     // show logout button, also hide login and signup buttons
+    console.log("in initSession Routine()");
     $("#at-login").modal("hide");
     $("#session-logout").show();
     $("#modalLogin").hide();
