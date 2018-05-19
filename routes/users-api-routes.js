@@ -179,7 +179,7 @@ module.exports = function(app) {
 
       // TODO: check if email already exists in database
       db.Users.findOne({
-        "where": {user_name: fields.userName}
+        "where": {email: fields.email}
       }).then(function(dbUsers){
         if (dbUsers) {
           noDuplicateUserName = false;

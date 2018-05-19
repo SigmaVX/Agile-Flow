@@ -54,6 +54,58 @@ module.exports = function(app) {
     });
   });
 
+ // ----------------------------------------------------------------------------
+  // get myquestions page
+  // ----------------------------------------------------------------------------
+  app.get("/myquestions", function (req, res) {
+      
+      var userId = 1;
+      var hbsObject = {};
+
+      console.log("req.user: " + req.user);
+      if (req.user !== undefined) {
+        res.redirect("/member");
+    };
+
+      db.Topics.findAll({"where": {"topic_created_by": userId,"topic_state":"open"}}).
+      then(function (topicData) {
+        if (!topicData) res.status(404).end();
+        hbsObject.openUser = topicData;
+
+        db.Topics.findAll({"where": {"topic_created_by": userId,"topic_state":"pending"}}).
+        then(function (pendingData) {
+          if (!pendingData) res.status(404).end();
+          hbsObject.pendingUser = pendingData;
+
+        db.Topics.findAll({"where": {"topic_created_by": userId,"topic_state":"closed"}}).
+        then(function (closedData) {
+          if (!closedData) res.status(404).end();
+          hbsObject.closedUser = closedData;
+
+          db.Topics.findAll({"where": {"topic_assigned_to": userId,"topic_state":"closed"}}).
+          then(function (closedData) {
+            if (!closedData) res.status(404).end();
+            hbsObject.closedAnswers = closedData;
+
+            console.log(hbsObject.openUser.length + " Open items found.");
+            console.log(hbsObject.pendingUser.length + " Pending Topics found.");
+            console.log(hbsObject.closedUser.length + " Closed found.");
+            console.log(hbsObject.closedAnswers.length + " Answers found.");
+
+            // for testing res.json(hbsObject);
+            res.render("myquestions", hbsObject);
+          });
+        });
+      });
+    });
+  });
+
+
+
+
+
+
+
   // ----------------------------------------------------------------------------
   // get navbar (TESTING NAVBAR ROUTE!!!!!!!!)
   // get demouserprofile (TESTING USER PROFILE ROUTE!!!!!!!!!)
