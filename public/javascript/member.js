@@ -39,7 +39,7 @@ $(document).ready(function() {
       // verify user id number from data attribute
       userId = $("#user").data("user-id");
 
-      // console.log("verify userId: " + userId);
+      console.log("verify userId: " + userId);
 
       // display user email
       $("#appuser-name").html(data.email);
@@ -48,6 +48,7 @@ $(document).ready(function() {
       $("#user").data("user-id", 1);
       $("#user").data("data-id", 1);
       userId = $("#user").data("user-id");
+      console.log("verify userId: " + userId);
     }
 
   });
@@ -71,6 +72,9 @@ $(document).ready(function() {
       $("#modalLogin").show();
       $("#modalSignup").show();
       $("#session-logout").hide();
+
+      // testing userId value on reload
+      location.reload();
 
     });
   });

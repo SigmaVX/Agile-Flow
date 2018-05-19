@@ -77,7 +77,8 @@ module.exports = function(app) {
     // So we're sending the user back the route to the members page because the redirect will happen on the front end
     // They won't get this or even be able to access this page if they aren't authed
     // console.log("req.user: " + req.user);
-    res.json("/member");
+    // res.json("/member");
+    res.redirect("/admin");
   });
 
 
@@ -179,7 +180,8 @@ module.exports = function(app) {
 
       // TODO: check if email already exists in database
       db.Users.findOne({
-        "where": {user_name: fields.userName}
+        // "where": {email: fields.userName}
+        "where": {email: fields.email}
       }).then(function(dbUsers){
         if (dbUsers) {
           noDuplicateUserName = false;
@@ -205,6 +207,9 @@ module.exports = function(app) {
               email: fields.email,
               user_pw: fields.password,
               user_photo: result.secure_url
+              // creating following lines to check admin functionality
+              ,
+              user_rank: "Admin"
             }).then(function () {
               // res.json(true);
               res.json("/");

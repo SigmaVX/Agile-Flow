@@ -25,7 +25,8 @@ module.exports = function(app) {
     // TODO -- if member is of type admin redirect to "/admin" route
     console.log("req.user: " + req.user);
     if (req.user !== undefined) {
-      res.redirect("/member");
+      // res.redirect("/member");
+      res.redirect("/admin");
    }
 
     db.Topics.findAll({"where": {"topic_state": {[Op.or]: ["open", "pending"]}}}).
@@ -108,33 +109,44 @@ module.exports = function(app) {
   app.get("/admin", isAuthenticated, function (req, res) {
     var hbsObject = {};
 
-    db.Topics.findAll({"where": {"topic_state": "open"}, "order": [["created_at", "DESC"]]}).
-    then(function (openData) {
-      if (!openData) res.status(404).end();
-      hbsObject.open = openData;
+    // grab req.user
+    // if req.user.rank == Admin
+    console.log("req.user: " + req.user);
 
-      db.Topics.findAll({"where": {"topic_state": "pending"}, "order": [["created_at", "DESC"]]}).
-      then(function (pendingData) {
-        if (!pendingData) res.status(404).end();
-        hbsObject.pending = pendingData;
-    
-        db.Topics.findAll({"where": {"topic_state": "closed"}, "order": [["created_at", "DESC"]]}).
-          then(function (closedData) {
-          if (!closedData) res.status(404).end();
-          hbsObject.closed = closedData;
+    console.log("Found admin user: " + JSON.stringify(req.user));
+    if (req.user) {
+      console.log("user rank: " + req.user.user_rank);
+      if (req.user.user_rank === "Admin") {
+        db.Topics.findAll({"where": {"topic_state": "open"}, "order": [["created_at", "DESC"]]}).
+        then(function (openData) {
+          if (!openData) res.status(404).end();
+          hbsObject.open = openData;
 
-            console.log(hbsObject.open.length + " Open items found.");
-            console.log(hbsObject.pending.length + " Pending items found.");
-            console.log(hbsObject.closed.length + " Closed Topics found.");
+          db.Topics.findAll({"where": {"topic_state": "pending"}, "order": [["created_at", "DESC"]]}).
+          then(function (pendingData) {
+            if (!pendingData) res.status(404).end();
+            hbsObject.pending = pendingData;
+        
+            db.Topics.findAll({"where": {"topic_state": "closed"}, "order": [["created_at", "DESC"]]}).
+              then(function (closedData) {
+              if (!closedData) res.status(404).end();
+              hbsObject.closed = closedData;
 
-            // for testing res.json(hbsObject);
-            res.render("admin", hbsObject);
+                console.log(hbsObject.open.length + " Open items found.");
+                console.log(hbsObject.pending.length + " Pending items found.");
+                console.log(hbsObject.closed.length + " Closed Topics found.");
 
+                // for testing res.json(hbsObject);
+                res.render("admin", hbsObject);
+
+            });
+          });
         });
-      });
-    });
-    // a user who is not authenticated as admin will get redirected to admin
-    res.render("index");
+      }
+    } else {
+      // a user who is not authenticated as admin will get redirected to index
+      res.render("index");
+    }
   });
 
 
