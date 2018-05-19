@@ -3,8 +3,7 @@ $(document).ready(function() {
 // Run on page load to turn vote and interest state to true where applicable 
 function loadChoices(){
 
-    var userId = $("#user").attr("data-id");
-    // console.log(userId);
+    var userId = parseInt($("#user").data("data-id"), 10);
 
     if(userId){
 
@@ -15,6 +14,7 @@ function loadChoices(){
         // console.log("Interest Data:" , data);
             
             // Loop through choices data to change topics to true
+            console.log("data.choices.length: " + data.choices.length);
             for (var i = 0; i < data.choices.length; i++){
                 // console.log("Topic Picked For Loop Test: ", data.choices[i].topic_id);
                 $("#user-interest-"+data.choices[i].topic_id).text("I'm Interested");
@@ -45,7 +45,8 @@ function answerVote(vote_state, topic_id){
     // Store The state of the vote for topic selected 
     var voteState = vote_state;
     var topicId = parseInt(topic_id);
-    var userId = parseInt($("#user").attr("data-id"));
+    var userId = parseInt($("#user").data("data-id"), 10);
+    console.log("answerVote() user id" + userId);
 
 
     // Pull total vote for this topic
@@ -123,7 +124,7 @@ function interestVote(interest_state, topic_id){
     // Store The state of the vote for topic selected 
     var interestState = interest_state;
     var topicId = parseInt(topic_id);
-    var userId = parseInt($("#user").attr("data-id"));
+    var userId = parseInt($("#user").data("data-id"), 10);
 
     // Pull total vote for this topic
     $.ajax({
@@ -202,7 +203,8 @@ $(".interest-btn").on("click", function(event){
     event.preventDefault();
     // console.log("got click");
     var interest_state = $(this).attr("interest-state");
-    var topic_id = $(this).attr("topic-id");
+    var topic_id = parseInt($(this).attr("topic-id"));
+    console.log("in .interest-btn: topic_id: " + topic_id);
     interestVote(interest_state, topic_id);
 });
 
@@ -215,8 +217,11 @@ $(".vote-btn").on("click", function(event){
     answerVote(vote_state, topic_id);
 });
 
-
-loadChoices();
+// must wait for user_data ajax query to return value
+// before starting function loadChoices
+$.get("/api/user_data").then(function(data) {
+  loadChoices();
+});
 
 // Document Ready Close
 });
