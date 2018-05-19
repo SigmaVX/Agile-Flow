@@ -76,8 +76,15 @@ module.exports = function(app) {
     // Since we're doing a POST with javascript, we can't actually redirect that post into a GET request
     // So we're sending the user back the route to the members page because the redirect will happen on the front end
     // They won't get this or even be able to access this page if they aren't authed
-    // console.log("req.user: " + req.user);
-    res.json("/member");
+    console.log("logged in req.user id: " + req.user.id);
+    // on successful login, route user is sent to is based on user_rank
+    if (req.user.user_rank === "user") {
+      console.log("normal user has signed in...");
+      res.redirect("/");
+    } else if (req.user.user_rank === "Admin") {
+      console.log("Administrator user has signed in...");
+      res.redirect("/admin");
+    }
   });
 
 
@@ -205,6 +212,9 @@ module.exports = function(app) {
               email: fields.email,
               user_pw: fields.password,
               user_photo: result.secure_url
+              // creating following lines to check admin functionality
+              ,
+              user_rank: "Admin"
             }).then(function () {
               // res.json(true);
               res.json("/");
@@ -254,7 +264,8 @@ module.exports = function(app) {
       res.json({
         email: req.user.email,
         id: req.user.id,
-        photo: req.user.user_photo
+        photo: req.user.user_photo,
+        rank: req.user.user_rank
       });
     }
   });

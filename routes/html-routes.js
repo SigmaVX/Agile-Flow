@@ -21,13 +21,7 @@ module.exports = function(app) {
   app.get("/", function (req, res) {
     var hbsObject = {};
 
-    // If the user already has an account send them to the members page
-    // TODO -- if member is of type admin redirect to "/admin" route
-    console.log("req.user: " + req.user);
-    if (req.user !== undefined) {
-      res.redirect("/member");
-   }
-
+    // default visitor sees public topics
     db.Topics.findAll({"where": {"topic_state": {[Op.or]: ["open", "pending"]}}}).
     then(function (topicData) {
       if (!topicData) res.status(404).end();
@@ -65,7 +59,7 @@ module.exports = function(app) {
       console.log("req.user: " + req.user);
       if (req.user !== undefined) {
         res.redirect("/member");
-    };
+      }
 
       db.Topics.findAll({"where": {"topic_created_by": userId,"topic_state":"open"}}).
       then(function (topicData) {
@@ -99,11 +93,6 @@ module.exports = function(app) {
       });
     });
   });
-
-
-
-
-
 
 
   // ----------------------------------------------------------------------------
@@ -157,34 +146,44 @@ module.exports = function(app) {
   // ----------------------------------------------------------------------------
   // get admin page information
   // ----------------------------------------------------------------------------
-  app.get("/admin", function (req, res) {
+  app.get("/admin", isAuthenticated, function (req, res) {
     var hbsObject = {};
 
-    db.Topics.findAll({"where": {"topic_state": "open"}, "order": [["created_at", "DESC"]]}).
-    then(function (openData) {
-      if (!openData) res.status(404).end();
-      hbsObject.open = openData;
+    // first check to see if req.user is not empty
+    if (req.user) {
+      console.log("user rank: " + req.user.user_rank);
+      // next verify that user is an 'Admin'
+      if (req.user.user_rank === "Admin") {
+        db.Topics.findAll({"where": {"topic_state": "open"}, "order": [["created_at", "DESC"]]}).
+        then(function (openData) {
+          if (!openData) res.status(404).end();
+          hbsObject.open = openData;
 
-      db.Topics.findAll({"where": {"topic_state": "pending"}, "order": [["created_at", "DESC"]]}).
-      then(function (pendingData) {
-        if (!pendingData) res.status(404).end();
-        hbsObject.pending = pendingData;
-      
-        db.Topics.findAll({"where": {"topic_state": "closed"}, "order": [["created_at", "DESC"]]}).
-          then(function (closedData) {
-          if (!closedData) res.status(404).end();
-          hbsObject.closed = closedData;
+          db.Topics.findAll({"where": {"topic_state": "pending"}, "order": [["created_at", "DESC"]]}).
+          then(function (pendingData) {
+            if (!pendingData) res.status(404).end();
+            hbsObject.pending = pendingData;
+       
+            db.Topics.findAll({"where": {"topic_state": "closed"}, "order": [["created_at", "DESC"]]}).
+              then(function (closedData) {
+              if (!closedData) res.status(404).end();
+              hbsObject.closed = closedData;
 
-            console.log(hbsObject.open.length + " Open items found.");
-            console.log(hbsObject.pending.length + " Pending items found.");
-            console.log(hbsObject.closed.length + " Closed Topics found.");
+                console.log(hbsObject.open.length + " Open items found.");
+                console.log(hbsObject.pending.length + " Pending items found.");
+                console.log(hbsObject.closed.length + " Closed Topics found.");
 
-            // for testing res.json(hbsObject);
-            res.render("admin", hbsObject);
+                // for testing res.json(hbsObject);
+                res.render("admin", hbsObject);
 
+            });
+          });
         });
-      });
-    });
+      } else {
+        // a user who is not authenticated as admin will get redirected to index route
+        res.redirect("/");
+      }
+    }
   });
 
 
@@ -201,11 +200,6 @@ module.exports = function(app) {
       res.json(dbUser);
     });
   });
-
-
-  // ============================================================================
-  // html POST ROUTES
-  //
 
 
   // ============================================================================

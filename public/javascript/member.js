@@ -39,15 +39,17 @@ $(document).ready(function() {
       // verify user id number from data attribute
       userId = $("#user").data("user-id");
 
-      // console.log("verify userId: " + userId);
+      console.log("verify userId: " + userId);
 
       // display user email
       $("#appuser-name").html(data.email);
+
     } // temporary fix to hardcode user id as 1
     else {
       $("#user").data("user-id", 1);
       $("#user").data("data-id", 1);
       userId = $("#user").data("user-id");
+      console.log("verify userId: " + userId);
     }
 
   });
@@ -72,12 +74,16 @@ $(document).ready(function() {
       $("#modalSignup").show();
       $("#session-logout").hide();
 
+      // reload to send back to default public user view
+      location.reload();
+
     });
   });
 
   function initSessionRoutine() {
     // since user has successfully logged in hide login modal and
     // show logout button, also hide login and signup buttons
+    console.log("in initSession Routine()");
     $("#at-login").modal("hide");
     $("#session-logout").show();
     $("#modalLogin").hide();
