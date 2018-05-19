@@ -67,9 +67,26 @@ module.exports = function(app) {
 
 
   // ----------------------------------------------------------------------------
-  // put route for updating topics
+  // put route for updating topics - admin
   // ----------------------------------------------------------------------------
   app.put("/api/topics", function(req, res) {
+
+    console.log("put id", req.body.id);
+    db.Topics.update(
+      req.body,
+      {"where": {"id": req.body.id}}
+    ).then(function(dbTopic) {
+      console.log("topic_id " + req.body.id + " updated successfully.");
+
+      res.json(dbTopic);
+    });
+  });
+
+
+    // ----------------------------------------------------------------------------
+  // put route for updating open topics - user
+  // ----------------------------------------------------------------------------
+  app.put("/api/topics/open", function(req, res) {
 
     console.log("put id", req.body.id);
     db.Topics.update(
@@ -113,6 +130,29 @@ module.exports = function(app) {
 
     db.Topics.update(
       {"topic_interest": req.body.topic_interest},
+      {"where": {"id": topicID}}
+    ).then(function(dbTopic) {
+      console.log("topic_id " + req.body.id + " updated successfully.");
+
+      res.json(dbTopic);
+    });
+  });
+
+
+  // ----------------------------------------------------------------------------
+  // put route for updating topic status
+  // ----------------------------------------------------------------------------
+  app.put("/api/topics/status", function(req, res) {
+
+    var topicID = parseInt(req.body.id);
+
+    console.log("put id", req.body.id);
+
+    db.Topics.update(
+      {
+        "topic_state": req.body.topic_state,
+        "topic_assigned_to": req.body.topic_assigned_to 
+      },
       {"where": {"id": topicID}}
     ).then(function(dbTopic) {
       console.log("topic_id " + req.body.id + " updated successfully.");

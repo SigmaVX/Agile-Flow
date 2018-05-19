@@ -42,31 +42,25 @@
                 <div class="span4 proj-div" data-toggle="modal" data-target="#at-question">Post a Question</a>
         </li>
         <li>
-            <a href="#">Answer a Question</a>
+            <a href="/myquestions">My Questions</a>
         </li>
         <li>
-            <a href="#">Video Tutorials</a>
+            <a href="#">Open Questions</a>
+        </li>
+        <li>
+            <a href="#">Agile Answers</a>
+        </li>
+        <li>
+            <a href="#">About Helpflow</a>
+        </li>
+        <li>
+            <a href="editProfile.html">My Profile</a>
         </li>
         <li>
             <a href="/admin">Admin</a>
         </li>
         <li>
-            <a href="/userprofile">My Stuff</a>
-        </li>
-        <li>
-            <a href="#menu">Trending</a>
-        </li>
-        <li>
-            <a href="#">Latest</a>
-        </li>
-        <li>
-            <a href="#">Most Viewed</a>
-        </li>
-        <li>
-            <a href="#">About</a>
-        </li>
-        <li>
-            <a href="editProfile.html">Settings</a>
+            <a href="#">Sign-Up/Login</a>
         </li>
         <li>
             <a href="#">Logout</a>
@@ -103,8 +97,9 @@
             <button id="modalSignup" type="button" class="btn btn-outline-dark btn-sm mr-2" data-toggle="modal" data-target="#at-signup-filling">Signup</button>
             <button id="modalLogin" type="button" class="btn btn-outline-dark btn-sm mr-2" data-toggle="modal" data-target="#at-login">Login</button>
             <button id="session-logout">Logout</button>
-            <div style="width:200px;" class="container" id="user">
+            <div style="width:200px;" class="container" id="user" data-id="3">
                 <h4 style="font-size: 16px; margin-top:15px;" id="appuser-name"></h4>
+                <img class="col-1 img-fluid" src="https://placem.at/things?w=50&h=50&random=some_seed">
             </div>
 
 
@@ -119,7 +114,7 @@
     {{!-- Proxy for user profie div  --}}
     {{!-- <div id="user" data-id="3">
         <h2>User Stuff</h2>
-        <img class="col-1 img-fluid" src="https://placem.at/things?w=50&h=50&random=some_seed">
+        
     </div>  --}}
 
     {{{ body }}}
@@ -162,13 +157,14 @@
                         Are you sure you want to delete this?  Select 'Delete Topic' below to permanently remove this topic. 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-block" data-dismiss="modal" id="confirm-delete-btn">Delete Topic</button><br>
+                    <button type="button" class="btn btn-block confirm-delete-btn" data-dismiss="modal" topic-id="">Delete Topic</button><br>
                     <button type="button" class="btn btn-block" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- MODAL Confirm Delete ENDS -->
+
     <!-- Modal Container -->
     <div class="container">
         <div class="row">
@@ -331,51 +327,7 @@
                         </div>
                     </div>
                     <!-- MODAL SIGNUP FORM FILLING ENDS -->
-                    <!-- MODAL FORGOT PASSWORD -->
-                    <div class="modal fade" id="at-reset-pswd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form>
-                                        <p> Enter the email address associated with your account, and we’ll email you a link to reset your password. </p>
-                                        <div class="form-group">
-
-                                            <input type="email" class="form-control-form " id="email-address" placeholder="Email">
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                     <!-- MODAL FORGOT PASSWORD END-->
-                    <!-- MODAL HELP -->
-                    <div class="modal fade" id="at-helping" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control-form " id="exampleInputEmaillog" placeholder="Enter Your Question">
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <div class="row">
-                                        <button class="btn-gst" data-toggle="modal" data-dismiss="modal">Send a reset Link</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- MODAL HELP END -->
+                    
                     <!-- MODAL POST QUESTION -->
                     <div class="modal fade" id="at-question" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
@@ -421,8 +373,7 @@
     {{!-- CDN and JS Links --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="./javascript/choices.js"></script>
-    <script src="./javascript/logic.js"></script>
+    
     <!-- User Profile JS -->
     <script src="./javascript/userprofile.js"></script>
     <!-- Navbar JS -->
@@ -433,6 +384,9 @@
     <script src="./javascript/member.js"></script>
     <!-- Card Buttons JS -->
     <script src="./javascript/cardbtn.js"></script>
+
+    <script src="./javascript/choices.js"></script>
+    <script src="./javascript/logic.js"></script>
 
 
   </body>

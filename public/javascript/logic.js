@@ -36,7 +36,7 @@ function createTopic(){
 
 
 // Fill Values In Edit Modal - For Admin
-function fillEditModal(topicID){
+function fillEditModalAdmin(topicID){
 
     $.ajax({
         url: "/api/topics/"+topicID,
@@ -52,6 +52,23 @@ function fillEditModal(topicID){
         $("#update-topic-btn").attr("data-id", topicID);
     });
     $("#editModal").modal("show");
+};
+
+
+// Fill Values In Edit Modal - For User
+function fillEditModalUser(topicID){
+
+    $.ajax({
+        url: "/api/topics/"+topicID,
+        type: "GET"
+    }).then(function(data) {
+        console.log("Data Stored: ", data);
+        console.log("data ", data[0].topic_title);
+        $("input[id='topic_title']").val(data[0].topic_title);
+        $("textarea[id='topic_body']").val(data[0].topic_body);
+        $("#update-topic-btn").attr("data-id", topicID);
+    });
+    $("#userEditModal").modal("show");
 };
 
 
@@ -106,22 +123,26 @@ function editAnyTopic(){
 // Update Open Topic - For User
 function editOpenTopic(){
 
-    var userId = $("#user").data("user-id");
-    var topicTitle = $("#topic_title").val().trim();
-    var topicBody = $("#topic_body").val().trim();
+    var userId = $("#user").attr("data-id");
+    var topicID = $("#update-topic-btn").attr("data-id");
+    
+    var topicTitle = $("input[id='topic_title']").val().trim();
+    var topicBody = $("textarea[id='topic_body']").val().trim();
     var titleLength = topicTitle.length;
-    var bodyLength = topicBody.lenght;
+    var bodyLength = topicBody.length;
+    console.log("Topic Body and Title:" ,bodyLength, titleLength, userId);
 
     if(topicTitle !== "" && topicBody !== "" && titleLength < 101 && bodyLength < 281){
 
         var newTopic = {
             topic_title: topicTitle,
             topic_body: topicBody,
-            topic_created_by: userId
+            id: topicID
         };
 
+        console.log(newTopic);
         $.ajax({
-            url: "/api/topics",
+            url: "/api/topics/open",
             type: "PUT",
             data: newTopic
         }).then(function(data) {
@@ -134,28 +155,46 @@ function editOpenTopic(){
         $("#modal-title").text("Please Check Your Title And Description");
         $("#modal-body").text("A title and description are required and must be less than 100 and 280 characters, respectively.");
     }
-
 }
 
 
 // Delete Topic
 function deleteTopic(topicID){
+    $.ajax({
+        url: "/api/topics/"+topicID,
+        type: "DELETE",
+    }).then(function(data) {
+        console.log("Data Stored: ", data);
+        // location.reload();
+    });        
+};
 
-    $("#confirmModal").modal("show");
+// Claim An Open Topic
+function claimTopic(topicID){
 
-    $("#confirm-delete-btn").on("click", function(Event){
-        event.preventDefault();
+    var userId = $("#user").data("user-id");
 
-        $.ajax({
-            url: "/api/topics/"+topicID,
-            type: "DELETE",
-        }).then(function(data) {
-            console.log("Data Stored: ", data);
-            location.reload();
-        });        
+    var newTopic = {
+        topic_assigned_to: userId,
+        topic_state: "pending",
+        id: topicID
+    };
+
+    console.log(newTopic);
+    $.ajax({
+        url: "/api/topics/status",
+        type: "PUT",
+        data: newTopic
+    }).then(function(data) {
+        console.log("Data Stored: ", data);
+        location.reload();
     });
 };
 
+// Hide Claim Button ON Pending Topics
+function hideClaim(){
+    $(".claim-btn [staus=pending]").hide()
+}
 
 // Post An Answer To Pending
 function postAnswer(){
@@ -224,12 +263,18 @@ function cancelPending(){
 }
     
 
-
-
-
 // Event Listeners
 // ====================================================================
 
+//  Claim An Open Topic
+$(".claim-btn").on("click", function(event){
+    event.preventDefault();
+    var topicID = $(this).attr("topic-id");
+    console.log("test", topicID);
+    claimTopic(topicID);
+});
+
+// Post Answer
 $("#answer-topic-btn").on("click", function(event){
     event.preventDefault();
     postAnswer();
@@ -241,26 +286,47 @@ $("#add-topic-btn").on("click", function(event){
     createTopic();
 });
 
-// Open Edit Topic Modal & Get Data
+// Open Edit Topic Modal & Get Data - Admin
 $(".admin-edit-btn").on("click", function(event){
     event.preventDefault();
-    var topicID = $(this).attr("id");
-    fillEditModal(topicID);
+    var topicID = $(this).attr("topic-id");
+    fillEditModalAdmin(topicID);
 });
 
-// Update Topic - Edit Event Model
+// Open Edit Topic Modal & Get Data - User
+$(".user-edit-btn").on("click", function(event){
+    event.preventDefault();
+    var topicID = $(this).attr("topic-id");
+    fillEditModalUser(topicID);
+});
+
+// Update Topic - Edit Event Model - Admin
 $("#update-topic-btn").on("click", function(event){
     event.preventDefault();
     editAnyTopic();
 });
 
-// Delete Topic
-$(".admin-delete-btn").on("click", function(event){
+// Update Topic - Edit Event Model - User
+$("#update-open-topic-btn").on("click", function(event){
     event.preventDefault();
-    var topicID = $(this).attr("id");
-    deleteTopic(topicID);
+    editOpenTopic();
 });
 
+// Delete Topic Warning
+$(".admin-delete-btn").on("click", function(event){
+    event.preventDefault();
+    var topicID = $(this).attr("topic-id");
+    $(".confirm-delete-btn").attr("topic-id", topicID);    
+    $("#confirmModal").modal("show");
+});
+
+// Delete Topic
+$(".confirm-delete-btn").on("click", function(event){
+    event.preventDefault();
+    var topicID = $(this).attr("topic-id");
+    console.log("ID Stored:" ,topicID); 
+    deleteTopic(topicID);
+});
 
 // End For Document Ready Function
 });
