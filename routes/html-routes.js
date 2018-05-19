@@ -21,7 +21,6 @@ module.exports = function(app) {
   app.get("/", function (req, res) {
     var hbsObject = {};
 
-   // console.log("inside /: req: " + JSON.stringify(req));
     // If the user already has an account send them to the members page
     // TODO -- if member is of type admin redirect to "/admin" route
     console.log("req.user: " + req.user);
@@ -190,15 +189,6 @@ module.exports = function(app) {
 
 
   // ----------------------------------------------------------------------------
-  // get signup page
-  // ----------------------------------------------------------------------------
-/*   app.get("/signup", function(req, res) {
-    // user can update password, photo or email
-    // res.json();
-    res.render("signup");
-  }); */
-
-  // ----------------------------------------------------------------------------
   // route for editing user profile based on user_id
   // ----------------------------------------------------------------------------
   app.get("/editprofile/:id", function(req, res) {
@@ -216,37 +206,6 @@ module.exports = function(app) {
   // ============================================================================
   // html POST ROUTES
   //
-/*   app.post("/signup", function(req, res) {
-    var email = req.body.email;
-    var user_pw = req.body.user_pw;
-
-    // validate email
-    // on email error return status 404 (with message?)
-
-    // validate password
-    // on password error return status 404 (with message?)
-
-    req.body.email = email;
-    req.body.user_pw = user_pw;
-
-    // user_name, first_name, last_name, email, photo_url, user_pw
-    db.Users.create({
-        "user_name": req.body.user_name,
-        "email": req.body.email,
-        "user_pw": req.body.user_pw,
-        "first_name": req.body.first_name,
-        "last_name": req.body.last_name
-        // ,
-        // "user_photo": req.body.user_photo    
-      }).
-      then(function(newUser) {
-      if (!newUser) res.status(404).end();
-      console.log("user_id " + newUser.id + " created successfully.");
-
-      res.json(newUser);
-    });
-
-  }); */
 
 
   // ============================================================================

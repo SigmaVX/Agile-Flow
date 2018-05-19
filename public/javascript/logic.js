@@ -193,8 +193,8 @@ function claimTopic(topicID){
 
 // Hide Claim Button ON Pending Topics
 function hideClaim(){
-    $(".claim-btn [staus=pending]").hide()
-}
+    $(".claim-btn [status=pending]").hide();
+};
 
 // Post An Answer To Pending
 function postAnswer(){
@@ -327,6 +327,11 @@ $(".confirm-delete-btn").on("click", function(event){
     console.log("ID Stored:" ,topicID); 
     deleteTopic(topicID);
 });
+
+
+
+
+
 
 // End For Document Ready Function
 });

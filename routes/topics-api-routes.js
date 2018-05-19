@@ -156,7 +156,6 @@ module.exports = function(app) {
       {"where": {"id": topicID}}
     ).then(function(dbTopic) {
       console.log("topic_id " + req.body.id + " updated successfully.");
-
       res.json(dbTopic);
     });
   });
