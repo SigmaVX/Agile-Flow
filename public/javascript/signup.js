@@ -1,6 +1,10 @@
 $(document).ready(function () {
+  
   // hide logout button
-  $("#session-logout").hide();
+  function displayLoginSignupButtons() {
+    $("#session-logout").hide();
+  }
+
 
   // Getting references to our form and input
   var signUpForm = $("#modal-signup-form"),
@@ -93,5 +97,7 @@ $(document).ready(function () {
     $("input#user-password").val("");
     $("input#confirm-password").val("");
   }
+
+  displayLoginSignupButtons();
 
 });
