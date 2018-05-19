@@ -16,12 +16,10 @@ $(document).ready(function() {
   $.get("/api/user_data").then(function(data) {
     var usrImg = $("<img>"),
         userId;
-    console.log("in /api/user_data");
 
     if (!isEmptyObject(data)) {
       // user is signed in
-      console.log("in /api/user_data user is signed in");
-      
+
       initSessionRoutine();
       // prepend an image to user navbar
       usrImg.attr("src", data.photo).
@@ -76,7 +74,7 @@ $(document).ready(function() {
       $("#modalSignup").show();
       $("#session-logout").hide();
 
-      // testing userId value on reload
+      // reload to send back to default public user view
       location.reload();
 
     });
