@@ -181,8 +181,9 @@ function claimTopic(topicID){
     };
 
     console.log(newTopic);
+    
     $.ajax({
-        url: "/api/topics/status",
+        url: "/api/topics/status/"+topicID,
         type: "PUT",
         data: newTopic
     }).then(function(data) {
@@ -191,15 +192,12 @@ function claimTopic(topicID){
     });
 };
 
-// Hide Claim Button ON Pending Topics
-function hideClaim(){
-    $(".claim-btn [status=pending]").hide();
-};
 
 // Post An Answer To Pending
-function postAnswer(){
+function postAnswer(topicID){
 
-    var topicId = $("#user-topic").data("topic-id");
+    console.log("Click Test ID: ", topicID);
+
     var answer = $("#topic_answer").val().trim();
     var answerURL = $("#topic_answer_url").val().trim();
     var answerVideo = $("#topic_video").val().trim();
@@ -208,27 +206,31 @@ function postAnswer(){
     if(answer !== "" && answerVideo !== "" && youTubeCheck === true){
         
         // Modify YouTube URL
-        var rawURL = data[0].topic_video;
+        // var rawURL = data[0].topic_video;
+        var rawURL = answerVideo;
         var spot = rawURL.lastIndexOf("/");
         var cleanURL = rawURL.slice(spot);
         var fixedURL = "https://www.youtube.com/embed"+cleanURL;
-        // console.log(cleanURL);
+        console.log(cleanURL);
 
 
         var topicData = {    
             topic_answer: answer,
-            topic_answer_url: fixedURL,
-            topic_video: answerVideo,
-            topic_state: "Closed"
+            topic_answer_url: answerURL,
+            topic_video: fixedURL,
+            topic_state: "closed",
+            id: topicID
         };
 
+        console.log(topicData);
+
         $.ajax({
-            url: "/api/topics/"+topicId,
+            url: "/api/topics/status/"+topicID,
             type: "PUT",
             data: topicData
         }).then(function(data) {
             console.log("Data Stored: ", data);
-            location.reload();
+            // location.reload();
         });
 
     } else {
@@ -239,28 +241,23 @@ function postAnswer(){
 };
 
 // Cancel A Pending Answer
-function cancelPending(){
-
-    // This assumes the user has their pending topic saved to the DOM with a user-topic ID
-    // Assumes we will use the data method to store user id and topic-id
-    var topicId = $("#user-topic").data("topic-id");
-    var userId = $("#user").data("user-id");
+function removeTopic(topicID){
     
     var userCancels = {
-        topic_state: "Open",
-        topic_assigned_to: null 
+        topic_state: "open",
+        topic_assigned_to: null,
+        id: topicID 
     };
 
     $.ajax({
-        url: "/api/topics/"+topicId+"/"+userId,
+        url: "/api/topics/status/"+topicID,
         type: "PUT",
-        data: userCancel
+        data: userCancels
     }).then(function(data) {
         console.log("Data Stored: ", data);
         location.reload();
     });
-
-}
+};
     
 
 // Event Listeners
@@ -274,10 +271,26 @@ $(".claim-btn").on("click", function(event){
     claimTopic(topicID);
 });
 
-// Post Answer
-$("#answer-topic-btn").on("click", function(event){
+// Show Post Answer Modal & Save ID
+$(".answer-btn").on("click", function(event){
     event.preventDefault();
-    postAnswer();
+    var topicID = $(this).attr("topic-id");
+    $("#update-btn").attr("topic-id", topicID);
+    $("#answerModal").modal("show");
+});
+
+// Remove A Claimed Topic 
+$(".remove-btn").on("click", function(event){
+    event.preventDefault();
+    var topicID = $(this).attr("topic-id");
+    removeTopic(topicID);
+});
+
+// Post Answer From Modal
+$("#update-btn").on("click", function(event){
+    event.preventDefault();
+    var topicID = $(this).attr("topic-id");
+    postAnswer(topicID);
 });
 
 // Add New Topic - Admin Page
@@ -329,9 +342,21 @@ $(".confirm-delete-btn").on("click", function(event){
 });
 
 
+// Run On Page Load
+// ====================================================================
+    
+// Hide Claim Button ON Pending Topics
+    function hideClaim(){
+        $("[status=pending]").hide();  
+    };
 
+    hideClaim();
 
 
 
 // End For Document Ready Function
 });
+
+
+
+// check claim open topic and remove pending

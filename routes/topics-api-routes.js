@@ -21,7 +21,7 @@ module.exports = function(app) {
   // ----------------------------------------------------------------------------
   // get specific topic by topicId req.param
   // ----------------------------------------------------------------------------
-  app.get("/api/topics/:topicId", function(req, res) {
+  app.get("/api/topics/one/:topicId", function(req, res) {
     db.Topics.findAll({"where": {"id": req.params.topicId}}).
     then(function (topicData) {
       // return 404 if no row was found, this means topicId does not exist
@@ -34,7 +34,7 @@ module.exports = function(app) {
   // ----------------------------------------------------------------------------
   // get open topics by topic state
   // ----------------------------------------------------------------------------
-  app.get("/api/topics/:topic_state", function(req, res) {
+  app.get("/api/topics/one/:topic_state", function(req, res) {
     var topicState = req.params.state.toString();
 
     db.Topics.findAll({"where": {"topic_state": topicState}}).
@@ -52,8 +52,8 @@ module.exports = function(app) {
   //
 
   // ----------------------------------------------------------------------------
-  // post topics when a topic is created
-  //   make sure that the topic fills in the created_by field, based on the
+  //  post topics when a topic is created
+  //  make sure that the topic fills in the created_by field, based on the
   //  the user_id that effectively created the topic
   // ----------------------------------------------------------------------------
   app.post("/api/topics", function(req, res) {
@@ -142,50 +142,50 @@ module.exports = function(app) {
   // ----------------------------------------------------------------------------
   // put route for updating topic status
   // ----------------------------------------------------------------------------
-  app.put("/api/topics/status", function(req, res) {
+  // app.put("/api/topics/status", function(req, res) {
 
-    var topicID = parseInt(req.body.id);
+  //   var topicID = parseInt(req.body.id);
 
-    console.log("put id", req.body.id);
+  //   console.log("put id", req.body.id);
 
-    db.Topics.update(
-      {
-        "topic_state": req.body.topic_state,
-        "topic_assigned_to": req.body.topic_assigned_to 
-      },
-      {"where": {"id": topicID}}
-    ).then(function(dbTopic) {
-      console.log("topic_id " + req.body.id + " updated successfully.");
-      res.json(dbTopic);
-    });
-  });
-
-
+  //   db.Topics.update(
+  //     {
+  //       "topic_state": req.body.topic_state,
+  //       "topic_assigned_to": req.body.topic_assigned_to 
+  //     },
+  //     {"where": {"id": topicID}}
+  //   ).then(function(dbTopic) {
+  //     console.log("topic_id " + req.body.id + " updated successfully.");
+  //     res.json(dbTopic);
+  //   });
+  // });
 
 
   // ----------------------------------------------------------------------------
   // put update route for changing topic states
   // ----------------------------------------------------------------------------
-  app.put("/api/topics/:topic_id", function(req, res) {
+  app.put("/api/topics/status/:topic_id", function(req, res) {
     var topicId = parseInt(req.params.topic_id, 10),
         topicState = req.body.topic_state,
         userId = parseInt(req.body.user_id, 10),
         updateObj = {};
 
-    console.log("update topic state, current state: " + topicState);
-    // build the topic id object depending on whether it is an 'open' or
-    // pending object
+    console.log("Update topic state: " + topicState);
+    // build the topic id object depending on whether it is an 'open', 'pending', or 'closed' topic 
     switch (topicState) {
       case "open":
-        // change state to pending and 'assign user' to topic
         updateObj = {
-          topic_assigned_to: userId,
-          topic_state: "pending"
+          topic_assigned_to: null,
+          topic_state: "open"
         };
         break;
       case "pending":
-        // change state to 'closed', and update topic object in database with
-        // topic video, topic answer text, and topic answer url
+        updateObj = {
+          topic_assigned_to: req.body.topic_assigned_to,
+          topic_state: "pending"
+        };
+        break;
+      case "closed":
         updateObj = {
           topic_video: req.body.topic_video,
           topic_answer: req.body.topic_answer,
