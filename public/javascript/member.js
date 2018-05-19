@@ -42,6 +42,11 @@ $(document).ready(function() {
 
       // display user email
       $("#appuser-name").html(data.email);
+    } // temporary fix to hardcode user id as 1
+    else {
+      $("#user").data("data-id", 1);
+      userId = $("#user").data("data-id");
+      console.log("userId: " + userId);
     }
 
   });
