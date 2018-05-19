@@ -36,7 +36,7 @@ function createTopic(){
 
 
 // Fill Values In Edit Modal - For Admin
-function fillEditModal(topicID){
+function fillEditModalAdmin(topicID){
 
     $.ajax({
         url: "/api/topics/"+topicID,
@@ -52,6 +52,23 @@ function fillEditModal(topicID){
         $("#update-topic-btn").attr("data-id", topicID);
     });
     $("#editModal").modal("show");
+};
+
+
+// Fill Values In Edit Modal - For User
+function fillEditModalUser(topicID){
+
+    $.ajax({
+        url: "/api/topics/"+topicID,
+        type: "GET"
+    }).then(function(data) {
+        console.log("Data Stored: ", data);
+        console.log("data ", data[0].topic_title);
+        $("input[id='topic_title']").val(data[0].topic_title);
+        $("textarea[id='topic_body']").val(data[0].topic_body);
+        $("#update-topic-btn").attr("data-id", topicID);
+    });
+    $("#userEditModal").modal("show");
 };
 
 
@@ -106,22 +123,26 @@ function editAnyTopic(){
 // Update Open Topic - For User
 function editOpenTopic(){
 
-    var userId = $("#user").data("user-id");
-    var topicTitle = $("#topic_title").val().trim();
-    var topicBody = $("#topic_body").val().trim();
+    var userId = $("#user").attr("data-id");
+    var topicID = $("#update-topic-btn").attr("data-id");
+    
+    var topicTitle = $("input[id='topic_title']").val().trim();
+    var topicBody = $("textarea[id='topic_body']").val().trim();
     var titleLength = topicTitle.length;
-    var bodyLength = topicBody.lenght;
+    var bodyLength = topicBody.length;
+    console.log("Topic Body and Title:" ,bodyLength, titleLength, userId);
 
     if(topicTitle !== "" && topicBody !== "" && titleLength < 101 && bodyLength < 281){
 
         var newTopic = {
             topic_title: topicTitle,
             topic_body: topicBody,
-            topic_created_by: userId
+            id: topicID
         };
 
+        console.log(newTopic);
         $.ajax({
-            url: "/api/topics",
+            url: "/api/topics/open",
             type: "PUT",
             data: newTopic
         }).then(function(data) {
@@ -134,33 +155,49 @@ function editOpenTopic(){
         $("#modal-title").text("Please Check Your Title And Description");
         $("#modal-body").text("A title and description are required and must be less than 100 and 280 characters, respectively.");
     }
-
 }
 
 
 // Delete Topic
 function deleteTopic(topicID){
+    $.ajax({
+        url: "/api/topics/"+topicID,
+        type: "DELETE",
+    }).then(function(data) {
+        console.log("Data Stored: ", data);
+        // location.reload();
+    });        
+};
 
-    $("#confirmModal").modal("show");
+// Claim An Open Topic
+function claimTopic(topicID){
 
-    $("#confirm-delete-btn").on("click", function(Event){
-        event.preventDefault();
+    var userId = $("#user").data("user-id");
 
-        $.ajax({
-            url: "/api/topics/"+topicID,
-            type: "DELETE",
-        }).then(function(data) {
-            console.log("Data Stored: ", data);
-            location.reload();
-        });        
+    var newTopic = {
+        topic_assigned_to: userId,
+        topic_state: "pending",
+        id: topicID
+    };
+
+    console.log(newTopic);
+    
+    $.ajax({
+        url: "/api/topics/status/"+topicID,
+        type: "PUT",
+        data: newTopic
+    }).then(function(data) {
+        console.log("Data Stored: ", data);
+        location.reload();
     });
 };
 
 
 // Post An Answer To Pending
-function postAnswer(){
+function postAnswer(topicID){
 
-    var topicId = $("#user-topic").data("topic-id");
+    console.log("Click Test ID: ", topicID);
+
     var answer = $("#topic_answer").val().trim();
     var answerURL = $("#topic_answer_url").val().trim();
     var answerVideo = $("#topic_video").val().trim();
@@ -169,27 +206,31 @@ function postAnswer(){
     if(answer !== "" && answerVideo !== "" && youTubeCheck === true){
         
         // Modify YouTube URL
-        var rawURL = data[0].topic_video;
+        // var rawURL = data[0].topic_video;
+        var rawURL = answerVideo;
         var spot = rawURL.lastIndexOf("/");
         var cleanURL = rawURL.slice(spot);
         var fixedURL = "https://www.youtube.com/embed"+cleanURL;
-        // console.log(cleanURL);
+        console.log(cleanURL);
 
 
         var topicData = {    
             topic_answer: answer,
-            topic_answer_url: fixedURL,
-            topic_video: answerVideo,
-            topic_state: "Closed"
+            topic_answer_url: answerURL,
+            topic_video: fixedURL,
+            topic_state: "closed",
+            id: topicID
         };
 
+        console.log(topicData);
+
         $.ajax({
-            url: "/api/topics/"+topicId,
+            url: "/api/topics/status/"+topicID,
             type: "PUT",
             data: topicData
         }).then(function(data) {
             console.log("Data Stored: ", data);
-            location.reload();
+            // location.reload();
         });
 
     } else {
@@ -200,39 +241,56 @@ function postAnswer(){
 };
 
 // Cancel A Pending Answer
-function cancelPending(){
-
-    // This assumes the user has their pending topic saved to the DOM with a user-topic ID
-    // Assumes we will use the data method to store user id and topic-id
-    var topicId = $("#user-topic").data("topic-id");
-    var userId = $("#user").data("user-id");
+function removeTopic(topicID){
     
     var userCancels = {
-        topic_state: "Open",
-        topic_assigned_to: null 
+        topic_state: "open",
+        topic_assigned_to: null,
+        id: topicID 
     };
 
     $.ajax({
-        url: "/api/topics/"+topicId+"/"+userId,
+        url: "/api/topics/status/"+topicID,
         type: "PUT",
-        data: userCancel
+        data: userCancels
     }).then(function(data) {
         console.log("Data Stored: ", data);
         location.reload();
     });
-
-}
+};
     
-
-
-
 
 // Event Listeners
 // ====================================================================
 
-$("#answer-topic-btn").on("click", function(event){
+//  Claim An Open Topic
+$(".claim-btn").on("click", function(event){
     event.preventDefault();
-    postAnswer();
+    var topicID = $(this).attr("topic-id");
+    console.log("test", topicID);
+    claimTopic(topicID);
+});
+
+// Show Post Answer Modal & Save ID
+$(".answer-btn").on("click", function(event){
+    event.preventDefault();
+    var topicID = $(this).attr("topic-id");
+    $("#update-btn").attr("topic-id", topicID);
+    $("#answerModal").modal("show");
+});
+
+// Remove A Claimed Topic 
+$(".remove-btn").on("click", function(event){
+    event.preventDefault();
+    var topicID = $(this).attr("topic-id");
+    removeTopic(topicID);
+});
+
+// Post Answer From Modal
+$("#update-btn").on("click", function(event){
+    event.preventDefault();
+    var topicID = $(this).attr("topic-id");
+    postAnswer(topicID);
 });
 
 // Add New Topic - Admin Page
@@ -241,26 +299,64 @@ $("#add-topic-btn").on("click", function(event){
     createTopic();
 });
 
-// Open Edit Topic Modal & Get Data
+// Open Edit Topic Modal & Get Data - Admin
 $(".admin-edit-btn").on("click", function(event){
     event.preventDefault();
-    var topicID = $(this).attr("id");
-    fillEditModal(topicID);
+    var topicID = $(this).attr("topic-id");
+    fillEditModalAdmin(topicID);
 });
 
-// Update Topic - Edit Event Model
+// Open Edit Topic Modal & Get Data - User
+$(".user-edit-btn").on("click", function(event){
+    event.preventDefault();
+    var topicID = $(this).attr("topic-id");
+    fillEditModalUser(topicID);
+});
+
+// Update Topic - Edit Event Model - Admin
 $("#update-topic-btn").on("click", function(event){
     event.preventDefault();
     editAnyTopic();
 });
 
-// Delete Topic
+// Update Topic - Edit Event Model - User
+$("#update-open-topic-btn").on("click", function(event){
+    event.preventDefault();
+    editOpenTopic();
+});
+
+// Delete Topic Warning
 $(".admin-delete-btn").on("click", function(event){
     event.preventDefault();
-    var topicID = $(this).attr("id");
+    var topicID = $(this).attr("topic-id");
+    $(".confirm-delete-btn").attr("topic-id", topicID);    
+    $("#confirmModal").modal("show");
+});
+
+// Delete Topic
+$(".confirm-delete-btn").on("click", function(event){
+    event.preventDefault();
+    var topicID = $(this).attr("topic-id");
+    console.log("ID Stored:" ,topicID); 
     deleteTopic(topicID);
 });
 
 
+// Run On Page Load
+// ====================================================================
+    
+// Hide Claim Button ON Pending Topics
+    function hideClaim(){
+        $("[status=pending]").hide();  
+    };
+
+    hideClaim();
+
+
+
 // End For Document Ready Function
 });
+
+
+
+// check claim open topic and remove pending

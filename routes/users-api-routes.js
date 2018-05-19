@@ -180,7 +180,6 @@ module.exports = function(app) {
 
       // TODO: check if email already exists in database
       db.Users.findOne({
-        // "where": {email: fields.userName}
         "where": {email: fields.email}
       }).then(function(dbUsers){
         if (dbUsers) {

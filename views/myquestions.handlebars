@@ -1,0 +1,173 @@
+
+<div class="container-fluid">
+    <div class="row jumbotron text-center">
+        <h1 class="col-12">My Questions</h1>
+        <h2>Total Votes: </h2>
+    </div>
+</div>
+
+
+{{!-- Open User Questions --}}
+<h2 class="col-12" style="text-align:center;">My Unanswered Questions</h2>
+<div class="row">
+    {{#each openUser}}
+    <div class="col-12 col-md-8">
+        <h5 id="topic-title-{{this.id}}">{{this.topic_title}}</h5>
+        <h5>Total Interest: {{this.topic_interest}}</h5>
+        <p id="topic-body-{{this.id}}">{{this.topic_body}}</p>
+    </div>
+    <div class="col-12 col-md-4">
+        <button class="btn btn-block user-edit-btn" topic-id={{this.id}}>Edit</button>
+        <button class="btn btn-block admin-delete-btn" topic-id={{this.id}}>Delete</button>
+    </div>
+    {{/each}}
+</div>
+
+
+{{!-- Pending Questions --}}
+<h2 class="col-12" style="text-align:center;">My Pending Questions</h2>
+<div class="row">
+    {{#each pendingUser}}
+    <div class="col-12 col-md-8">
+        <h5>{{this.topic_title}}</h5>
+        <h5>Total Interest: {{this.topic_interest}}</h5>
+        <p>{{this.topic_body}}</p>
+    </div>
+    <div class="col-12 col-md-4">
+        <button class="btn btn-block answer-btn" topic-id={{this.id}}>Answer</button>
+        <button class="btn btn-block remove-btn" topic-id={{this.id}}>Remove</button>
+    </div>
+    {{/each}}
+</div>
+
+
+{{!-- Old Questions --}}
+<h2 class="col-12" style="text-align:center;">My Answered Questions</h2>
+<div class="container">
+    <div class="row">
+        {{#each closedUser}}
+        <div class="col-12 col-md-8">
+            <h5>{{this.topic_title}}</h5>
+            <h5>Total Votes: {{this.topic_votes}}</h5>
+            <p><strong>Question - </strong>{{this.topic_body}}</p>
+            <p><strong>Answer - </strong>{{this.topic_answer}}</p>
+            <p><strong>Helpful URL - </strong>{{this.topic_answer_url}}</p>
+        </div>
+        <div class="col-12 col-md-4">
+            <iframe class="topic-video" src={{this.topic_video}} alt="Video For Topic"></iframe>
+        </div>
+        {{/each}}
+    </div>
+</div>
+
+
+{{!-- My Answers --}}
+<h2 class="col-12" style="text-align:center;">My Answers</h2>
+<div class="container">
+    <div class="row">
+        {{#each closedAnswers}}
+        <div class="col-12 col-md-8">
+            <h5>{{this.topic_title}}</h5>
+            <h5>Total Votes: {{this.topic_votes}}</h5>
+            <p><strong>Question - </strong>{{this.topic_body}}</p>
+            <p><strong>Answer - </strong>{{this.topic_answer}}</p>
+            <p><strong>Helpful URL - </strong>{{this.topic_answer_url}}</p>
+        </div>
+        <div class="col-12 col-md-4">
+            <iframe class="topic-video" src={{this.topic_video}} alt="Video For Topic"></iframe>
+        </div>
+        {{/each}}
+    </div>
+</div>
+
+
+
+{{!-- Edit Modal --}}
+    <div class="modal fade" id="userEditModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title">Enter Updated Information</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                   <form class="col-12">
+                        <div class="form-group">
+                            <label for="topic_title">Title - Up To 100 Characters</label>
+                            <input type="text" class="form-control" id="topic_title" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="topic_body">Question Description - Up To 250 Characters</label>
+                            <textarea type="text" rows="5" class="form-control" id="topic_body" placeholder=""></textarea>
+                        </div>
+                    </form> 
+                </div>
+                <div class="modal-footer">
+                    <span id="error-txt"></span>
+                    <span id="yt-error-txt"></span>
+                    <button type="submit" class="btn btn-block" id="update-open-topic-btn">Update</button> 
+                    <button type="close" class="btn btn-block" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{{!-- Answer Modal --}}
+    <div class="modal fade" id="answerModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title">Enter Your Answer</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                   <form class="col-12">
+                        <div class="form-group">
+                            <label for="topic_video">YouTube Link</label>
+                            <input type="text" class="form-control" id="topic_video" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="topic_answer_url">Useful Link</label>
+                            <input type="text" class="form-control" id="topic_answer_url" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="topic_answer">Answer</label>
+                            <textarea type="text" rows="5" class="form-control" id="topic_answer" placeholder=""></textarea>
+                        </div>
+                    </form> 
+                </div>
+                <div class="modal-footer">
+                    <span id="error-txt"></span>
+                    <span id="yt-error-txt"></span>
+                    <button type="submit" class="btn btn-block" id="update-btn" data-dismiss="modal" topic-id="">Update</button> 
+                    <button type="close" class="btn btn-block" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{{!-- Remove Modal --}}
+    <div class="modal fade" id="confirmRemove" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirm-modal-title">Confirm Removal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                        Are you sure you want to remove this?  Select 'Remove Topic' below to confirm your selection. 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-block" data-dismiss="modal" id="confirm-delete-btn">Remove Topic</button><br>
+                    <button type="button" class="btn btn-block" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
