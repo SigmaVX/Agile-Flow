@@ -11,16 +11,110 @@
     <script src="https://code.jquery.com/jquery.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 
-     <!-- CSS, Font, & Icon Files --> 
-    <link type="text/css" rel="stylesheet" href="./css/style.css">
-    <!-- CSS, Font, & Icon Files for Admin and User Profile Pages --> 
-    <link type="text/css" rel="stylesheet" href="./css/userprofile.css">
     <!-- Modal CSS --> 
     <link type="text/css" rel="stylesheet" href="./css/modal.css">
+    <!-- User Profile CSS --> 
+    <link type="text/css" rel="stylesheet" href="./css/userprofile.css">
+    <!-- Font Awesome CSS --> 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <!-- CSS, Font, & Icon Files --> 
+    <link type="text/css" rel="stylesheet" href="./css/style.css">
+
 
 </head>
 
     <body>
+
+<!-- Left Navbar -->
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <h3 class="navTitle">Help
+            <span class="titleColor">Flow</span>
+        </h3>
+
+    </div>
+    <ul class="list-unstyled components">
+        <li class="active">
+            <a href="/">Home</a>
+        </li>
+        <li>
+            <a href="#" data-toggle="tooltip" data-placement="top" title="Hooray!">
+                <div class="span4 proj-div" data-toggle="modal" data-target="#at-question">Post a Question</a>
+        </li>
+        <li>
+            <a href="#">Answer a Question</a>
+        </li>
+        <li>
+            <a href="#">Video Tutorials</a>
+        </li>
+        <li>
+            <a href="/admin">Admin</a>
+        </li>
+        <li>
+            <a href="/userprofile">My Stuff</a>
+        </li>
+        <li>
+            <a href="#menu">Trending</a>
+        </li>
+        <li>
+            <a href="#">Latest</a>
+        </li>
+        <li>
+            <a href="#">Most Viewed</a>
+        </li>
+        <li>
+            <a href="#">About</a>
+        </li>
+        <li>
+            <a href="editProfile.html">Settings</a>
+        </li>
+        <li>
+            <a href="#">Logout</a>
+        </li>
+    </ul>
+</nav>
+<!-- Top Navbar -->
+<div id="content">
+    <nav class="navbar navbar-default navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+
+            <div class="navbar-header">
+                <button style="background-color:rgb(99, 162, 124);" type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                    <i class="glyphicon glyphicon-align-left"></i>
+                    <span>Toggle Sidebar</span>
+                </button>
+            </div>
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Features</a>
+                </li>
+            </ul>
+            <button id="modalSignup" type="button" class="btn btn-outline-dark btn-sm mr-2" data-toggle="modal" data-target="#at-signup-filling">Signup</button>
+            <button id="modalLogin" type="button" class="btn btn-outline-dark btn-sm mr-2" data-toggle="modal" data-target="#at-login">Login</button>
+            <button id="session-logout">Logout</button>
+            <div style="width:200px;" class="container" id="user">
+                <h4 style="font-size: 16px; margin-top:15px;" id="appuser-name"></h4>
+            </div>
+
+
+        </div>
+        <a href="#" data-toggle="tooltip" data-placement="top" title="Add a Question!">
+            <div class="span4 proj-div" data-toggle="modal" data-target="#at-question">
+                <img style="width:50px; margin-right:10px; margin-left:20px;" class="popUp" src="./images/add.png" alt="">
+            </div>
+        </a>
+    </nav>
 
     {{!-- Proxy for user profie div  --}}
     {{!-- <div id="user" data-id="3">
@@ -90,44 +184,45 @@
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                 </div>
                                 <div class="modal-body">
-                                    <button class="btn-fb"> <i class="fa fa-fw fa-facebook pull-left" aria-hidden="true"></i> Login with Facebook </button>
+{{!--                                     <button class="btn-fb"> <i class="fa fa-fw fa-facebook pull-left" aria-hidden="true"></i> Login with Facebook </button>
                                     <br>
                                     <button class="btn-gp"> <i class="fa fa-fw fa-google-plus pull-left" aria-hidden="true"></i> Login with Google </button>
                                     <br>
                                     <div class="signup-or-separator">
                                         <span class="h6 signup-or-separator--text">or</span>
                                         <hr>
-                                    </div>
-                                    <form>
+                                    </div> --}}
+                                    <div id="successful-signup"></div>
+                                    <form id="login-form">
                                         <div class="form-group">
-                                            <input type="email" class="form-control-form " id="exampleInputEmaillog" placeholder="Email">
+                                            <input type="email" class="form-control-form " id="login-email" placeholder="Email">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control-form " id="exampleInputPasswordpas" placeholder="Password">
+                                            <input type="password" class="form-control-form " id="login-password" placeholder="Password">
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="checkbox">
+{{!--                                                 <div class="checkbox">
                                                     <label>
                                                         <input type="checkbox"> Remember me
                                                         </label>
-                                                </div>
+                                                </div> --}}
                                             </div>
-                                            <div class="col-md-4 col-md-offset-2">
+{{!--                                             <div class="col-md-4 col-md-offset-2">
                                                 <p class="frgt-pswd" data-toggle="modal" data-dismiss="modal" data-target="#at-reset-pswd">Forgot Password ?</p>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                         <button type="submit" class="btn-lgin">Login</button>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
                                     <div class="row">
-                                        <div class="col-md-6">
+{{!--                                         <div class="col-md-6">
                                             <p class="ta-l">Don't have an account ? </p>
                                         </div>
                                         <div class="col-md-4 col-md-offset-2">
                                             <button class="btn-gst" data-toggle="modal" data-dismiss="modal" data-target="#at-signup">Sign Up </button>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
@@ -176,44 +271,60 @@
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Sign up with <a href="#">Facebook</a> or <a href="#">Google</a></p>
+{{!--                                     <p>Sign up with <a href="#">Facebook</a> or <a href="#">Google</a></p>
                                     <div class="signup-or-separator">
                                         <span class="h6 signup-or-separator--text">or</span>
                                         <hr>
-                                    </div>
-                                    <form>
+                                    </div> --}}
+                                    <form id="modal-signup-form">
                                         <div class="form-group">
-                                            <input type="text" class="form-control-form " id="exampleInputEmaillog" placeholder="Full Name">
+                                            <input type="text" class="form-control-form " id="first-name" placeholder="First Name">
                                         </div>
                                         <div class="form-group">
-                                            <input type="email" class="form-control-form " id="exampleInputEmaillog" placeholder="Email">
+                                            <input type="text" class="form-control-form " id="last-name" placeholder="Last Name">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control-form " id="exampleInputPasswordpas" placeholder="Password">
+                                            <input type="text" class="form-control-form " id="user-name" placeholder="username">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" class="form-control-form " id="user-email" placeholder="Email">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control-form " id="user-password" placeholder="Password">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control-form " id="confirm-password" placeholder="Confirm Password">
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="fileImage">File Image</label>
+                                          <input type="file" class="form-control" id="file-input">
                                         </div>
 
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="checkbox">
-                                                    <label>
+{{!--                                                     <label>
                                                             <input type="checkbox"> I’d like to receive email notifications
-                                                        </label>
+                                                        </label> --}}
                                                 </div>
 
-                                                <p>By signing up, I agree to HELPFLOW'S<a href="#">Terms of Service</a>, and <a href="#">Privacy Policy</a></p>
+{{!--                                                 <p>By signing up, I agree to HELPFLOW'S<a href="#">Terms of Service</a>, and <a href="#">Privacy Policy</a></p> --}}
                                             </div>
+                                        </div>
+                                        <div class="row">
+                                          <div id="signup-error"></div>
                                         </div>
                                         <button type="submit" class="btn-lgin">Signup</button>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
                                     <div class="row">
-                                        <div class="col-md-6">
+{{!--                                         <div class="col-md-6">
                                             <p class="ta-l">Already a Member? </p>
                                         </div>
                                         <div class="col-md-4 col-md-offset-2">
                                             <button class="btn-gst" data-toggle="modal" data-dismiss="modal" data-target="#at-login">Login</button>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
@@ -232,7 +343,7 @@
                                         <p> Enter the email address associated with your account, and we’ll email you a link to reset your password. </p>
                                         <div class="form-group">
 
-                                            <input type="email" class="form-control-form " id="exampleInputEmaillog" placeholder="Email">
+                                            <input type="email" class="form-control-form " id="email-address" placeholder="Email">
                                         </div>
                                     </form>
                                 </div>
@@ -276,7 +387,7 @@
                                     <form>
                                         <div class="form-group">
                                             <h1>Post a Question</h1>
-                                            <input type="text" class="form-control-form " id="exampleInputEmaillog" placeholder="Enter Your Question ">
+                                            <input type="text" class="form-control-form " id="post-question" placeholder="Enter Your Question ">
                                         </div>
                                     </form>
                                 </div>
@@ -310,13 +421,18 @@
     {{!-- CDN and JS Links --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="./javascript/insert_data.js"></script>
     <script src="./javascript/choices.js"></script>
     <script src="./javascript/logic.js"></script>
     <!-- User Profile JS -->
     <script src="./javascript/userprofile.js"></script>
     <!-- Navbar JS -->
     <script src="./javascript/nav.js"></script>
+    <!-- Authentication JS -->
+    <script src="./javascript/signup.js"></script>
+    <script src="./javascript/login.js"></script>
+    <script src="./javascript/member.js"></script>
+    <!-- Card Buttons JS -->
+    <script src="./javascript/cardbtn.js"></script>
 
 
   </body>
