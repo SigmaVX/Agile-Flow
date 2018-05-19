@@ -33,10 +33,11 @@ $(document).ready(function() {
 
       // set logged in user's data attributes
       console.log("data.id: " + data.id);
+      $("#user").data("user-id", data.id);
       $("#user").data("data-id", data.id);
 
       // verify user id number from data attribute
-      userId = $("#user").data("data-id");
+      userId = $("#user").data("user-id");
 
       console.log("verify userId: " + userId);
 
@@ -44,8 +45,9 @@ $(document).ready(function() {
       $("#appuser-name").html(data.email);
     } // temporary fix to hardcode user id as 1
     else {
+      $("#user").data("user-id", 1);
       $("#user").data("data-id", 1);
-      userId = $("#user").data("data-id");
+      userId = $("#user").data("user-id");
       console.log("userId: " + userId);
     }
 
