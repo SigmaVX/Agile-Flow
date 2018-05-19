@@ -105,7 +105,7 @@ module.exports = function(app) {
   // ----------------------------------------------------------------------------
   // get admin page information
   // ----------------------------------------------------------------------------
-  app.get("/admin", function (req, res) {
+  app.get("/admin", isAuthenticated, function (req, res) {
     var hbsObject = {};
 
     db.Topics.findAll({"where": {"topic_state": "open"}, "order": [["created_at", "DESC"]]}).
@@ -117,7 +117,7 @@ module.exports = function(app) {
       then(function (pendingData) {
         if (!pendingData) res.status(404).end();
         hbsObject.pending = pendingData;
-      
+    
         db.Topics.findAll({"where": {"topic_state": "closed"}, "order": [["created_at", "DESC"]]}).
           then(function (closedData) {
           if (!closedData) res.status(404).end();
@@ -133,6 +133,8 @@ module.exports = function(app) {
         });
       });
     });
+    // a user who is not authenticated as admin will get redirected to admin
+    res.render("index");
   });
 
 
