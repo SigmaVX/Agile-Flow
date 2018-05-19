@@ -32,14 +32,14 @@ $(document).ready(function() {
       $("#user-image").prepend(usrImg);
 
       // set logged in user's data attributes
-      console.log("data.id: " + data.id);
+      // console.log("data.id: " + data.id);
       $("#user").data("user-id", data.id);
       $("#user").data("data-id", data.id);
 
       // verify user id number from data attribute
       userId = $("#user").data("user-id");
 
-      console.log("verify userId: " + userId);
+      // console.log("verify userId: " + userId);
 
       // display user email
       $("#appuser-name").html(data.email);
@@ -48,7 +48,6 @@ $(document).ready(function() {
       $("#user").data("user-id", 1);
       $("#user").data("data-id", 1);
       userId = $("#user").data("user-id");
-      console.log("userId: " + userId);
     }
 
   });
@@ -60,7 +59,6 @@ $(document).ready(function() {
     event.preventDefault();
 
     $.get("/logout").then(function(data) {
-      console.log("in /logout");
 
       // empty user name area
       $("#appuser-name").empty();

@@ -14,7 +14,6 @@ function loadChoices(){
         // console.log("Interest Data:" , data);
             
             // Loop through choices data to change topics to true
-            console.log("data.choices.length: " + data.choices.length);
             for (var i = 0; i < data.choices.length; i++){
                 // console.log("Topic Picked For Loop Test: ", data.choices[i].topic_id);
                 $("#user-interest-"+data.choices[i].topic_id).text("I'm Interested");
@@ -46,8 +45,6 @@ function answerVote(vote_state, topic_id){
     var voteState = vote_state;
     var topicId = parseInt(topic_id);
     var userId = parseInt($("#user").data("data-id"), 10);
-    console.log("answerVote() user id" + userId);
-
 
     // Pull total vote for this topic
     $.ajax({
@@ -204,7 +201,6 @@ $(".interest-btn").on("click", function(event){
     // console.log("got click");
     var interest_state = $(this).attr("interest-state");
     var topic_id = parseInt($(this).attr("topic-id"));
-    console.log("in .interest-btn: topic_id: " + topic_id);
     interestVote(interest_state, topic_id);
 });
 
