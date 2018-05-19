@@ -77,12 +77,10 @@ module.exports = function(app) {
     // So we're sending the user back the route to the members page because the redirect will happen on the front end
     // They won't get this or even be able to access this page if they aren't authed
     console.log("logged in req.user id: " + req.user.id);
-    // on successful login, route user based on user_rank
-    // res.json("/member");
+    // on successful login, route user is sent to is based on user_rank
     if (req.user.user_rank === "user") {
       console.log("normal user has signed in...");
       res.redirect("/");
-      // res.json("/member");
     } else if (req.user.user_rank === "Admin") {
       console.log("Administrator user has signed in...");
       res.redirect("/admin");
@@ -266,7 +264,8 @@ module.exports = function(app) {
       res.json({
         email: req.user.email,
         id: req.user.id,
-        photo: req.user.user_photo
+        photo: req.user.user_photo,
+        rank: req.user.user_rank
       });
     }
   });

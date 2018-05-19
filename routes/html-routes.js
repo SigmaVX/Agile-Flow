@@ -21,18 +21,7 @@ module.exports = function(app) {
   app.get("/", function (req, res) {
     var hbsObject = {};
 
-    // If the user already has an account send them to the members page
-    // TODO -- if member is of type admin redirect to "/admin" route
-    console.log("req.user: " + req.user);
-/*     if (req.user !== undefined) {
-      // res.redirect("/member");
-      if (req.user.user_rank === "Admin") {
-        res.redirect("/admin");
-      } else if (req.user.user_rank === "user") {
-        res.redirect("/");
-      }
-    } */
-
+    // default visitor sees public topics
     db.Topics.findAll({"where": {"topic_state": {[Op.or]: ["open", "pending"]}}}).
     then(function (topicData) {
       if (!topicData) res.status(404).end();
@@ -106,11 +95,6 @@ module.exports = function(app) {
   });
 
 
-
-
-
-
-
   // ----------------------------------------------------------------------------
   // get navbar (TESTING NAVBAR ROUTE!!!!!!!!)
   // get demouserprofile (TESTING USER PROFILE ROUTE!!!!!!!!!)
@@ -165,13 +149,10 @@ module.exports = function(app) {
   app.get("/admin", isAuthenticated, function (req, res) {
     var hbsObject = {};
 
-    // grab req.user
-    // if req.user.rank == Admin
-    console.log("req.user: " + req.user);
-
-    console.log("Found admin user: " + JSON.stringify(req.user));
+    // first check to see if req.user is not empty
     if (req.user) {
       console.log("user rank: " + req.user.user_rank);
+      // next verify that user is an 'Admin'
       if (req.user.user_rank === "Admin") {
         db.Topics.findAll({"where": {"topic_state": "open"}, "order": [["created_at", "DESC"]]}).
         then(function (openData) {
@@ -182,7 +163,7 @@ module.exports = function(app) {
           then(function (pendingData) {
             if (!pendingData) res.status(404).end();
             hbsObject.pending = pendingData;
-        
+       
             db.Topics.findAll({"where": {"topic_state": "closed"}, "order": [["created_at", "DESC"]]}).
               then(function (closedData) {
               if (!closedData) res.status(404).end();
@@ -219,11 +200,6 @@ module.exports = function(app) {
       res.json(dbUser);
     });
   });
-
-
-  // ============================================================================
-  // html POST ROUTES
-  //
 
 
   // ============================================================================
