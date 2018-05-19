@@ -11,7 +11,7 @@
                     <h5 style="font-size:17px;" >My Interest:
                     <span id="user-interest-{{this.id}}">Not Interested</span>
                     </h5>
-                    <button class="btn btn-block interest-btn" id="interest-btn-{{this.id}}" interest-state="false">Interest</button>
+                    <button class="btn btn-block interest-btn" topic-id={{this.id}} id="interest-btn-{{this.id}}" interest-state="false">Interest</button>
                     {{!-- <div id="target"></div> --}}
                     <button class="btn btn-block details-btn" topic-id={{this.id}}>See Details</button>
                     <button class="btn btn-block claim-btn" status={{this.topic_state}} topic-id={{this.id}}>Claim Topic</button>
