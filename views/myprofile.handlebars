@@ -1,2 +1,46 @@
+{{!-- Proxy for assigned topic div --}}
+<div class="row" id="user-topic">
+  <h3 class="col-12">
+    Update my profile
+  </h3>
+</div>
+  User Information:<br> 
+  <table>
+    <tr>
+      <td>User:</td>
+      <td>{{profile.user_name}}</td>
+    </tr>
+    <tr>
+      <td>Name:</td>
+      <td>{{profile.first_name}}&nbsp;{{profile.last_name}}</td>
+    </tr>
+    <tr>
+      <td>Email:</td>
+      <td>{{profile.email}}</td>
+    </tr>
+  </table>
+  <hr>
+  <form id="myprofile-form">
+{{!--       <div class="form-group">
+        <span class="font-weight-bold">Current Password:</span>
+          <input type="password" class="form-control-form " id="update-password" placeholder="Enter Current Password">
+      </div> --}}
+      <div class="form-group">
+        <span class="font-weight-bold">New Password:</span>
+          <input type="password" class="form-control-form " id="confirm1-update-password" placeholder="New  Password">
+      </div>
+      <div class="form-group">
+        <span class="font-weight-bold">Confirm New Password:</span>
+          <input type="password" class="form-control-form " id="confirm2-update-password" placeholder="Confirm New Password">
+      </div>
+      <div class="form-group">
+        <label for="fileImage">Change Profile Image</label>
+        <input type="file" class="form-control" id="update-file-input">
+      </div>
 
+      <div class="row">
+        <div class="p-3 mb-2 bg-white text-white" id="update-profile-error"></div>
+      </div>
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+  </form>
 
