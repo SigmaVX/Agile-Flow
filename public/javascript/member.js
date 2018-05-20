@@ -10,7 +10,7 @@
 
 $(document).ready(function() {
 
-  var logoutBtn = $("#session-logout");
+  var logoutBtn = $(".session-logout");
 
   // -------------------------------------------------------------------------------------
   // isEmptyObject returns true if object is empty, false otherwise
@@ -86,7 +86,7 @@ $(document).ready(function() {
       // redisplay login and signup buttons on navbar, hide logout button
       $("#modalLogin").show();
       $("#modalSignup").show();
-      $("#session-logout").hide();
+      $(".session-logout").hide();
 
       // reload to send back to default public user view
       location.reload();
@@ -103,7 +103,7 @@ $(document).ready(function() {
     // show logout button, also hide login and signup buttons
     console.log("in initSession Routine()");
     $("#at-login").modal("hide");
-    $("#session-logout").show();
+    $(".session-logout").show();
     $("#modalLogin").hide();
     $("#modalSignup").hide();
 

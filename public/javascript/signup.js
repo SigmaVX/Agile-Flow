@@ -29,7 +29,7 @@ $(document).ready(function () {
   // hide logout button
   //
   function displayLoginSignupButtons() {
-    $("#session-logout").hide();
+    $(".session-logout").hide();
   }
 
   // clear signup success div in login modal

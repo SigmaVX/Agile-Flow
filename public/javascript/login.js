@@ -47,7 +47,7 @@ $(document).ready(function () {
     }).done(function (data) {
        // console.log("login data: " + JSON.stringify(data));
       $("#at-login").modal("hide");
-      $("#session-logout").show();
+      $(".session-logout").show();
       location.reload();
       // If there's an error, log the error
     }).fail(function(xhr, textStatus, err) {
