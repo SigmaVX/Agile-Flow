@@ -12,15 +12,6 @@ $(document).ready(function() {
 
   var logoutBtn = $(".session-logout");
 
-  // -------------------------------------------------------------------------------------
-  // isEmptyObject returns true if object is empty, false otherwise
-  //
-  function isEmptyObject(obj) {
-    return Object.getOwnPropertyNames(obj).length === 0 &&
-    Object.getOwnPropertySymbols(obj).length === 0 &&
-    Object.getPrototypeOf(obj) === Object.prototype;
-  }
-
   // ----------------------------------------------------------------------------------------
   // This function does a GET request to figure out which user is logged in
   // and updates the HTML on the page

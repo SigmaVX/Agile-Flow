@@ -11,29 +11,50 @@
 $(document).ready(function () {
   // Getting references to our form and inputs
   var loginForm = $("#login-form");
+  var loginError = $("login-error");
   var emailInput = $("input#login-email");
   var passwordInput = $("input#login-password");
+  var loginEmailError = $("#login-email-error");
+  var loginPswdError = $("#login-password-error");
+
+  // hide login error divs
+  hideLoginErrorDivs();
+
 
   // --------------------------------------------------------------------------------
   // When the form is submitted, we validate there's an email and password entered
   //
   loginForm.on("submit", function (event) {
+    var validLoginInfo = true;
+
     event.preventDefault();
-    $("#login-error").empty().
-                      removeClass("bg-danger").
-                      addClass("bg-white");
+
+    clearLoginErrorDivs();
+    hideLoginErrorDivs();
 
     var userData = {
       email: emailInput.val().trim(),
       password: passwordInput.val().trim()
     };
 
+    // validation
     if (!userData.email || !userData.password) {
-      return;
+      displayErrorMessage(loginError, "Please enter email and password.");
+      validLoginInfo = false;
+    }
+
+    if (!validEmail(userData.email)) {
+      displayErrorMessage(loginEmailError, "Please enter valid email.");
+      validLoginfInfo = false;
+    }
+
+    if (!validPassword(userData.password)) {
+      displayErrorMessage(loginPswdError, "Password must be at least 7 characters and contain at least one letter and one digit.");
+      validLoginfInfo = false;
     }
 
     // If we have an email and password we run the loginUser function and clear the form
-    loginUser(userData.email, userData.password);
+    if (validLoginInfo) loginUser(userData.email, userData.password);
     clearLoginInfo();
   });
 
@@ -66,5 +87,22 @@ $(document).ready(function () {
     $("input#login-password").val("");
   }
 
+  // ------------------------------------------------------------------------------------------------
+  // clearLoginErrorDivs empties out error validation divs
+  //
+  function clearLoginErrorDivs() {
+    $(loginEmailError, loginPswdError, loginError).removeClass("bg-danger").
+                                                   addClass("bg-white").
+                                                   empty();
+
+  }
+
+  // --------------------------------------------------------------------------------------------------
+  // hide login error divs
+  //
+  function hideLoginErrorDivs() {
+    $(loginEmailError).hide();
+    $(loginPswdError).hide();
+  }
 
 });

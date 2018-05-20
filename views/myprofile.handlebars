@@ -25,17 +25,23 @@
         <span class="font-weight-bold">Current Password:</span>
           <input type="password" class="form-control-form " id="update-password" placeholder="Enter Current Password">
       </div> --}}
-      <div class="form-group">
-        <span class="font-weight-bold">New Password:</span>
-          <input type="password" class="form-control-form " id="confirm1-update-password" placeholder="New  Password">
+      <div class="form-group row">
+          <label for="confirm1-update-password" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">New Password:</label>
+          <input type="password" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="confirm1-update-password" placeholder="New  Password">
       </div>
-      <div class="form-group">
-        <span class="font-weight-bold">Confirm New Password:</span>
-          <input type="password" class="form-control-form " id="confirm2-update-password" placeholder="Confirm New Password">
+      <div class="row">
+        <div class="p-3 mb-2 bg-white text-white" id="update-password-error"></div>
       </div>
-      <div class="form-group">
-        <label for="fileImage">Change Profile Image</label>
-        <input type="file" class="form-control" id="update-file-input">
+      <div class="form-group row">
+          <label for="confirm2-update-password" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">Confirm Password:</label>
+          <input type="password" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="confirm2-update-password" placeholder="Confirm New Password">
+      </div>
+      <div class="row">
+        <div class="p-3 mb-2 bg-white text-white" id="update-confirmpswd-error"></div>
+      </div>
+      <div class="form-group row">
+        <label for="update-file-input"class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">Change Profile Picture:</label>
+        <input type="file" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="update-file-input">
       </div>
 
       <div class="row">
