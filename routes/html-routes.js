@@ -188,42 +188,25 @@ module.exports = function(app) {
 
 
   // ----------------------------------------------------------------------------
-  // route for editing user profile based on user_id
+  // route for editing user profile based on user_id, user must be authenticated
   // ----------------------------------------------------------------------------
-  app.get("/editprofile/:id", function(req, res) {
+  // app.get("/editprofile/:id", function(req, res) {
+  app.get("/myprofile", isAuthenticated, function (req, res) {
     // user can update password, photo or email
+    // hold user info in handlebars object
+    var hbsObject = {};
 
-    db.Users.findOne({"where": {"id": req.params.id}}).
-    then(function(dbUser) {
-      console.log("user profile found successfully.");
+    if (req.user) {
+      console.log("in /myprofile: " + req.user.id);
+      db.Users.findOne({"where": {"id": req.user.id}}).
+      then(function(dbUser) {
+        console.log("user profile found successfully.");
+        hbsObject.profile = dbUser;
+        console.log("hbsObject: " + JSON.stringify(hbsObject));
 
-      res.json(dbUser);
-    });
-  });
-
-
-  // ============================================================================
-  // html UPDATE ROUTES
-  //
-
-  // ----------------------------------------------------------------------------
-  // put route for updating user profile
-  // ----------------------------------------------------------------------------
-  app.put("/editprofile", function(req, res) {
-    // user can update password, photo or email
-
-    // validate email
-
-    // validate password
-
-    db.Users.update(
-      req.body,
-      {"where": {"id": req.body.id}}
-    ).then(function(dbUser) {
-      console.log("user profile updated successfully.");
-
-      res.json(dbUser);
-    });
+        res.render("myprofile", hbsObject);
+      });
+    }
   });
 
 };
