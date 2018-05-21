@@ -1,46 +1,49 @@
 
 
-    <div class="py-5">
-        <h2 class="col-12" style="text-align:center;">Open & PendingTopics</h2>
-        <div class="container">
-            <div class="row hidden-md-up d-flex justify-content-around">
-                {{#each openAndPending}}
-                <div class="card questionCards col-md-2" style="min-width: 250px; width:100%; margin-bottom:2%; padding-left: 0px; padding-right: 0px;" >
-                    <h5 style="font-size:23px;" class="card-title">{{this.topic_title}}</h5>
-                    <h5 style="font-size:17px;">Total Interest: {{this.topic_interest}}</h5>
-                    <h5 style="font-size:17px;">My Interest:
-                    <span id="user-interest-{{this.id}}">Not Interested</span>
-                    </h5>
-                    <button class="btn btn-block interest-btn" topic-id={{this.id}} id="interest-btn-{{this.id}}" interest-state="false">Interest</button>
-                    {{!-- <div id="target"></div> --}}
-                    <button class="btn btn-block details-btn" topic-id={{this.id}}>See Details</button>
-                    <button class="btn btn-block claim-btn" status={{this.topic_state}} topic-id={{this.id}}>Claim Topic</button>
-                </div>
-                {{/each}}
+ 
+    <h2 class="col-12" id="open-topics">Open & Pending Questions</h2>
+    <div class="container">
+        <div class="row justify-content-around">
+            {{#each openAndPending}}
+            <div class="card questionCards col-md-2 {{this.topic_state}}">
+                <h5 class="card-title">{{this.topic_title}}</h5>
+                <h6 class="question-state">Question Status: {{this.topic_state}}</h6>
+                <h6 class="total-votes">Total Interest: {{this.topic_interest}}</h6>
+                {{!-- <h5>My Interest:
+                <span id="user-interest-{{this.id}}">Not Interested</span>
+                </h5> --}}
+                <button class="btn btn-block interest-btn" topic-id={{this.id}} id="interest-btn-{{this.id}}" interest-state="false">Interest</button>
+                {{!-- <div id="target"></div> --}}
+                <button class="btn btn-block details-btn" topic-id={{this.id}}>See Details</button>
+                <button class="btn btn-block claim-btn" status={{this.topic_state}} topic-id={{this.id}}>Claim Topic</button>
             </div>
+            {{/each}}
         </div>
     </div>
+
    
 
-    <div class="py-5">
-        <h2 class="col-12" style="text-align:center;">Closed Topics</h2>
-        <div class="container">
-            <div class="row hidden-md-up d-flex justify-content-around">  
-            {{#each closed}}
-                <div class="card col-md-2" style="min-width: 220px; width:100%; padding-left: 0px; padding-right: 0px;"  >
-                    <iframe class="card-img-top" src={{this.topic_video}} alt="Video For Topic"></iframe>
-                    <div class="card-body">
-                        <h5 style="font-size:17px;" class="card-title">{{this.topic_title}}</h5>
-                        <h5 style="font-size:15px;">Total Votes: {{this.topic_votes}} |
-                        <span id="vote-text-{{this.id}}">I Did Not Vote</span>
-                        </h5>
+    <h2 class="col-12" id="closed-topics">Answers</h2>
+    <div class="container">
+        <div class="row text-center justify-content-around">  
+        {{#each closed}}
+            <div class="card answerCards my-1 col-md-4">
+                <iframe class="card-img-top card-video" src={{this.topic_video}} alt="Video For Topic"></iframe>
+                <div class="card-body">
+                    <h5 class="card-title">{{this.topic_title}}</h5>
+                    <h6 class="total-votes">Total Votes: {{this.topic_votes}}
+                    {{!-- <span id="vote-text-{{this.id}}">I Did Not Vote</span> --}}
+                    </h6>
+                    <div class="align-bottom">
                         <button class="btn btn-block details-btn" topic-id={{this.id}}>See Details</button>
                         <button class="btn btn-block vote-btn" id="vote-btn-{{this.id}}" topic-id={{this.id}} vote-state="false">Change Vote</button>
                     </div>
                 </div>
-            {{/each}}
             </div>
+        {{/each}}
         </div>
     </div>
+    
+
   
 

@@ -165,7 +165,7 @@ function deleteTopic(topicID){
         type: "DELETE",
     }).then(function(data) {
         console.log("Data Stored: ", data);
-        // location.reload();
+        location.reload();
     });        
 };
 
@@ -181,7 +181,7 @@ function claimTopic(topicID){
     };
 
     console.log(newTopic);
-    
+
     $.ajax({
         url: "/api/topics/status/"+topicID,
         type: "PUT",
@@ -263,6 +263,26 @@ function removeTopic(topicID){
 // Event Listeners
 // ====================================================================
 
+// Sidebar collapse functionality
+$('#sidebarCollapse').on('click', function () {
+    $('#sidebar, #content').toggleClass('active');
+    $('.collapse.in').toggleClass('in');
+    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+});
+
+// Post A Question - Show Modal
+$("#post-link").on("click", function(event){
+    event.preventDefault();
+    console.log("click test");
+    $("#postModal").modal("show");
+});
+
+// Add New Topic - Admin & User Page
+$(".add-topic").on("click", function(event){
+    event.preventDefault();
+    createTopic();
+});
+
 //  Claim An Open Topic
 $(".claim-btn").on("click", function(event){
     event.preventDefault();
@@ -291,12 +311,6 @@ $("#update-btn").on("click", function(event){
     event.preventDefault();
     var topicID = $(this).attr("topic-id");
     postAnswer(topicID);
-});
-
-// Add New Topic - Admin Page
-$("#add-topic-btn").on("click", function(event){
-    event.preventDefault();
-    createTopic();
 });
 
 // Open Edit Topic Modal & Get Data - Admin
