@@ -76,8 +76,15 @@ module.exports = function(app) {
     // Since we're doing a POST with javascript, we can't actually redirect that post into a GET request
     // So we're sending the user back the route to the members page because the redirect will happen on the front end
     // They won't get this or even be able to access this page if they aren't authed
-    // console.log("req.user: " + req.user);
-    res.json("/member");
+    console.log("logged in req.user id: " + req.user.id);
+    // on successful login, route user is sent to is based on user_rank
+    if (req.user.user_rank === "user") {
+      console.log("normal user has signed in...");
+      res.redirect("/");
+    } else if (req.user.user_rank === "Admin") {
+      console.log("Administrator user has signed in...");
+      res.redirect("/admin");
+    }
   });
 
 
@@ -95,46 +102,6 @@ module.exports = function(app) {
 
     // Create a new instance of formidable to handle the request info
     var form = new formidable.IncomingForm();
-
-    // =============================================================================
-    // helper validation functions
-    // -----------------------------------------------------------------------------
-    // hasAlpha() checks if a string has at least one alphabetic character, lower
-    // or upper case
-    //
-    function hasAlpha(str) {
-      return str.match(/[a-z]/i);
-    }
-
-    // -----------------------------------------------------------------------------
-    // hasNum() checks if a string has at least one numeric character
-    //
-    function hasNum(str) {
-      return str.match(/\d+/g);
-    }
-
-    // -----------------------------------------------------------------------
-    // validateEmail() checks if an email is valid
-    // source code for regular expression:
-    // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript/1373724#1373724
-    //
-    function validateEmail(email) {
-      var re = /^(?:[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
-
-      return re.test(email);
-    }
-
-    // -----------------------------------------------------------------------------
-    // validatePassword() checks for password validity, the password must
-    // be greater than MinPassLength, have alpha characters and at least one digit
-    //
-    function validatePassword(pswd) {
-      if (pswd.length >= MIN_PASS_LENGTH && hasAlpha(pswd) && hasNum(pswd)) {
-        return true;
-      }
-
-      return false;
-    }
 
     // parse information for form fields and incoming files
     form.parse(req, function (err, fields, files) {
@@ -205,9 +172,12 @@ module.exports = function(app) {
               email: fields.email,
               user_pw: fields.password,
               user_photo: result.secure_url
+              // creating following lines to check admin functionality
+              ,
+              user_rank: "Admin"
             }).then(function () {
-              // res.json(true);
-              res.json("/");
+              res.json(true);
+              // res.json("/");
             }).catch(function (err) {
               console.log(err);
               res.json(err);
@@ -251,11 +221,145 @@ module.exports = function(app) {
     } else {
       // Otherwise send back the user's email and id
       // Sending back a password, even a hashed password, isn't a good idea
-      res.json({
-        email: req.user.email,
-        id: req.user.id,
-        photo: req.user.user_photo
-      });
+      db.Users.findById(req.user.id).then(function(dbUser) {
+        if (!dbUser) res.status(404).end();
+        console.log("in /api/new_photo: " + dbUser.user_photo);
+        // photo is set to dbUser.user_photo in order to handle an authenticated
+        // user changing profile image since req.user.user_photo holds the photo
+        // value retrieved at time of login
+        res.json({
+          email: req.user.email,
+          id: req.user.id,
+          photo: dbUser.user_photo,
+          rank: req.user.user_rank
+        });
+      });     
     }
   });
+
+  // ----------------------------------------------------------------------------
+  // Route for getting new photo
+  // ----------------------------------------------------------------------------
+  app.get("/api/new_photo", function (req,res) {
+    db.Users.findById(req.user.id).then(function(dbUser) {
+      if (!dbUser) res.status(404).end();
+      console.log("in /api/new_photo: " + dbUser.user_photo);
+      res.json({photo: dbUser.user_photo});
+    });
+  });
+
+  // ----------------------------------------------------------------------------
+  // workaround put route for updating user profile
+  // ----------------------------------------------------------------------------
+  app.put("/api/updateprofile/user/:id", function(req, res) {
+    // Create a new instance of formidable to handle the request info
+    var form = new formidable.IncomingForm(),
+        idNum = parseInt(req.params.id, 10),
+        validPswd = false,
+        pswdsMatch = false,
+        signupSuccess = false,
+        errorText = "";
+
+    // user can update password or photo
+    console.log("in upate profile users id: " + idNum);
+
+    console.log("myprofile req.body: " + JSON.stringify(req.body));
+
+    form.parse(req, function (err, fields, files) {
+      // validate new password
+      if (validatePassword(fields.newPassword)) {
+        validPswd = true;
+      } else {
+        errorText += "Please enter valid password. Must be at least " +
+                    MIN_PASS_LENGTH +
+                    " characters long and have at least one digit and one alphabetic character.<br />";
+        validPswd = false;
+      }
+
+      // check if to see if newPassword matches confirmNewPassword
+      if (fields.newPassword === fields.confirmNewPassword) {
+        pswdsMatch = true;
+      } else {
+        errorText += "Passwords do not match. Please enter them again.<br />";
+        pswdsMatch = false;
+      }
+
+      signupSuccess = validPswd && pswdsMatch ? true : false;
+
+      if (!signupSuccess) {
+        res.statusMessage = errorText;
+        res.status(400).end();
+      } else if (files.photo) {
+        // upload file to cloudinary, which'll return an object for the new image
+        cloudinary.uploader.upload(files.photo.path, function (result) {
+          console.log(result);
+          // create new user
+          db.Users.update({
+            user_pw: fields.newPassword,
+            user_photo: result.secure_url
+            }, {where: {id: idNum}}).then(function (data) {
+              res.json(true);
+            }).catch(function (err) {
+              console.log(err);
+              res.json(err);
+            });
+          });
+      } else {
+        // no photo updated just update password
+        db.Users.update({
+          user_pw: fields.newPassword
+        }, {where: {id: idNum}}).then(function (data) {
+          res.json(true);
+          // res.redirect(307, "/api/login");
+        }).catch(function (err) {
+          console.log(err);
+          res.json(err);
+          // res.status(422).json(err.errors[0].message);
+        });
+      }
+
+    });
+
+  });
+
+    // =============================================================================
+    // HELPER validation functions
+    // -----------------------------------------------------------------------------
+    // hasAlpha() checks if a string has at least one alphabetic character, lower
+    // or upper case
+    //
+    function hasAlpha(str) {
+      return str.match(/[a-z]/i);
+    }
+
+    // -----------------------------------------------------------------------------
+    // hasNum() checks if a string has at least one numeric character
+    //
+    function hasNum(str) {
+      return str.match(/\d+/g);
+    }
+
+    // -----------------------------------------------------------------------
+    // validateEmail() checks if an email is valid
+    // source code for regular expression:
+    // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript/1373724#1373724
+    //
+    function validateEmail(email) {
+      var re = /^(?:[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
+
+      return re.test(email);
+    }
+
+    // -----------------------------------------------------------------------------
+    // validatePassword() checks for password validity, the password must
+    // be greater than MinPassLength, have alpha characters and at least one digit
+    //
+    function validatePassword(pswd) {
+      if (pswd.length >= MIN_PASS_LENGTH && hasAlpha(pswd) && hasNum(pswd)) {
+        return true;
+      }
+
+      return false;
+    }
+
 };
