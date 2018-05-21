@@ -8,6 +8,7 @@
 
 
 {{!-- Open User Questions --}}
+{{#if openUser}}
 <h2 class="col-12 myq-heading">My Unanswered Questions</h2>
 {{#each openUser}}
 <div class="row myq-rows">
@@ -22,9 +23,11 @@
     </div>
 </div>
 {{/each}}
+{{/if}}
 
 
 {{!-- Pending Questions --}}
+{{#if pendingUser}}
 <h2 class="col-12 myq-heading">My Pending Questions</h2>
 {{#each pendingUser}}
 <div class="row myq-rows">
@@ -39,8 +42,10 @@
     </div>
 </div>
 {{/each}}
+{{/if}}
 
 {{!-- Old Questions --}}
+{{#if closedUser}}
 <h2 class="col-12 myq-heading">My Answered Questions</h2>
 <div class="container">
     {{#each closedUser}}
@@ -61,9 +66,11 @@
     </div>
     {{/each}}
 </div>
+{{/if}}
 
 
 {{!-- My Answers --}}
+{{#if closedAnswers}}
 <h2 class="col-12 myq-heading>My Answers</h2>
 <div class="container">
     {{#each closedAnswers}}
@@ -84,6 +91,7 @@
     </div>
     {{/each}}
 </div>
+{{/if}}
 
 
 
