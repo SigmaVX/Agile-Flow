@@ -14,7 +14,7 @@ passport.use(new LocalStrategy(
   },
   function(email, user_pw, done) {
     // When a user tries to sign in this code runs
-    console.log(email,user_pw);
+    // console.log(email,user_pw);
     db.Users.findOne({
       where: {
         email: email

@@ -198,23 +198,22 @@
                                     </div> --}}
                                     <div id="successful-signup"></div>
                                     <form id="login-form">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control-form " id="login-email" placeholder="Email">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control-form " id="login-password" placeholder="Password">
+                                        <div class="form-group row">
+                                            <label for="login-email" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white  col-form-label">Email:</label>
+                                            <input type="email" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="login-email" placeholder="Email">
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
-{{!--                                                 <div class="checkbox">
-                                                    <label>
-                                                        <input type="checkbox"> Remember me
-                                                        </label>
-                                                </div> --}}
-                                            </div>
-{{!--                                             <div class="col-md-4 col-md-offset-2">
-                                                <p class="frgt-pswd" data-toggle="modal" data-dismiss="modal" data-target="#at-reset-pswd">Forgot Password ?</p>
-                                            </div> --}}
+                                          <div class="p-3 mb-2 bg-white text-white" id="login-email-error"></div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="login-password" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">Password:</label>
+                                            <input type="password" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="login-password" placeholder="Password">
+                                        </div>
+                                        <div class="row">
+                                          <div class="p-3 mb-2 bg-white text-white" id="login-password-error"></div>
+                                        </div>
+                                        <div class="row">
+                                          <div class="p-3 mb-2 bg-white text-white" id="login-error"></div>
                                         </div>
                                         <button type="submit" class="btn-lgin">Login</button>
                                     </form>
@@ -283,27 +282,48 @@
                                         <hr>
                                     </div> --}}
                                     <form id="modal-signup-form">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control-form " id="first-name" placeholder="First Name">
+                                        <div class="form-group row">
+                                            <label for="first-name" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">First Name:</label>
+                                            <input type="text" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="first-name" placeholder="First Name">
                                         </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control-form " id="last-name" placeholder="Last Name">
+                                        <div class="form-group row">
+                                            <label for="last-name" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">Last Name:</label>
+                                            <input type="text" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="last-name" placeholder="Last Name">
                                         </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control-form " id="user-name" placeholder="username">
+                                        <div class="row">
+                                          <div class="p-3 mb-2 bg-white text-white" id="signup-name-error"></div>
                                         </div>
-                                        <div class="form-group">
-                                            <input type="email" class="form-control-form " id="user-email" placeholder="Email">
+                                        <div class="form-group row">
+                                            <label for="user-name" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">User Name:</label>
+                                            <input type="text" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="user-name" placeholder="username">
                                         </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control-form " id="user-password" placeholder="Password">
+                                        <div class="row">
+                                          <div class="p-3 mb-2 bg-white text-white" id="signup-username-error"></div>
                                         </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control-form " id="confirm-password" placeholder="Confirm Password">
+                                        <div class="form-group row">
+                                            <label for="user-email" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">Email:</label>
+                                            <input type="email" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="user-email" placeholder="Email">
                                         </div>
-                                        <div class="form-group">
-                                          <label for="fileImage">File Image</label>
-                                          <input type="file" class="form-control" id="file-input">
+                                        <div class="row">
+                                          <div class="p-3 mb-2 bg-white text-white" id="signup-email-error"></div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="user-password" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">Password:</label>
+                                            <input type="password" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="user-password" placeholder="Password">
+                                        </div>
+                                        <div class="row">
+                                          <div class="p-3 mb-2 bg-white text-white" id="signup-password-error"></div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="confirm-password" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">Confirm Password:</label>
+                                            <input type="password" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="confirm-password" placeholder="Confirm Password">
+                                        </div>
+                                        <div class="row">
+                                          <div class="p-3 mb-2 bg-white text-white" id="signup-confirmpswd-error"></div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="file-input" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">Profile Picture:</label>
+                                          <input type="file" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="file-input">
                                         </div>
 
                                         <div class="row">
@@ -318,7 +338,7 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                          <div id="signup-error"></div>
+                                          <div class="p-3 mb-2 bg-white text-white" id="signup-error"></div>
                                         </div>
                                         <button type="submit" class="btn-lgin">Signup</button>
                                     </form>
@@ -348,6 +368,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <!-- Authentication JS -->
+    <script src="./javascript/validationhelpers.js"></script>
     <script src="./javascript/signup.js"></script>
     <script src="./javascript/login.js"></script>
     <script src="./javascript/member.js"></script>
