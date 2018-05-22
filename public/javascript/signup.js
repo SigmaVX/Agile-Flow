@@ -112,7 +112,7 @@ $(document).ready(function () {
       // append first_name to form
       formData.append("firstName", firstName);
       // append last_name to form
-      formData.append("lastName", lastNameInput);
+      formData.append("lastName", lastName);
       // append email to form
       formData.append("email", userEmail);
       // append password to form (password: '12345')
@@ -266,7 +266,7 @@ $(document).ready(function () {
 
       // If there's an error, handle it by displaying validation error
     }).fail(function(xhr, textStatus, errorThrown) {
-      $("#update-profile-error").removeClass("bg-white").
+      $(updateErrorDiv).show().removeClass("bg-white").
                                  addClass("bg-danger").
                                  html(xhr.statusText);
     });
@@ -325,6 +325,7 @@ $(document).ready(function () {
   // hide update error divs
   //
   function hideUpdateErrorDivs() {
+    $(updateErrorDiv).hide();
     $(updatePasswordError).hide();
     $(updateConfirmPswdError).hide();
   }

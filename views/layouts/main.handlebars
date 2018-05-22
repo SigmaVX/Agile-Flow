@@ -32,9 +32,9 @@
             <span class="titleColor">Flow</span>
         </h3>
     </div>
-    <div class="text-center" id="user" data-id="3">
-        <img class="img-fluid nav-pic" src="https://placem.at/things?w=50&h=50&random=some_seed">
-        <h4 id="appuser-name">Username</h4>
+     <div class="container" id="user" data-id="3"></div>
+        <div id="user-image"></div>
+        <h4 id="appuser-name"></h4>
     </div>
     <ul class="list-unstyled components">
         <li class="active">
@@ -59,10 +59,17 @@
             <a href="/myprofile">My Profile</a>
         </li>
         <li>
-            <a href="#" data-toggle="modal" data-target="#at-signup-filling">Sign-Up</a>
+           <div id="modalSignup">
+                <a href="#" data-toggle="modal" data-target="#at-signup-filling">Sign-Up</a>
+          </div>
         </li>
         <li>
-            <a href="#">Login</a>
+            <div id="modalLogin">
+                <a href="#" data-toggle="modal" data-target="#at-login">Login</a>
+            </div>
+        </li>
+        <li>
+            <a class="session-logout" href="#">Logout</a>
         </li>
         <li>
             <a href="/admin">Admin</a>

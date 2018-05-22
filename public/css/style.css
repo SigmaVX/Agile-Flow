@@ -215,6 +215,11 @@ ul.CTAs a {
   text-align: left;
 }
   
+#appuser-name{
+  font-size: 16px; 
+  margin-top:15px;
+}
+
 #content {
   width: calc(100% - 250px);
   padding: 40px;
@@ -225,6 +230,7 @@ ul.CTAs a {
   right: 0;
   background-color: #cacaca;
 }
+
 #content.active {
   width: 100%;
 }
@@ -239,8 +245,12 @@ ul.CTAs a {
   background: #474b4f;
   color: #fff;
   transition: all 0.3s;
-  border-top-right-radius: 25px;
+  overflow-y: scroll;
 }
+::-webkit-scrollbar { 
+  display: none; 
+}
+
 
 #sidebar.active {
   margin-left: -250px;

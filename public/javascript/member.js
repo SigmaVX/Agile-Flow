@@ -37,6 +37,7 @@ $(document).ready(function() {
       // console.log("data.id: " + data.id);
       $("#user").data("user-id", data.id);
       $("#user").data("data-id", data.id);
+      $("#user").attr("data-id", data.id);
 
       // verify user id number from data attribute
       userId = $("#user").data("user-id");

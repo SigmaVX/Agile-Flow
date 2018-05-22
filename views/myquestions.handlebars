@@ -56,11 +56,11 @@
                 <h6 class="votes" >Total Votes: {{this.topic_votes}} | Total Interest: {{this.topic_interest}}</h6>
                 <p class="topic-body"><strong>Question - </strong>{{this.topic_body}}</p>
                 <p class="topic-body"><strong>Answer - </strong>{{this.topic_answer}}</p>
-                <a class="topic-body" href="{{this.topic_answer_url}}">Helpful URL - {{this.topic_answer_url}}</a>
+                <a class="topic-body" href="{{this.topic_answer_url}}" target="_blank">Helpful URL - {{this.topic_answer_url}}</a>
             </div>
             <div class="col-12 col-md-4">
                 <iframe class="topic-video" src={{this.topic_video}} alt="Video For Topic"></iframe>
-                <button class="btn btn-block details-btn" topic-id={{this.id}}>See Details</button>
+                <button class="btn btn-block details-btn" topic-id="{{this.id}}">See Details</button>
             </div>
         </div>
     </div>
@@ -71,7 +71,7 @@
 
 {{!-- My Answers --}}
 {{#if closedAnswers}}
-<h2 class="col-12 myq-heading>My Answers</h2>
+<h2 class="col-12 myq-heading">My Answers</h2>
 <div class="container">
     {{#each closedAnswers}}
     <div class="row answer-rows">
@@ -81,7 +81,7 @@
                 <h6 class="votes">Total Votes: {{this.topic_votes}} | Total Interest: {{this.topic_interest}}</h6>
                 <p class="topic-body"><strong>Question - </strong>{{this.topic_body}}</p>
                 <p class="topic-body"><strong>Answer - </strong>{{this.topic_answer}}</p>
-                <a class="topic-body" href="{{this.topic_answer_url}}">Helpful URL - {{this.topic_answer_url}}</a>
+                <a class="topic-body" href="{{this.topic_answer_url}}" target="_blank">Helpful URL - {{this.topic_answer_url}}</a>
             </div>
             <div class="col-12 col-md-4">
                 <iframe class="topic-video" src={{this.topic_video}} alt="Video For Topic"></iframe>
