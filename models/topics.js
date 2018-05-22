@@ -1,5 +1,4 @@
 module.exports = function(sequelize, DataTypes) {
-
     var Topics = sequelize.define("Topics", {
 
         topic_title: {
@@ -12,11 +11,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         topic_video: {
             type: DataTypes.STRING,
-            allowNull: false,
-            defaultValue: "https://youtu.be/8AIMskRMxOM",
-            validate: {
-                isUrl: true
-            }
+            allowNull: true,
         },
         topic_answer: {
             type: DataTypes.STRING,
@@ -29,27 +24,55 @@ module.exports = function(sequelize, DataTypes) {
         topic_state: {
             type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: "Open"
+            defaultValue: "open"
         },
         topic_interest: {
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 0
         },
-        topic_votes: {
+        topic_created_by: {
             type: DataTypes.INTEGER,
-            allowNull: false,
-            defaultValue: 0
+            allowNull: true,
         },
         topic_assigned_to: {
             type: DataTypes.INTEGER,
             allowNull: true,
+            defaultValue: null
+        },
+        // maybe add vote_val boolean and interest_val boolean here
+        // ===================================================================================
+        // topic_votes may not be necessary to store here, we'll leave it in for now
+        // ==================================================================================
+        // ==
+        // do 'before hook' to set topic_votes to a function that calculates topic_votes by
+        // doing a query on the choices database
+        // ==
+        topic_votes: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          defaultValue: 0
         }
       },
 
       {
-        freezeTableName: true
+        freezeTableName: true,
+        underscored: true
       });
+
+
+    Topics.associate = function(models) {
+        // Topics have many Users
+        Topics.belongsToMany(models.Users, {
+          through: {
+            model: models.Choices,
+            unique: false
+          },
+          foreignKey: "topic_id",
+          constraints: false
+        });
+    };
+
 
       return Topics;
 

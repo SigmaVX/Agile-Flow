@@ -1,14 +1,392 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Helpflow</title>
+
+     <!-- CDN Links -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+    <!-- Modal CSS --> 
+    <link type="text/css" rel="stylesheet" href="./css/modal.css">
+    <!-- User Profile CSS --> 
+    <link type="text/css" rel="stylesheet" href="./css/userprofile.css">
+    <!-- Font Awesome CSS --> 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <!-- CSS, Font, & Icon Files --> 
+    <link type="text/css" rel="stylesheet" href="./css/style.css">
+
+
 </head>
-<body>
+
+    <body>
+
+<!-- Left Navbar -->
+<nav id="sidebar">
+    <div class="sidebar-header text-center">
+        <h3 class="navTitle">Help
+            <span class="titleColor">Flow</span>
+        </h3>
+    </div>
+     <div class="container" id="user" data-id="3"></div>
+        <div id="user-image"></div>
+        <h4 id="appuser-name"></h4>
+    </div>
+    <ul class="list-unstyled components">
+        <li class="active">
+            <a href="/">Home</a>
+        </li>
+        <li>
+            <a href="#" id="post-link">Post A Question</a>
+        </li>
+        <li>
+            <a href="/myquestions">My Questions</a>
+        </li>
+        <li>
+            <a href="/#open-topics">Open Questions</a>
+        </li>
+        <li>
+            <a href="/#closed-topics">Agile Answers</a>
+        </li>
+        <li>
+            <a href="#">About Helpflow</a>
+        </li>
+        <li>
+            <a href="/myprofile">My Profile</a>
+        </li>
+        <li>
+           <div id="modalSignup">
+                <a href="#" data-toggle="modal" data-target="#at-signup-filling">Sign-Up</a>
+          </div>
+        </li>
+        <li>
+            <div id="modalLogin">
+                <a href="#" data-toggle="modal" data-target="#at-login">Login</a>
+            </div>
+        </li>
+        <li>
+            <a class="session-logout" href="#">Logout</a>
+        </li>
+        <li>
+            <a href="/admin">Admin</a>
+        </li>
+    </ul>
+</nav>
+
+
     
+<!-- Top Navbar -->
+<div id="content">
+
+    {{!-- <div class="navbar-header">
+        <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+            <i class="glyphicon glyphicon-align-left"></i>
+            <span>Toggle Sidebar</span>
+        </button>
+    </div> --}}
+
+
     {{{ body }}}
 
-</body>
+
+    {{!-- Footer --}}
+    <footer class="footer container mt-3">
+        <div class="row text-center">
+            <h5 class="col-12">© Copyright 2018 FET</h5>
+        </div>
+    </footer>
+
+</div>
+
+    <!-- Modal Section Start -->
+
+    <!-- Modal - Error Msg-->
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                        
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-block" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- Modal - Confirm Delete -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirm-modal-title">Confirm Delete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                        Are you sure you want to delete this?  Select 'Delete Topic' below to permanently remove this topic. 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-block confirm-delete-btn" data-dismiss="modal" topic-id="">Delete Topic</button><br>
+                    <button type="button" class="btn btn-block" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{!-- Post Modal --}}
+    <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title">Post Your Question</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                   <form class="col-12">
+                        <div class="form-group">
+                            <label for="add_topic_title">Enter Topic Title - Up To 100 Characters</label>
+                            <input type="text" class="form-control" id="add_topic_title" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="add_topic_body">Enter Description - Up To 250 Characters</label>
+                            <textarea type="text" rows="5" class="form-control" id="add_topic_body" placeholder=""></textarea>
+                        </div>   
+                    </form> 
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn col-12 col-md-5 add-topic">Submit</button>
+                    <button type="close" class="btn col-12 col-md-5" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+
+
+
+    <!-- Modal Container -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- <header class="header-tp"> -->
+                <!-- </header> -->
+                <section class="at-login-form">
+                    <!-- MODAL LOGIN -->
+                    <div class="modal fade" id="at-login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                </div>
+                                <div class="modal-body">
+{{!--                                     <button class="btn-fb"> <i class="fa fa-fw fa-facebook pull-left" aria-hidden="true"></i> Login with Facebook </button>
+                                    <br>
+                                    <button class="btn-gp"> <i class="fa fa-fw fa-google-plus pull-left" aria-hidden="true"></i> Login with Google </button>
+                                    <br>
+                                    <div class="signup-or-separator">
+                                        <span class="h6 signup-or-separator--text">or</span>
+                                        <hr>
+                                    </div> --}}
+                                    <div id="successful-signup"></div>
+                                    <form id="login-form">
+                                        <div class="form-group row">
+                                            <label for="login-email" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white  col-form-label">Email:</label>
+                                            <input type="email" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="login-email" placeholder="Email">
+                                        </div>
+                                        <div class="row">
+                                          <div class="p-3 mb-2 bg-white text-white" id="login-email-error"></div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="login-password" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">Password:</label>
+                                            <input type="password" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="login-password" placeholder="Password">
+                                        </div>
+                                        <div class="row">
+                                          <div class="p-3 mb-2 bg-white text-white" id="login-password-error"></div>
+                                        </div>
+                                        <div class="row">
+                                          <div class="p-3 mb-2 bg-white text-white" id="login-error"></div>
+                                        </div>
+                                        <button type="submit" class="btn-lgin">Login</button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="row">
+{{!--                                         <div class="col-md-6">
+                                            <p class="ta-l">Don't have an account ? </p>
+                                        </div>
+                                        <div class="col-md-4 col-md-offset-2">
+                                            <button class="btn-gst" data-toggle="modal" data-dismiss="modal" data-target="#at-signup">Sign Up </button>
+                                        </div> --}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- MODAL LOGIN ENDS -->
+                   
+                    <!-- MODAL SIGNUP -->
+                    <div class="modal fade" id="at-signup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                </div>
+                                <div class="modal-body">
+                                    <button class="btn-fb"> <i class="fa fa-fw fa-facebook pull-left" aria-hidden="true"></i> Signup with Facebook </button>
+                                    <br>
+                                    <button class="btn-gp"> <i class="fa fa-fw fa-google-plus pull-left" aria-hidden="true"></i> Signup with Google </button>
+                                    <br>
+                                    <div class="signup-or-separator">
+                                        <span class="h6 signup-or-separator--text">or</span>
+                                        <hr>
+                                    </div>
+                                    <button type="submit" class="btn-lgin" data-toggle="modal" data-dismiss="modal" data-target="#at-signup-filling">Signup with Email</button>
+                                    <hr>
+                                    <p>By signing up, I agree to HELPFLOWS’s <a href="#">Terms of Service</a>, and <a href="#">Privacy Policy</a></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p class="ta-l">Already a Member? </p>
+                                        </div>
+                                        <div class="col-md-4 col-md-offset-2">
+                                            <button class="btn-gst" data-toggle="modal" data-dismiss="modal" data-target="#at-login">Login</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- MODAL SIGNUP ENDS -->
+
+                    <!-- MODAL SIGNUP FORM FILLING -->
+                    <div class="modal fade" id="at-signup-filling" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                </div>
+                                <div class="modal-body">
+{{!--                                     <p>Sign up with <a href="#">Facebook</a> or <a href="#">Google</a></p>
+                                    <div class="signup-or-separator">
+                                        <span class="h6 signup-or-separator--text">or</span>
+                                        <hr>
+                                    </div> --}}
+                                    <form id="modal-signup-form">
+                                        <div class="form-group row">
+                                            <label for="first-name" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">First Name:</label>
+                                            <input type="text" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="first-name" placeholder="First Name">
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="last-name" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">Last Name:</label>
+                                            <input type="text" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="last-name" placeholder="Last Name">
+                                        </div>
+                                        <div class="row">
+                                          <div class="p-3 mb-2 bg-white text-white" id="signup-name-error"></div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="user-name" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">User Name:</label>
+                                            <input type="text" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="user-name" placeholder="username">
+                                        </div>
+                                        <div class="row">
+                                          <div class="p-3 mb-2 bg-white text-white" id="signup-username-error"></div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="user-email" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">Email:</label>
+                                            <input type="email" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="user-email" placeholder="Email">
+                                        </div>
+                                        <div class="row">
+                                          <div class="p-3 mb-2 bg-white text-white" id="signup-email-error"></div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="user-password" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">Password:</label>
+                                            <input type="password" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="user-password" placeholder="Password">
+                                        </div>
+                                        <div class="row">
+                                          <div class="p-3 mb-2 bg-white text-white" id="signup-password-error"></div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="confirm-password" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">Confirm Password:</label>
+                                            <input type="password" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="confirm-password" placeholder="Confirm Password">
+                                        </div>
+                                        <div class="row">
+                                          <div class="p-3 mb-2 bg-white text-white" id="signup-confirmpswd-error"></div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="file-input" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">Profile Picture:</label>
+                                          <input type="file" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="file-input">
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="checkbox">
+{{!--                                                     <label>
+                                                            <input type="checkbox"> I’d like to receive email notifications
+                                                        </label> --}}
+                                                </div>
+
+{{!--                                                 <p>By signing up, I agree to HELPFLOW'S<a href="#">Terms of Service</a>, and <a href="#">Privacy Policy</a></p> --}}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                          <div class="p-3 mb-2 bg-white text-white" id="signup-error"></div>
+                                        </div>
+                                        <button type="submit" class="btn-lgin">Signup</button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="row">
+{{!--                                         <div class="col-md-6">
+                                            <p class="ta-l">Already a Member? </p>
+                                        </div>
+                                        <div class="col-md-4 col-md-offset-2">
+                                            <button class="btn-gst" data-toggle="modal" data-dismiss="modal" data-target="#at-login">Login</button>
+                                        </div> --}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- MODAL SIGNUP FORM FILLING ENDS -->
+                    
+                </section>
+            </div>
+        </div>
+    </div>
+    
+
+    {{!-- CDN and JS Links --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- Authentication JS -->
+    <script src="./javascript/validationhelpers.js"></script>
+    <script src="./javascript/signup.js"></script>
+    <script src="./javascript/login.js"></script>
+    <script src="./javascript/member.js"></script>
+    <!-- User Profile JS -->
+    <script src="./javascript/userprofile.js"></script>
+    <!-- Card Buttons JS -->
+    <script src="./javascript/cardbtn.js"></script>
+    <!-- Application Logic JS -->
+    <script src="./javascript/choices.js"></script>
+    <script src="./javascript/logic.js"></script>
+
+
+  </body>
 </html>
