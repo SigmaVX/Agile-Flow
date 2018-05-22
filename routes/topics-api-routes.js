@@ -73,7 +73,13 @@ module.exports = function(app) {
 
     console.log("put id", req.body.id);
     db.Topics.update(
-      req.body,
+      {
+        topic_title: req.body.topic_title,
+        topic_body: req.body.topic_body,
+        topic_answer: req.body.topic_answer,
+        topic_video: req.body.topic_video,
+        topic_answer_url: req.body.topic_answer_url
+      },
       {"where": {"id": req.body.id}}
     ).then(function(dbTopic) {
       console.log("topic_id " + req.body.id + " updated successfully.");
