@@ -27,28 +27,30 @@
 
 <!-- Left Navbar -->
 <nav id="sidebar">
-    <div class="sidebar-header">
+    <div class="sidebar-header text-center">
         <h3 class="navTitle">Help
             <span class="titleColor">Flow</span>
         </h3>
-
+    </div>
+     <div class="container" id="user" data-id="3"></div>
+        <div id="user-image"></div>
+        <h4 id="appuser-name"></h4>
     </div>
     <ul class="list-unstyled components">
         <li class="active">
             <a href="/">Home</a>
         </li>
         <li>
-            <a href="#" data-toggle="tooltip" data-placement="top" title="Hooray!">
-                <div class="span4 proj-div" data-toggle="modal" data-target="#at-question">Post a Question</a>
+            <a href="#" id="post-link">Post A Question</a>
         </li>
         <li>
             <a href="/myquestions">My Questions</a>
         </li>
         <li>
-            <a href="#">Open Questions</a>
+            <a href="/#open-topics">Open Questions</a>
         </li>
         <li>
-            <a href="#">Agile Answers</a>
+            <a href="/#closed-topics">Agile Answers</a>
         </li>
         <li>
             <a href="#">About Helpflow</a>
@@ -57,68 +59,48 @@
             <a href="/myprofile">My Profile</a>
         </li>
         <li>
+           <div id="modalSignup">
+                <a href="#" data-toggle="modal" data-target="#at-signup-filling">Sign-Up</a>
+          </div>
+        </li>
+        <li>
+            <div id="modalLogin">
+                <a href="#" data-toggle="modal" data-target="#at-login">Login</a>
+            </div>
+        </li>
+        <li>
+            <a class="session-logout" href="#">Logout</a>
+        </li>
+        <li>
             <a href="/admin">Admin</a>
-        </li>
-        <li>
-            <a href="/myprofile">Settings</a>
-        </li>
-        <li>
-            <a href="#">Logout</a>
         </li>
     </ul>
 </nav>
+
+
+    
 <!-- Top Navbar -->
 <div id="content">
-    <nav class="navbar navbar-default navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
 
-            <div class="navbar-header">
-                <button style="background-color:rgb(99, 162, 124);" type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                    <i class="glyphicon glyphicon-align-left"></i>
-                    <span>Toggle Sidebar</span>
-                </button>
-            </div>
-        </div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+    {{!-- <div class="navbar-header">
+        <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+            <i class="glyphicon glyphicon-align-left"></i>
+            <span>Toggle Sidebar</span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
-                </li>
-            </ul>
-            <button id="modalSignup" type="button" class="btn btn-outline-dark btn-sm mr-2" data-toggle="modal" data-target="#at-signup-filling">Signup</button>
-            <button id="modalLogin" type="button" class="btn btn-outline-dark btn-sm mr-2" data-toggle="modal" data-target="#at-login">Login</button>
-            <button class="session-logout btn btn-outline-dark btn-sm mr-2">Logout</button>
-            <div style="width:200px;" class="container" id="user">
-                <div id="user-image"></div>
-                <h4 style="font-size: 16px; margin-top:15px;" id="appuser-name"></h4>
-            </div>
+    </div> --}}
 
-
-        </div>
-        <a href="#" data-toggle="tooltip" data-placement="top" title="Add a Question!">
-            <div class="span4 proj-div" data-toggle="modal" data-target="#at-question">
-                <img style="width:50px; margin-right:10px; margin-left:20px;" class="popUp" src="./images/add.png" alt="">
-            </div>
-        </a>
-    </nav>
-
-    {{!-- Proxy for user profie div  --}}
-    {{!-- <div id="user" data-id="3">
-        <h2>User Stuff</h2>
-        
-    </div>  --}}
 
     {{{ body }}}
 
+
+    {{!-- Footer --}}
+    <footer class="footer container mt-3">
+        <div class="row text-center">
+            <h5 class="col-12">© Copyright 2018 FET</h5>
+        </div>
+    </footer>
+
+</div>
 
     <!-- Modal Section Start -->
 
@@ -141,7 +123,6 @@
             </div>
         </div>
     </div>
-
  
     <!-- Modal - Confirm Delete -->
     <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
@@ -163,7 +144,41 @@
             </div>
         </div>
     </div>
-    <!-- MODAL Confirm Delete ENDS -->
+
+    {{!-- Post Modal --}}
+    <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title">Post Your Question</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                   <form class="col-12">
+                        <div class="form-group">
+                            <label for="add_topic_title">Enter Topic Title - Up To 100 Characters</label>
+                            <input type="text" class="form-control" id="add_topic_title" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="add_topic_body">Enter Description - Up To 250 Characters</label>
+                            <textarea type="text" rows="5" class="form-control" id="add_topic_body" placeholder=""></textarea>
+                        </div>   
+                    </form> 
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn col-12 col-md-5 add-topic">Submit</button>
+                    <button type="close" class="btn col-12 col-md-5" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+
+
 
     <!-- Modal Container -->
     <div class="container">
@@ -224,6 +239,7 @@
                         </div>
                     </div>
                     <!-- MODAL LOGIN ENDS -->
+                   
                     <!-- MODAL SIGNUP -->
                     <div class="modal fade" id="at-signup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
@@ -258,6 +274,7 @@
                         </div>
                     </div>
                     <!-- MODAL SIGNUP ENDS -->
+
                     <!-- MODAL SIGNUP FORM FILLING -->
                     <div class="modal fade" id="at-signup-filling" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
@@ -348,46 +365,10 @@
                     </div>
                     <!-- MODAL SIGNUP FORM FILLING ENDS -->
                     
-                    <!-- MODAL POST QUESTION -->
-                    <div class="modal fade" id="at-question" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form>
-                                        <div class="form-group">
-                                            <h1>Post a Question</h1>
-                                            <input type="text" class="form-control-form " id="post-question" placeholder="Enter Your Question ">
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <div class="row">
-                                        <button class="btn-gst" data-toggle="modal" data-dismiss="modal">Submit Question</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- MODAL POST QUESTION END -->
                 </section>
             </div>
         </div>
     </div>
-
-<!-- Modal Container End -->
-<!-- Modal Section End -->
-
-
-       {{!-- Footer --}}
-    <footer class="footer container">
-        <div class="row text-center">
-            <h5 class="col-12">© Copyright 2018 FET</h5>
-        </div>
-    </footer>
-    
     
 
     {{!-- CDN and JS Links --}}
@@ -400,8 +381,6 @@
     <script src="./javascript/member.js"></script>
     <!-- User Profile JS -->
     <script src="./javascript/userprofile.js"></script>
-    <!-- Navbar JS -->
-    <script src="./javascript/nav.js"></script>
     <!-- Card Buttons JS -->
     <script src="./javascript/cardbtn.js"></script>
     <!-- Application Logic JS -->

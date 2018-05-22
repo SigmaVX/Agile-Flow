@@ -59,14 +59,14 @@ function fillEditModalAdmin(topicID){
 function fillEditModalUser(topicID){
 
     $.ajax({
-        url: "/api/topics/"+topicID,
+        url: "/api/topics/one/"+topicID,
         type: "GET"
     }).then(function(data) {
         console.log("Data Stored: ", data);
         console.log("data ", data[0].topic_title);
         $("input[id='topic_title']").val(data[0].topic_title);
         $("textarea[id='topic_body']").val(data[0].topic_body);
-        $("#update-topic-btn").attr("data-id", topicID);
+        $("#update-open-topic-btn").attr("data-id", topicID);
     });
     $("#userEditModal").modal("show");
 };
@@ -122,9 +122,9 @@ function editAnyTopic(){
 
 // Update Open Topic - For User
 function editOpenTopic(){
-
+    
     var userId = $("#user").attr("data-id");
-    var topicID = $("#update-topic-btn").attr("data-id");
+    var topicID = $("#update-open-topic-btn").attr("data-id");
     
     var topicTitle = $("input[id='topic_title']").val().trim();
     var topicBody = $("textarea[id='topic_body']").val().trim();
@@ -140,7 +140,7 @@ function editOpenTopic(){
             id: topicID
         };
 
-        console.log(newTopic);
+        // console.log(newTopic);
         $.ajax({
             url: "/api/topics/open",
             type: "PUT",
@@ -165,7 +165,7 @@ function deleteTopic(topicID){
         type: "DELETE",
     }).then(function(data) {
         console.log("Data Stored: ", data);
-        // location.reload();
+        location.reload();
     });        
 };
 
@@ -181,7 +181,7 @@ function claimTopic(topicID){
     };
 
     console.log(newTopic);
-    
+
     $.ajax({
         url: "/api/topics/status/"+topicID,
         type: "PUT",
@@ -230,7 +230,7 @@ function postAnswer(topicID){
             data: topicData
         }).then(function(data) {
             console.log("Data Stored: ", data);
-            // location.reload();
+            location.reload();
         });
 
     } else {
@@ -263,6 +263,26 @@ function removeTopic(topicID){
 // Event Listeners
 // ====================================================================
 
+// Sidebar collapse functionality
+$('#sidebarCollapse').on('click', function () {
+    $('#sidebar, #content').toggleClass('active');
+    $('.collapse.in').toggleClass('in');
+    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+});
+
+// Post A Question - Show Modal
+$("#post-link").on("click", function(event){
+    event.preventDefault();
+    console.log("click test");
+    $("#postModal").modal("show");
+});
+
+// Add New Topic - Admin & User Page
+$(".add-topic").on("click", function(event){
+    event.preventDefault();
+    createTopic();
+});
+
 //  Claim An Open Topic
 $(".claim-btn").on("click", function(event){
     event.preventDefault();
@@ -293,12 +313,6 @@ $("#update-btn").on("click", function(event){
     postAnswer(topicID);
 });
 
-// Add New Topic - Admin Page
-$("#add-topic-btn").on("click", function(event){
-    event.preventDefault();
-    createTopic();
-});
-
 // Open Edit Topic Modal & Get Data - Admin
 $(".admin-edit-btn").on("click", function(event){
     event.preventDefault();
@@ -322,6 +336,7 @@ $("#update-topic-btn").on("click", function(event){
 // Update Topic - Edit Event Model - User
 $("#update-open-topic-btn").on("click", function(event){
     event.preventDefault();
+    console.log("event list");
     editOpenTopic();
 });
 

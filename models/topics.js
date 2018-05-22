@@ -24,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
         topic_state: {
             type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: "Open"
+            defaultValue: "open"
         },
         topic_interest: {
             type: DataTypes.INTEGER,
