@@ -57,8 +57,11 @@ module.exports = function(app) {
       var hbsObject = {};
 
       console.log("req.user: " + req.user);
+      
       if (req.user !== undefined) {
-        res.redirect("/member");
+        // res.redirect("/myquestions");
+        userId = parseInt(req.user.id);
+        console.log("User ID is: ", userId);
       }
 
       db.Topics.findAll({"where": {"topic_created_by": userId,"topic_state":"open"}}).
@@ -66,7 +69,7 @@ module.exports = function(app) {
         if (!topicData) res.status(404).end();
         hbsObject.openUser = topicData;
 
-        db.Topics.findAll({"where": {"topic_created_by": userId,"topic_state":"pending"}}).
+        db.Topics.findAll({"where": {"topic_assigned_to": userId,"topic_state":"pending"}}).
         then(function (pendingData) {
           if (!pendingData) res.status(404).end();
           hbsObject.pendingUser = pendingData;
@@ -77,9 +80,9 @@ module.exports = function(app) {
           hbsObject.closedUser = closedData;
 
           db.Topics.findAll({"where": {"topic_assigned_to": userId,"topic_state":"closed"}}).
-          then(function (closedData) {
-            if (!closedData) res.status(404).end();
-            hbsObject.closedAnswers = closedData;
+          then(function (toData) {
+            if (!toData) res.status(404).end();
+            hbsObject.closedAnswers = toData;
 
             console.log(hbsObject.openUser.length + " Open items found.");
             console.log(hbsObject.pendingUser.length + " Pending Topics found.");
@@ -136,11 +139,13 @@ module.exports = function(app) {
 
   // Here we've add our isAuthenticated middleware to this route.
   // If a user who is not logged in tries to access this route they will be redirected to the signup page
-  app.get("/member", isAuthenticated, function(req, res) {
-    console.log("in /member route");
-    // console.log("req: " + JSON.stringify(req));
-    res.render("index");
-  });
+  
+  // Not Used
+  // app.get("/member", isAuthenticated, function(req, res) {
+  //   console.log("in /member route");
+  //   // console.log("req: " + JSON.stringify(req));
+  //   res.render("index");
+  // });
 
 
   // ----------------------------------------------------------------------------
