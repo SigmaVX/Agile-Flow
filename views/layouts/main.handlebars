@@ -32,7 +32,7 @@
 <nav id="sidebar">
     <div class="sidebar-header text-center">
         <h3 class="navTitle">Agile
-            <span class="titleColor">Core</span>
+            <span class="titleColor">Flow</span>
         </h3>
     </div>
      <div class="container" id="user" data-id="3"></div>
@@ -56,7 +56,7 @@
             <a href="/#closed-topics">Agile Answers</a>
         </li>
         <li>
-            <a href="#">About Agile Core</a>
+            <a href="#">About Agile Flow</a>
         </li>
         <li>
             <a href="/myprofile">My Profile</a>
@@ -99,7 +99,8 @@
     {{!-- Footer --}}
     <footer class="footer container mt-5">
         <div class="row text-center">
-            <h5 class="col-12">© Copyright 2018 FET</h5>
+            <h5 class="col-12">© Copyright 2018 Code Busters</h5>
+            <h4 class="col-12"></h4>
         </div>
     </footer>
 
@@ -112,12 +113,12 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modal-title"></h5>
+                    <h5 class="modal-title" id="error-modal-title"></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div id="error-modal-body">
                         
                 </div>
                 <div class="modal-footer">
@@ -167,6 +168,9 @@
                         <div class="form-group">
                             <label for="add_topic_body">Enter Description - Up To 250 Characters</label>
                             <textarea type="text" rows="5" class="form-control" id="add_topic_body" placeholder=""></textarea>
+                        </div>
+                        <div class="form-group" id="modal-error-text">
+                            {{!-- text added here --}}
                         </div>   
                     </form> 
                 </div>

@@ -1,7 +1,45 @@
 
+{{!-- Splash Area --}}
+<div class="container-fluid splash">
+    <div class="row text-center">
+        <h1 class="col-12">Help Flow</h1>
+        <h2 class="col-12">Accelerate Your Learning With An Agile Group</h2>
+        <h3 class="col-12">Save Time & Stop Searching</h3>
+    </div>
+
+    <div class="row-fluid no-gutters text-center d-flex justify-content-around icon-row">
+        <div class="col-md-2 icon-box">
+            <div class="icon">
+                <i class="fas fa-fire"></i>
+            </div>
+            <p class="icon-text">Ask Burning<br>Questions</p> 
+        </div>
+
+        <div class="col-md-2 icon-box">
+            <div class="icon">
+                <i class="fas fa-video"></i>
+            </div>
+            <p class="icon-text">Get Short<br>Video Answers</p>
+        </div>
+
+        <div class="col-md-2 icon-box">
+            <div class="icon">
+                <i class="fas fa-heart"></i>
+            </div>
+            <p class="icon-text">Find Popular<br>Topics</p>
+        </div>
+        
+        <div class="col-md-2 icon-box">
+            <div class="icon">
+                <i class="far fa-thumbs-up"></i>
+            </div>
+            <p class="icon-text">Vote For<br>Favorites</p>
+        </div>
+    </div iv>
+</div>
 
  
-    <h2 class="col-12" id="open-topics">Open & Pending Questions</h2>
+    <h2 class="col-12 myq-heading" id="open-topics">Open & Pending Questions</h2>
     <div class="container">
         <div class="row justify-content-around">
             {{#each openAndPending}}
@@ -12,7 +50,7 @@
                 {{!-- <h5>My Interest:
                 <span id="user-interest-{{this.id}}">Not Interested</span>
                 </h5> --}}
-                <button class="btn btn-block interest-btn" topic-id={{this.id}} id="interest-btn-{{this.id}}" interest-state="false">Interest</button>
+                <button class="btn btn-block interest-btn" topic-id={{this.id}} id="interest-btn-{{this.id}}" interest-state="false">Vote</button>
                 {{!-- <div id="target"></div> --}}
                 {{!-- <button class="btn btn-block details-btn" topic-id={{this.id}}>See Details</button> --}}
                 <a class="btn btn-block details-btn" href="/details?topicId={{this.id}}" topic-id={{this.id}}>See Details</a>
@@ -24,7 +62,7 @@
 
    
 
-    <h2 class="col-12" id="closed-topics">Answers</h2>
+    <h2 class="col-12 myq-heading" id="closed-topics">Answers</h2>
     <div class="container">
         <div class="row text-center justify-content-around">  
         {{#each closed}}
@@ -38,7 +76,7 @@
                     <div class="align-bottom">
                         {{!-- <button class="btn btn-block details-btn" topic-id={{this.id}}>See Details</button> --}}
                         <a class="btn btn-block details-btn" href="/details?topicId={{this.id}}" topic-id={{this.id}}>See Details</a>
-                        <button class="btn btn-block vote-btn" id="vote-btn-{{this.id}}" topic-id={{this.id}} vote-state="false">Change Vote</button>
+                        <button class="btn btn-block vote-btn" id="vote-btn-{{this.id}}" topic-id={{this.id}} vote-state="false">Vote</button>
                     </div>
                 </div>
             </div>
