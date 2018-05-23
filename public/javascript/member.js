@@ -45,7 +45,7 @@ $(document).ready(function() {
       console.log("verify userId: " + userId);
 
       // display user email
-      $("#appuser-name").html(data.email);
+      $("#appuser-name").html("<p class=\"text-center font-weight-bold text-success\">Welcome, " + data.user_name + "</p>");
 
     } // temporary fix to hardcode user id as 1
     else {
@@ -81,7 +81,9 @@ $(document).ready(function() {
       $(".session-logout").hide();
 
       // reload to send back to default public user view
-      location.reload();
+      // location.reload();
+      // upon profile update, go back to index page
+      window.location.replace("/");
 
     });
   });
