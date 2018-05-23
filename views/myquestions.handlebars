@@ -2,7 +2,7 @@
 <div class="container-fluid">
     <div class="row jumbotron myq-jumbo text-center">
         <h1 class="col-12">My Questions</h1>
-        <h3 class="col-12 myq-jumbo-vote">Total Votes:  Total Interest: </h3>
+        {{!-- <h3 class="col-12 myq-jumbo-vote">Total Votes:      Total Interest: </h3> --}}
     </div>
 </div>
 
@@ -13,11 +13,11 @@
 {{#each openUser}}
 <div class="row myq-rows">
     <h5 class="col-12 title" id="topic-title-{{this.id}}">{{this.topic_title}}</h5>
-    <div class="col-12 col-md-8">
+    <div class="col-12 col-md-8 data-well">
         <h6 class="votes">Total Interest: {{this.topic_interest}}</h6>
         <p class="topic-body" id="topic-body-{{this.id}}">{{this.topic_body}}</p>
     </div>
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-4 text-center">
         <button class="btn btn-block user-edit-btn" topic-id={{this.id}}>Edit</button>
         <button class="btn btn-block admin-delete-btn" topic-id={{this.id}}>Delete</button>
     </div>
@@ -32,11 +32,11 @@
 {{#each pendingUser}}
 <div class="row myq-rows">
     <h5 class="col-12 title">{{this.topic_title}}</h5>
-    <div class="col-12 col-md-8">
+    <div class="col-12 col-md-8 data-well">
         <h6 class="votes">Total Interest: {{this.topic_interest}}</h6>
         <p class="topic-body">{{this.topic_body}}</p>
     </div>
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-4 text-center">
         <button class="btn btn-block answer-btn" topic-id={{this.id}}>Answer</button>
         <button class="btn btn-block remove-btn" topic-id={{this.id}}>Remove</button>
     </div>
@@ -50,15 +50,15 @@
 <div class="container">
     {{#each closedUser}}
     <div class="row answer-rows my-3">   
-        <h5 class="col-12 title">{{this.topic_title}}</h5>
+        <h5 class="col-12 title title-adj">{{this.topic_title}}</h5>
         <div class="row">    
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-8 data-well">
                 <h6 class="votes" >Total Votes: {{this.topic_votes}} | Total Interest: {{this.topic_interest}}</h6>
                 <p class="topic-body"><strong>Question - </strong>{{this.topic_body}}</p>
                 <p class="topic-body"><strong>Answer - </strong>{{this.topic_answer}}</p>
-                <a class="topic-body" href="{{this.topic_answer_url}}" target="_blank">Helpful URL - {{this.topic_answer_url}}</a>
+                <a class="topic-body" href="{{this.topic_answer_url}}" target="_blank"><strong>Helpful URL - </strong>{{this.topic_answer_url}}</a>
             </div>
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-4 text-center">
                 <iframe class="topic-video" src={{this.topic_video}} alt="Video For Topic"></iframe>
                 <button class="btn btn-block details-btn" topic-id="{{this.id}}">See Details</button>
             </div>
@@ -75,15 +75,15 @@
 <div class="container">
     {{#each closedAnswers}}
     <div class="row answer-rows">
-        <h5 class="col-12 title">{{this.topic_title}}</h5>
+        <h5 class="col-12 title title-adj">{{this.topic_title}}</h5>
         <div class="row">
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-8 data-well">
                 <h6 class="votes">Total Votes: {{this.topic_votes}} | Total Interest: {{this.topic_interest}}</h6>
                 <p class="topic-body"><strong>Question - </strong>{{this.topic_body}}</p>
                 <p class="topic-body"><strong>Answer - </strong>{{this.topic_answer}}</p>
                 <a class="topic-body" href="{{this.topic_answer_url}}" target="_blank">Helpful URL - {{this.topic_answer_url}}</a>
             </div>
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-4 text-center">
                 <iframe class="topic-video" src={{this.topic_video}} alt="Video For Topic"></iframe>
                 <button class="btn btn-block details-btn" topic-id={{this.id}}>See Details</button>
             </div>
