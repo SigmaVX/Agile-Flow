@@ -3,6 +3,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var session = require("express-session");
+var moment = require("moment");
 
 require("dotenv").config();
 
@@ -36,7 +37,10 @@ app.engine("handlebars", exphbs({
     // later, addOne is a sample handlebar helper function, not used yet
     "helpers": {
       // not used yet
-      "addOne": (value) => parseInt(value, 10) + 1
+      "addOne": (value) => parseInt(value, 10) + 1,
+      // formates timestamp date into DD, MM NN, YYYY  HH:MM format
+      // example Monday, May 21, 2018 5:41 PM
+      "fmtDate": (date) => moment(date).format("LLLL")
     }
   }));
 

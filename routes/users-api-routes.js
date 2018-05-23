@@ -173,8 +173,8 @@ module.exports = function(app) {
               user_pw: fields.password,
               user_photo: result.secure_url
               // creating following lines to check admin functionality
-              ,
-              user_rank: "Admin"
+              // ,
+              // user_rank: "Admin"
             }).then(function () {
               res.json(true);
               // res.json("/");

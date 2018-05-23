@@ -14,13 +14,14 @@
         <h5 class="col-12 title">Topic ID:{{this.id}} - {{this.topic_title}}</h5>
         <div class="col-12 col-md-8 no-gutters">
             <p class="topic-body"><strong>Created By: </strong>User ID {{this.topic_created_by}}</p>
-            <p class="topic-body"><strong>Created: </strong>{{this.created_at}}</p>
-            <p class="topic-body"><strong>Updated: </strong>{{this.updated_at}}</p>
+            <p class="topic-body"><strong>Created: </strong>{{fmtDate this.created_at}}</p>
+            <p class="topic-body"><strong>Updated: </strong>{{fmtDate this.updated_at}}</p>
             <p class="col-12 topic-body"><strong>Question - </strong>{{this.topic_body}}</p>
         </div>
         <div class="col-12 col-md-4 align-middle text-center">
             <h6 class="col-12 votes text-center"><strong>Votes: {{this.topic_votes}} Interest: {{this.topic_interest}}</strong></h6>
-            <button class="my-1 mx-1 col-md-10 col-12 btn details-btn" topic-id="{{this.id}}">See Details</button><br>
+{{!--             <button class="my-1 mx-1 col-md-10 col-12 btn details-btn" topic-id="{{this.id}}">See Details</button><br> --}}
+            <a class="my-1 mx-1 col-md-10 col-12 btn details-btn" href="/details?topicId={{this.id}}" topic-id={{this.id}}>See Details</a><br>
             <button class="my-1 mx-1 col-md-10 col-12 btn admin-edit-btn" topic-id="{{this.id}}">Edit</button><br>
             <button class="my-1 mx-1 col-md-10 col-12 btn admin-delete-btn" topic-id="{{this.id}}">Delete</button>
         </div>
@@ -36,13 +37,14 @@
         <h5 class="col-12 title">Topic ID:{{this.id}} - {{this.topic_title}}</h5>
         <div class="col-12 col-md-8 no-gutters">
             <p class="topic-body"><strong>Created By: </strong>User ID {{this.topic_created_by}}   -   <strong>Assigned To: </strong>User ID {{this.topic_assigned_to}}</p>
-            <p class="topic-body"><strong>Created: </strong>{{this.created_at}}</p>
-            <p class="topic-body"><strong>Updated: </strong>{{this.updated_at}}</p>
+            <p class="topic-body"><strong>Created: </strong>{{fmtDate this.created_at}}</p>
+            <p class="topic-body"><strong>Updated: </strong>{{fmtDate this.updated_at}}</p>
             <p class="col-12 topic-body"><strong>Question - </strong>{{this.topic_body}}</p>
         </div>
         <div class="col-12 col-md-4 align-middle text-center">
             <h6 class="col-12 votes text-center"><strong>Votes: {{this.topic_votes}} Interest: {{this.topic_interest}}</strong></h6>
-            <button class="my-1 mx-1 col-md-10 col-12 btn details-btn" topic-id="{{this.id}}">See Details</button><br>
+{{!--             <button class="my-1 mx-1 col-md-10 col-12 btn details-btn" topic-id="{{this.id}}">See Details</button><br> --}}
+            <a class="my-1 mx-1 col-md-10 col-12 btn details-btn" href="/details?topicId={{this.id}}" topic-id={{this.id}}>See Details</a><br>
             <button class="my-1 mx-1 col-md-10 col-12 btn admin-edit-btn" topic-id="{{this.id}}">Edit</button><br>
             <button class="my-1 mx-1 col-md-10 col-12 btn admin-delete-btn" topic-id="{{this.id}}">Delete</button>
         </div>
@@ -58,8 +60,8 @@
         <h5 class="col-12 title">Topic ID:{{this.id}} - {{this.topic_title}}</h5>
         <div class="col-12 col-md-8 no-gutters">
             <p class="topic-body"><strong>Created By: </strong>User ID {{this.topic_created_by}}   -   <strong>Assigned To: </strong>User ID {{this.topic_assigned_to}}</p>
-            <p class="topic-body"><strong>Created: </strong>{{this.created_at}}</p>
-            <p class="topic-body"><strong>Updated: </strong>{{this.updated_at}}</p>
+            <p class="topic-body"><strong>Created: </strong>{{fmtDate this.created_at}}</p>
+            <p class="topic-body"><strong>Updated: </strong>{{fmtDate this.updated_at}}</p>
             <p class="col-12 topic-body"><strong>Question - </strong>{{this.topic_body}}</p>
             <p class="col-12 topic-body"><strong>Answer - </strong>{{this.topic_answer}}</p>
             {{#if this.topic_answer_url}}
@@ -68,7 +70,8 @@
         </div>
         <div class="col-12 col-md-4 align-middle text-center">
             <h6 class="col-12 votes text-center"><strong>Votes: {{this.topic_votes}} Interest: {{this.topic_interest}}</strong></h6>
-            <button class="my-1 mx-1 col-md-10 col-12 btn details-btn" topic-id="{{this.id}}">See Details</button><br>
+{{!--             <button class="my-1 mx-1 col-md-10 col-12 btn details-btn" topic-id="{{this.id}}">See Details</button><br> --}}
+            <a class="my-1 mx-1 col-md-10 col-12 btn details-btn" href="/details?topicId={{this.id}}" topic-id={{this.id}}>See Details</a><br>
             <button class="my-1 mx-1 col-md-10 col-12 btn admin-edit-btn" topic-id="{{this.id}}">Edit</button><br>
             <button class="my-1 mx-1 col-md-10 col-12 btn admin-delete-btn" topic-id="{{this.id}}">Delete</button>
         </div>
