@@ -4,6 +4,9 @@ var db = require("../models");
 // Requiring path to so we can use relative routes to our HTML files
 var path = require("path");
 
+// require moment library
+var moment = require("moment");
+
 // Requiring our custom middleware for checking if a user is logged in
 var isAuthenticated = require("../config/middleware/isAuthenticated");
 
@@ -97,6 +100,29 @@ module.exports = function(app) {
     });
   });
 
+
+  // ----------------------------------------------------------------------------
+  // get /details route
+  // ----------------------------------------------------------------------------
+  app.get("/details", function(req, res) {
+  // app.get("/details", function(req, res) {
+    var topicId = parseInt(req.query.topicId, 10),
+        hbsObject = {};
+
+    db.Topics.findById(topicId).
+    then(function (topicData) {
+
+      // return 404 if no row was found, this means topicId does not exist
+      if (!topicData) return res.status(404).end();
+
+      // parse topicData object in order to add more variables to object 
+      hbsObject.topicDetails = topicData;
+
+      console.log("in /details " + JSON.stringify(hbsObject.topicDetails));
+
+      res.render("details", hbsObject);
+    });
+  });
 
   // ----------------------------------------------------------------------------
   // get navbar (TESTING NAVBAR ROUTE!!!!!!!!)
