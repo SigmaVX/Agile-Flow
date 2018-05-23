@@ -96,6 +96,18 @@ ul.CTAs a {
   color: #ffffff;
 }
 
+.btn[interest-state="true"]{
+  background-color: #63A27C;
+  color: #000000;
+  border: solid 1px #000000;
+}
+
+.btn[vote-state="true"]{
+  background-color: #63A27C;
+  color: #000000;
+  border: solid 1px #000000;
+}
+
 .card-title{
   font-size: 16px;
   padding: 10px;
@@ -117,6 +129,27 @@ ul.CTAs a {
 
 .Hide{
   display:none;
+}
+
+.icon{
+  font-size: 80px;
+  border: solid 2px #182825;
+  border-radius: 50px;
+  background-color: #63A27C;
+}
+
+.icon-box{
+  display: inline-block;
+}
+
+.icon-row{
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.icon-text{
+  font-size: 18px;
+  color: #182825;
 }
 
 .navTitle {
@@ -211,6 +244,14 @@ ul.CTAs a {
 .myq-jumbo-vote{
   text-align: center;
 }
+
+.splash h1{
+  font-weight: 1000;
+  font-size: 100px;
+  margin-top: 8%;
+  /* border-bottom: solid 3px #63A27C; */
+}
+
 
 .title{
   font-size: 22px;
