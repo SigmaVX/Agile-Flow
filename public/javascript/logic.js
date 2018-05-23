@@ -232,7 +232,7 @@ function postAnswer(topicID){
             data: topicData
         }).then(function(data) {
             console.log("Data Stored: ", data);
-            // location.reload();
+            location.reload();
         });
 
     } else {
