@@ -230,6 +230,7 @@ module.exports = function(app) {
         res.json({
           email: req.user.email,
           id: req.user.id,
+          user_name: req.user.user_name,
           photo: dbUser.user_photo,
           rank: req.user.user_rank
         });
