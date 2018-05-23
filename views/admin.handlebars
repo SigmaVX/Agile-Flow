@@ -1,70 +1,85 @@
 {{!-- Temp Add New Topic Form --}}
  <div class="container-fluid">
-    <div class="row jumbotron">
+    <div class="row jumbotron admin-jumbo text-center">
         <h1 class="col-12">Admin Panel<br>Get Your CRUD On</h1>
     </div>
 </div>
 
 
 {{!-- Open Topics --}}
-<div class="container-fluid text-center">
-    <h2 class="col-12">Open Topics</h2>
-    <div class="row text-center open-topics">
-        {{#each open}}
-            <div class="col-12 col-md-8">
-                <h5 class="col-12">{{this.topic_title}}</h5>
-                <p>Created: {{this.created_at}}</p>
-                <p>Updated: {{this.updated_at}}</p>
-                <p class="col-12">{{this.topic_body}}</p>
-            </div>
-            <div class="col-12 col-md-4 align-middle">
-                <p>Votes: {{this.topic_votes}} Interest: {{this.topic_interest}}</p>
-                <button class="my-1 mx-1 col-md-10 col-12 btn admin-edit-btn" topic-id="{{this.id}}">Edit</button><br>
-                <button class="my-1 mx-1 col-md-10 col-12 btn admin-delete-btn" topic-id="{{this.id}}">Delete</button>
-            </div>
-        {{/each}}
-    </div>
-</div>
-
-{{!-- Pending Topics --}}
-<div class="container-fluid text-center">
-    <h2 class="col-12">Pending Topics</h2>
-    <div class="row text-center pending-topics">
-        {{#each pending}}
-            <div class="col-12 col-md-8">
-                <h5 class="col-12">{{this.topic_title}}</h5>
-                <p>Created: {{this.created_at}}</p>
-                <p>Updated: {{this.updated_at}}</p>
-                <p class="col-12">{{this.topic_body}}</p>
-            </div>
-            <div class="col-12 col-md-4 align-middle">
-                <p>Votes: {{this.topic_votes}} Interest: {{this.topic_interest}}</p>
-                <button class="my-1 mx-1 col-md-10 col-12 btn admin-edit-btn" topic-id="{{this.id}}">Edit</button><br>
-                <button class="my-1 mx-1 col-md-10 col-12 btn admin-delete-btn" topic-id="{{this.id}}">Delete</button>
-            </div>
-        {{/each}}
-    </div>
-</div>
-
-{{!-- Closed Topics --}}
-<div class="row text-center closed-topics">
-    <h2 class="col-12">Closed Topics</h2>
-    {{#each closed}}
-        <div class="card col-3">
-        <iframe class="card-img-top" src={{this.topic_video}} alt="Video For Topic"></iframe>
-        <div class="card-body">
-            <h5 class="card-title">{{this.topic_title}}</h5>
-            <p>Created: {{this.created_at}}</p>
-            <p>Updated: {{this.updated_at}}</p>
-            <p>Votes: {{this.topic_votes}} Interest: {{this.topic_interest}}</p>
-            <button class="btn btn-block view-btn" topic-id="{{this.id}}">View Details</button>
-            <button class="btn btn-block admin-edit-btn" topic-id="{{this.id}}">Edit</button>
-            <button class="btn btn-block admin-delete-btn" topic-id="{{this.id}}">Delete</button>
+<div class="container-fluid">
+    <h2 class="col-12 myq-heading">Open Topics</h2>
+    {{#each open}}
+    <div class="row admin-open-topics">
+        <h5 class="col-12 title">Topic ID:{{this.id}} - {{this.topic_title}}</h5>
+        <div class="col-12 col-md-8 no-gutters">
+            <p class="topic-body"><strong>Created By: </strong>User ID {{this.topic_created_by}}</p>
+            <p class="topic-body"><strong>Created: </strong>{{fmtDate this.created_at}}</p>
+            <p class="topic-body"><strong>Updated: </strong>{{fmtDate this.updated_at}}</p>
+            <p class="col-12 topic-body"><strong>Question - </strong>{{this.topic_body}}</p>
         </div>
+        <div class="col-12 col-md-4 align-middle text-center">
+            <h6 class="col-12 votes text-center"><strong>Votes: {{this.topic_votes}} Interest: {{this.topic_interest}}</strong></h6>
+{{!--             <button class="my-1 mx-1 col-md-10 col-12 btn details-btn" topic-id="{{this.id}}">See Details</button><br> --}}
+            <a class="my-1 mx-1 col-md-10 col-12 btn details-btn" href="/details?topicId={{this.id}}" topic-id={{this.id}}>See Details</a><br>
+            <button class="my-1 mx-1 col-md-10 col-12 btn admin-edit-btn" topic-id="{{this.id}}">Edit</button><br>
+            <button class="my-1 mx-1 col-md-10 col-12 btn admin-delete-btn" topic-id="{{this.id}}">Delete</button>
         </div>
+    </div>
     {{/each}}
 </div>
 
+{{!-- Pending Topics --}}
+<div class="container-fluid">
+    <h2 class="col-12 myq-heading">Pending Topics</h2>
+    {{#each pending}}
+    <div class="row admin-pending-topics">
+        <h5 class="col-12 title">Topic ID:{{this.id}} - {{this.topic_title}}</h5>
+        <div class="col-12 col-md-8 no-gutters">
+            <p class="topic-body"><strong>Created By: </strong>User ID {{this.topic_created_by}}   -   <strong>Assigned To: </strong>User ID {{this.topic_assigned_to}}</p>
+            <p class="topic-body"><strong>Created: </strong>{{fmtDate this.created_at}}</p>
+            <p class="topic-body"><strong>Updated: </strong>{{fmtDate this.updated_at}}</p>
+            <p class="col-12 topic-body"><strong>Question - </strong>{{this.topic_body}}</p>
+        </div>
+        <div class="col-12 col-md-4 align-middle text-center">
+            <h6 class="col-12 votes text-center"><strong>Votes: {{this.topic_votes}} Interest: {{this.topic_interest}}</strong></h6>
+{{!--             <button class="my-1 mx-1 col-md-10 col-12 btn details-btn" topic-id="{{this.id}}">See Details</button><br> --}}
+            <a class="my-1 mx-1 col-md-10 col-12 btn details-btn" href="/details?topicId={{this.id}}" topic-id={{this.id}}>See Details</a><br>
+            <button class="my-1 mx-1 col-md-10 col-12 btn admin-edit-btn" topic-id="{{this.id}}">Edit</button><br>
+            <button class="my-1 mx-1 col-md-10 col-12 btn admin-delete-btn" topic-id="{{this.id}}">Delete</button>
+        </div>
+    </div>
+    {{/each}}
+</div>
+
+{{!-- Closed Topics --}}
+<div class="container-fluid">
+    <h2 class="col-12 myq-heading">Closed Topics</h2>
+    {{#each closed}}
+    <div class="row admin-closed-topics my-4">
+        <h5 class="col-12 title">Topic ID:{{this.id}} - {{this.topic_title}}</h5>
+        <div class="col-12 col-md-8 no-gutters">
+            <p class="topic-body"><strong>Created By: </strong>User ID {{this.topic_created_by}}   -   <strong>Assigned To: </strong>User ID {{this.topic_assigned_to}}</p>
+            <p class="topic-body"><strong>Created: </strong>{{fmtDate this.created_at}}</p>
+            <p class="topic-body"><strong>Updated: </strong>{{fmtDate this.updated_at}}</p>
+            <p class="col-12 topic-body"><strong>Question - </strong>{{this.topic_body}}</p>
+            <p class="col-12 topic-body"><strong>Answer - </strong>{{this.topic_answer}}</p>
+            {{#if this.topic_answer_url}}
+            <a class="topic-body mb-3" href="{{this.topic_answer_url}}" target="_blank"><strong>Helpful URL - </strong>{{this.topic_answer_url}}</a>
+            {{/if}}
+        </div>
+        <div class="col-12 col-md-4 align-middle text-center">
+            <h6 class="col-12 votes text-center"><strong>Votes: {{this.topic_votes}} Interest: {{this.topic_interest}}</strong></h6>
+{{!--             <button class="my-1 mx-1 col-md-10 col-12 btn details-btn" topic-id="{{this.id}}">See Details</button><br> --}}
+            <a class="my-1 mx-1 col-md-10 col-12 btn details-btn" href="/details?topicId={{this.id}}" topic-id={{this.id}}>See Details</a><br>
+            <button class="my-1 mx-1 col-md-10 col-12 btn admin-edit-btn" topic-id="{{this.id}}">Edit</button><br>
+            <button class="my-1 mx-1 col-md-10 col-12 btn admin-delete-btn" topic-id="{{this.id}}">Delete</button>
+        </div>
+    </div>
+    {{/each}}
+</div>
+
+{{!-- 144hrz monitor hyper x cloud headseat --}}
 
 <!-- Modal - Edit Content -->
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">

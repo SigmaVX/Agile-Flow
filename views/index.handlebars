@@ -14,7 +14,8 @@
                 </h5> --}}
                 <button class="btn btn-block interest-btn" topic-id={{this.id}} id="interest-btn-{{this.id}}" interest-state="false">Interest</button>
                 {{!-- <div id="target"></div> --}}
-                <button class="btn btn-block details-btn" topic-id={{this.id}}>See Details</button>
+                {{!-- <button class="btn btn-block details-btn" topic-id={{this.id}}>See Details</button> --}}
+                <a class="btn btn-block details-btn" href="/details?topicId={{this.id}}" topic-id={{this.id}}>See Details</a>
                 <button class="btn btn-block claim-btn" status={{this.topic_state}} topic-id={{this.id}}>Claim Topic</button>
             </div>
             {{/each}}
@@ -27,7 +28,7 @@
     <div class="container">
         <div class="row text-center justify-content-around">  
         {{#each closed}}
-            <div class="card answerCards my-1 col-md-4">
+            <div class="card answerCards my-3 col-md-4">
                 <iframe class="card-img-top card-video" src={{this.topic_video}} alt="Video For Topic"></iframe>
                 <div class="card-body">
                     <h5 class="card-title">{{this.topic_title}}</h5>
@@ -35,7 +36,8 @@
                     {{!-- <span id="vote-text-{{this.id}}">I Did Not Vote</span> --}}
                     </h6>
                     <div class="align-bottom">
-                        <button class="btn btn-block details-btn" topic-id={{this.id}}>See Details</button>
+                        {{!-- <button class="btn btn-block details-btn" topic-id={{this.id}}>See Details</button> --}}
+                        <a class="btn btn-block details-btn" href="/details?topicId={{this.id}}" topic-id={{this.id}}>See Details</a>
                         <button class="btn btn-block vote-btn" id="vote-btn-{{this.id}}" topic-id={{this.id}} vote-state="false">Change Vote</button>
                     </div>
                 </div>

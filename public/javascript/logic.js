@@ -39,7 +39,7 @@ function createTopic(){
 function fillEditModalAdmin(topicID){
 
     $.ajax({
-        url: "/api/topics/"+topicID,
+        url: "/api/topics/one/"+topicID,
         type: "GET"
     }).then(function(data) {
         console.log("Data Stored: ", data);
@@ -73,11 +73,10 @@ function fillEditModalUser(topicID){
 
 
 // Update Any Topic - For Admin
-function editAnyTopic(){
+function editAnyTopic(topicID){
 
     // Grab Info
     var userId = $("#user").data("user-id");
-    var topicID = $("#update-topic-btn").attr("data-id");
     var topicTitle = $("input[id='topic_title']").val().trim();
     var topicBody = $("textarea[id='topic_body']").val().trim();
     var topicAnswer = $("textarea[id='topic_answer']").val().trim();
@@ -114,7 +113,7 @@ function editAnyTopic(){
             data: newTopicData
         }).then(function(data) {
             // console.log("Data Stored: ", data);
-            location.reload();
+            // location.reload();
         });    
     };
 };
@@ -191,6 +190,7 @@ function claimTopic(topicID){
         location.reload();
     });
 };
+
 
 
 // Post An Answer To Pending
@@ -330,7 +330,8 @@ $(".user-edit-btn").on("click", function(event){
 // Update Topic - Edit Event Model - Admin
 $("#update-topic-btn").on("click", function(event){
     event.preventDefault();
-    editAnyTopic();
+    var topicID = $(this).attr("data-id");
+    editAnyTopic(topicID);
 });
 
 // Update Topic - Edit Event Model - User
