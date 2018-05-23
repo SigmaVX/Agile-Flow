@@ -192,6 +192,31 @@ function claimTopic(topicID){
 };
 
 
+// See Details Topic
+function seeDetails(topicID){
+
+  var userId = $("#user").data("user-id");
+
+  console.log("in see Details: " + topicID);
+
+  $.get("/details/" + topicID).
+    then(function(data) {
+      var topicDetails = {};
+          // formatCreatedDate = moment(data.create_at).format('LLLL'),
+          // formatUpdatedDate = moment(data.updated_at).format('LLLL');
+
+          // var topicDetails = JSON.parse(JSON.stringify(data[0]));
+
+      // topicDetails.created = formatCreatedDate;
+      // topicDetails.updated = formatUpdatedDate;
+
+
+      // console.log("New Data Stored: ", JSON.stringify(topicDetails));
+        // upon  update
+       //  window.location.replace("/details");
+  });
+};
+
 // Post An Answer To Pending
 function postAnswer(topicID){
 
@@ -354,6 +379,14 @@ $(".confirm-delete-btn").on("click", function(event){
     var topicID = $(this).attr("topic-id");
     console.log("ID Stored:" ,topicID); 
     deleteTopic(topicID);
+});
+
+// See details button
+$(".details-btn").on("click", function(event){
+  event.preventDefault();
+  var topicID = $(this).attr("topic-id");
+  console.log("ID Stored:" ,topicID); 
+  seeDetails(topicID);
 });
 
 
