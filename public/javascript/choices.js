@@ -16,7 +16,7 @@ function loadChoices(){
             // Loop through choices data to change topics to true
             for (var i = 0; i < data.choices.length; i++){
                 // console.log("Topic Picked For Loop Test: ", data.choices[i].topic_id);
-                $("#user-interest-"+data.choices[i].topic_id).text("I'm Interested");
+                $("#interest-btn-"+data.choices[i].topic_id).text("Remove Vote");
                 $("#interest-btn-"+data.choices[i].topic_id).attr("interest-state", "true");
             };  
             
@@ -29,7 +29,7 @@ function loadChoices(){
                 // Loop through choices data to change topics to true
                 for (var i = 0; i < voteData.choices.length; i++){
                     // console.log("test", data.choices[i].topic_id);
-                    $("#vote-text-"+voteData.choices[i].topic_id).text("I Voted For This");
+                    $("#vote-btn-"+voteData.choices[i].topic_id).text("Remove Vote");
                     $("#vote-btn-"+voteData.choices[i].topic_id).attr("vote-state", "true");
                 };  
             });

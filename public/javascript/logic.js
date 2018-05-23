@@ -28,9 +28,10 @@ function createTopic(){
         });
 
     } else {
-        $("#errorModal").modal("show");
-        $("#modal-title").text("Please Check Your Title And Description");
-        $("#modal-body").text("A title and description are required and must be less than 100 and 280 characters, respectively.");
+        // $("#errorModal").modal("show");
+        // $("#error-modal-title").text("Please Check Your Title And Description");
+        // $("#error-modal-body").text("A title and description are required and must be less than 100 and 280 characters, respectively.");
+        $("#modal-error-text").text("Error: A title and description are required and must be less than 100 and 280 characters, respectively.");
     };
 };
 
@@ -150,9 +151,10 @@ function editOpenTopic(){
         });
 
     } else {
-        $("#errorModal").modal("show");
-        $("#modal-title").text("Please Check Your Title And Description");
-        $("#modal-body").text("A title and description are required and must be less than 100 and 280 characters, respectively.");
+        // $("#errorModal").modal("show");
+        // $("#error-modal-title").text("Please Check Your Title And Description");
+        // $("#error-modal-body").text("A title and description are required and must be less than 100 and 280 characters, respectively.");
+        $(".myq-modal-error-text").text("Error: A title and description are required and must be less than 100 and 280 characters, respectively.");
     }
 }
 
@@ -230,13 +232,15 @@ function postAnswer(topicID){
             data: topicData
         }).then(function(data) {
             console.log("Data Stored: ", data);
-            location.reload();
+            // location.reload();
         });
 
     } else {
-        $("#errorModal").modal("show");
-        $("#modal-title").text("You Are Missing Some Info");
-        $("#modal-body").text("Please be sure to enter a short description for your answer and a valid YouTube URL (example: https://youtu.be/abc123).");
+        console.log("Error Found");
+        // $("#errorModal").modal("show");
+        // $("#error-modal-title").text("You Are Missing Some Info");
+        // $("#error-modal-body").text("Please be sure to enter a short description for your answer and a valid YouTube URL (example: https://youtu.be/abc123).");
+        $(".myq-modal-error-text").text("Error: Please be sure to enter a short description for your answer and a valid YouTube URL (example: https://youtu.be/abc123).");
     }   
 };
 

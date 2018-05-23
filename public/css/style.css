@@ -96,6 +96,18 @@ ul.CTAs a {
   color: #ffffff;
 }
 
+.btn[interest-state="true"]{
+  background-color: #63A27C;
+  color: #000000;
+  border: solid 1px #000000;
+}
+
+.btn[vote-state="true"]{
+  background-color: #63A27C;
+  color: #000000;
+  border: solid 1px #000000;
+}
+
 .card-title{
   font-size: 16px;
   padding: 10px;
@@ -117,6 +129,27 @@ ul.CTAs a {
 
 .Hide{
   display:none;
+}
+
+.icon{
+  font-size: 80px;
+  border: solid 2px #182825;
+  border-radius: 50px;
+  background-color: #63A27C;
+}
+
+.icon-box{
+  display: inline-block;
+}
+
+.icon-row{
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.icon-text{
+  font-size: 18px;
+  color: #182825;
 }
 
 .navTitle {
@@ -212,6 +245,13 @@ ul.CTAs a {
   text-align: center;
 }
 
+.splash h1{
+  font-weight: 1000;
+  font-size: 100px;
+  margin-top: 8%;
+  /* border-bottom: solid 3px #63A27C; */
+}
+
 .title{
   font-size: 22px;
   text-transform: capitalize;
@@ -252,6 +292,13 @@ ul.CTAs a {
   margin-top: 10px;
   width: 100%;
   text-align: center;
+  color: #fff;
+  margin-bottom: 0px;
+}
+
+#appuser-name p{
+  color: #fff;
+  margin-bottom: 0px;
 }
 
 #content {
@@ -269,18 +316,11 @@ ul.CTAs a {
   width: 100%;
 }
 
-/* #profile-img{
-  background-size: cover;
-  background-position: center;
-  border-radius: 25px;
-  border: solid 2px #182825;
-  width: 200px;
-  height: 200px;
-} */
-/* 
-#profile-row{
-  min-height: 150px;
-} */
+#modal-error-text, .myq-modal-error-text{
+  color:red;
+  text-align: center;
+  padding: 5px; 
+}
 
 #sidebar {
   width: 250px;
@@ -294,10 +334,6 @@ ul.CTAs a {
   transition: all 0.3s;
   overflow-y: scroll;
 }
-::-webkit-scrollbar { 
-  display: none; 
-}
-
 
 #sidebar.active {
   margin-left: -250px;
@@ -353,11 +389,14 @@ ul.CTAs a {
   margin: 8px 23px;
 }
 
+::-webkit-scrollbar { 
+  display: none; 
+}
 
 
 
 @media (max-width: 768px) {
-  #sidebar {
+  /* #sidebar {
       margin-left: -250px;
   }
   #sidebar.active {
@@ -371,7 +410,7 @@ ul.CTAs a {
   }
   #sidebarCollapse span {
       display: none;
-  }
+  } */
 
   .data-well{
     min-width: 100%;
