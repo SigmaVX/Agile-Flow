@@ -104,25 +104,21 @@ module.exports = function(app) {
   // ----------------------------------------------------------------------------
   // get /details route
   // ----------------------------------------------------------------------------
-  app.get("/details/:topic_id", function(req, res) {
-    var topicId = parseInt(req.params.topic_id, 10),
+  app.get("/details", function(req, res) {
+  // app.get("/details", function(req, res) {
+    var topicId = parseInt(req.query.topicId, 10),
         hbsObject = {};
 
     db.Topics.findById(topicId).
     then(function (topicData) {
-      var created = moment(topicData.created_at).format("LLLL"),
-          updated = moment(topicData.updated_at).format("LLLL");
+
       // return 404 if no row was found, this means topicId does not exist
       if (!topicData) return res.status(404).end();
 
-      // hbsObject.topicDetails = topicData;
+      // parse topicData object in order to add more variables to object 
       hbsObject.topicDetails = topicData;
-      topicData.topicDetails.created = created;
-      topicData.topicDetails.updated = updated;
-      console.log("topicData: " + JSON.stringify(topicData));
+
       console.log("in /details " + JSON.stringify(hbsObject.topicDetails));
-      console.log("updated:  " + updated);
-      console.log("created: " + created);
 
       res.render("details", hbsObject);
     });

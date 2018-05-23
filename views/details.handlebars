@@ -1,21 +1,29 @@
 
 
-    <h2 class="col-12" id="open-topics">Open & Pending Questions</h2>
+<div class="row">
+  <h2 class="col-12">{{topicDetails.topic_title}}</h2>
+</div>
     <div class="container">
-        <div class="row justify-content-around">
-            {{#each openAndPending}}
-            <div class="card questionCards col-md-2 {{this.topic_state}}">
-                <h5 class="card-title">{{this.topic_title}}</h5>
-                <h6 class="question-state">Question Status: {{this.topic_state}}</h6>
-                <h6 class="total-votes">Total Interest: {{this.topic_interest}}</h6>
-                {{!-- <h5>My Interest:
-                <span id="user-interest-{{this.id}}">Not Interested</span>
-                </h5> --}}
-                <button class="btn btn-block interest-btn" topic-id={{this.id}} id="interest-btn-{{this.id}}" interest-state="false">Interest</button>
-                {{!-- <div id="target"></div> --}}
-                <button class="btn btn-block details-btn" topic-id={{this.id}}>See Details</button>
-                <button class="btn btn-block claim-btn" status={{this.topic_state}} topic-id={{this.id}}>Claim Topic</button>
-            </div>
-            {{/each}}
+      <div class="row justify-content-around">
+    
+        <div class="card col-md-8">
+          <h5 class="card-title">{{topicDetails.topic_title}}</h5>
+          <h6 class="question-state">Question Status: {{topicDetails.topic_state}}</h6>
+          <h6 class="question-state">Created: {{fmtDate topicDetails.created_at}}</h6>
+          <h6 class="total-votes">Total Interest: {{topicDetails.topic_interest}}</h6>
+          <h6 class="total-votes">Total Votes: {{topicDetails.topic_votes}}</h6>
+          <h6 class="card-title">Description:{{topicDetails.topic_body}}</h6>
+          {{#if topicDetails.topic_answer}}
+            <h6 class="card-title">Answer:{{topicDetails.topic_answer}}</h6>
+          {{/if}}
+          {{#if topicDetails.topic_video}}
+            <h6 class="card-title">Video: <a href="{{topicDetails.topic_video}}" target="_blank">{{topicDetails.topic_video}}</a></h6>
+          {{/if}}
+          {{#if topicDetails.topic_answer_url}}
+            <h6 class="card-title">Answer URL: <a href="{{topicDetails.topic_answer_url}}" target="_blank">{{topicDetails.topic_answer_url}}</a></h6>
+          {{/if}}
+          <h6 class="question-state">Updated: {{fmtDate topicDetails.updated_at}}</h6>
+    
         </div>
+      </div>
     </div>
