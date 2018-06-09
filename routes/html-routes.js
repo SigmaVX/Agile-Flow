@@ -240,4 +240,10 @@ module.exports = function(app) {
     }
   });
 
+  // ----------------------------------------------------------------------------
+  // route for displaying about page
+  //
+  app.get("/about", function (req, res) { 
+    res.render("about");
+  });
 };
