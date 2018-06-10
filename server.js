@@ -17,7 +17,6 @@ var PORT = process.env.PORT || 8080;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.static("public"));
 
 // We need to use sessions to keep track of our user's login status
 app.use(session({
@@ -31,6 +30,7 @@ app.use(passport.session());
 // Setup Handlebars View Engine
 // =============================================================
 var exphbs = require("express-handlebars");
+app.set("view engine", "handlebars");
 app.engine("handlebars", exphbs({
     "defaultLayout": "main",
     // handlebars 'helpers' functions not used yet but may come in handy
@@ -44,7 +44,6 @@ app.engine("handlebars", exphbs({
     }
   }));
 
-app.set("view engine", "handlebars");
 
 // Database & Static Directory
 // =============================================================
