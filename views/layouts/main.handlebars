@@ -182,201 +182,92 @@
         </div>
     </div>
 
-
-    
-
-
-
-    <!-- Modal Container -->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <!-- <header class="header-tp"> -->
-                <!-- </header> -->
-                <section class="at-login-form">
-                    <!-- MODAL LOGIN -->
-                    <div class="modal fade" id="at-login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                </div>
-                                <div class="modal-body">
-{{!--                                     <button class="btn-fb"> <i class="fa fa-fw fa-facebook pull-left" aria-hidden="true"></i> Login with Facebook </button>
-                                    <br>
-                                    <button class="btn-gp"> <i class="fa fa-fw fa-google-plus pull-left" aria-hidden="true"></i> Login with Google </button>
-                                    <br>
-                                    <div class="signup-or-separator">
-                                        <span class="h6 signup-or-separator--text">or</span>
-                                        <hr>
-                                    </div> --}}
-                                    <div id="successful-signup"></div>
-                                    <form id="login-form">
-                                        <div class="form-group row">
-                                            <label for="login-email" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white  col-form-label">Email:</label>
-                                            <input type="email" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="login-email" placeholder="Email">
-                                        </div>
-                                        <div class="row">
-                                          <div class="p-3 mb-2 bg-white text-white" id="login-email-error"></div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="login-password" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">Password:</label>
-                                            <input type="password" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="login-password" placeholder="Password">
-                                        </div>
-                                        <div class="row">
-                                          <div class="p-3 mb-2 bg-white text-white" id="login-password-error"></div>
-                                        </div>
-                                        <div class="row">
-                                          <div class="p-3 mb-2 bg-white text-white" id="login-error"></div>
-                                        </div>
-                                        <button type="submit" class="btn-lgin">Login</button>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <div class="row">
-{{!--                                         <div class="col-md-6">
-                                            <p class="ta-l">Don't have an account ? </p>
-                                        </div>
-                                        <div class="col-md-4 col-md-offset-2">
-                                            <button class="btn-gst" data-toggle="modal" data-dismiss="modal" data-target="#at-signup">Sign Up </button>
-                                        </div> --}}
-                                    </div>
-                                </div>
-                            </div>
+    {{!-- Sign Up Modal --}}
+    <div class="modal fade" id="at-signup-filling" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title">Sign Up</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                   <form class="col-12" id="modal-signup-form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="first-name" placeholder="First Name">
                         </div>
-                    </div>
-                    <!-- MODAL LOGIN ENDS -->
-                   
-                    <!-- MODAL SIGNUP -->
-                    <div class="modal fade" id="at-signup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                </div>
-                                <div class="modal-body">
-                                    <button class="btn-fb"> <i class="fa fa-fw fa-facebook pull-left" aria-hidden="true"></i> Signup with Facebook </button>
-                                    <br>
-                                    <button class="btn-gp"> <i class="fa fa-fw fa-google-plus pull-left" aria-hidden="true"></i> Signup with Google </button>
-                                    <br>
-                                    <div class="signup-or-separator">
-                                        <span class="h6 signup-or-separator--text">or</span>
-                                        <hr>
-                                    </div>
-                                    <button type="submit" class="btn-lgin" data-toggle="modal" data-dismiss="modal" data-target="#at-signup-filling">Signup with Email</button>
-                                    <hr>
-                                    <p>By signing up, I agree to HELPFLOWS’s <a href="#">Terms of Service</a>, and <a href="#">Privacy Policy</a></p>
-                                </div>
-                                <div class="modal-footer">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <p class="ta-l">Already a Member? </p>
-                                        </div>
-                                        <div class="col-md-4 col-md-offset-2">
-                                            <button class="btn-gst" data-toggle="modal" data-dismiss="modal" data-target="#at-login">Login</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="last-name" placeholder="Last Name">
+                            <div class="form-control" id="signup-name-error"></div>
                         </div>
-                    </div>
-                    <!-- MODAL SIGNUP ENDS -->
-
-                    <!-- MODAL SIGNUP FORM FILLING -->
-                    <div class="modal fade" id="at-signup-filling" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                </div>
-                                <div class="modal-body">
-{{!--                                     <p>Sign up with <a href="#">Facebook</a> or <a href="#">Google</a></p>
-                                    <div class="signup-or-separator">
-                                        <span class="h6 signup-or-separator--text">or</span>
-                                        <hr>
-                                    </div> --}}
-                                    <form id="modal-signup-form">
-                                        <div class="form-group row">
-                                            <label for="first-name" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">First Name:</label>
-                                            <input type="text" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="first-name" placeholder="First Name">
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="last-name" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">Last Name:</label>
-                                            <input type="text" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="last-name" placeholder="Last Name">
-                                        </div>
-                                        <div class="row">
-                                          <div class="p-3 mb-2 bg-white text-white" id="signup-name-error"></div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="user-name" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">User Name:</label>
-                                            <input type="text" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="user-name" placeholder="username">
-                                        </div>
-                                        <div class="row">
-                                          <div class="p-3 mb-2 bg-white text-white" id="signup-username-error"></div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="user-email" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">Email:</label>
-                                            <input type="email" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="user-email" placeholder="Email">
-                                        </div>
-                                        <div class="row">
-                                          <div class="p-3 mb-2 bg-white text-white" id="signup-email-error"></div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="user-password" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">Password:</label>
-                                            <input type="password" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="user-password" placeholder="Password">
-                                        </div>
-                                        <div class="row">
-                                          <div class="p-3 mb-2 bg-white text-white" id="signup-password-error"></div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="confirm-password" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">Confirm Password:</label>
-                                            <input type="password" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="confirm-password" placeholder="Confirm Password">
-                                        </div>
-                                        <div class="row">
-                                          <div class="p-3 mb-2 bg-white text-white" id="signup-confirmpswd-error"></div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="file-input" class="d-inline-flex p-2 col-xs-12 col-sm-3 mr-1 bg-secondary text-white col-form-label">Profile Picture:</label>
-                                          <input type="file" class="d-inline-flex col-xs-12 col-sm-8 form-control-form" id="file-input">
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="checkbox">
-{{!--                                                     <label>
-                                                            <input type="checkbox"> I’d like to receive email notifications
-                                                        </label> --}}
-                                                </div>
-
-{{!--                                                 <p>By signing up, I agree to HELPFLOW'S<a href="#">Terms of Service</a>, and <a href="#">Privacy Policy</a></p> --}}
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                          <div class="p-3 mb-2 bg-white text-white" id="signup-error"></div>
-                                        </div>
-                                        <button type="submit" class="btn-lgin">Signup</button>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <div class="row">
-{{!--                                         <div class="col-md-6">
-                                            <p class="ta-l">Already a Member? </p>
-                                        </div>
-                                        <div class="col-md-4 col-md-offset-2">
-                                            <button class="btn-gst" data-toggle="modal" data-dismiss="modal" data-target="#at-login">Login</button>
-                                        </div> --}}
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="user-name" placeholder="Username">
+                            <div class="form-control" id="signup-username-error"></div>
                         </div>
-                    </div>
-                    <!-- MODAL SIGNUP FORM FILLING ENDS -->
-                    
-                </section>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="user-email" placeholder="eMail">
+                            <div class="form-control" id="signup-email-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="user-password" placeholder="Password">
+                            <div class="form-control" id="signup-password-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="confirm-password" placeholder="Confirm Password">
+                            <div class="form-control" id="signup-confirmpswd-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="file-input">Profile Picture:</label>
+                            <input type="file" class="d-inline-flex form-control" id="file-input">
+                        </div>
+                        <div class="form-group" id="signup-error">
+                            {{!-- text added here --}}
+                        </div>   
+                    </form> 
+                </div>
+                <div class="modal-footer justify-content-around">
+                    <button type="submit" class="btn btn-lgin col-12 col-md-5 add-topic">Submit</button>
+                    <button type="close" class="btn col-12 col-md-5" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
-    
+
+
+    {{!-- login Modal --}}
+    <div class="modal fade" id="at-login" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title">Sign Up</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                   <form id="login-form">
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="login-email" placeholder="Email">
+                            <div class="error-text" id="login-email-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="login-password" placeholder="Password">
+                            <div class="error-text" id="login-password-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="error-text" id="login-error"></div>
+                        </div>
+                    </form> 
+                </div>
+                <div class="modal-footer justify-content-around">
+                    <button type="submit" class="btn btn-lgin col-12 col-md-5 add-topic">Submit</button>
+                    <button type="close" class="btn col-12 col-md-5" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     {{!-- CDN and JS Links --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
