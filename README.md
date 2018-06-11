@@ -53,7 +53,7 @@ This app can be cloned and installed following the procedure below.
 ## Comments
 
 The source code for the Agile Flow app was added to the following github repository:
-[Github repo](https://github.com/SigmaVX/Nuggets)
+[Github repo](https://github.com/SigmaVX/Agile-Flow)
 
 A link to the app on heroku:
 [Agile Flow App](https://blooming-shore-12371.herokuapp.com/)
