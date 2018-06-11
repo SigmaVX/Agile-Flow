@@ -13,11 +13,11 @@
 {{#each openUser}}
 <div class="row myq-rows">
     <h5 class="col-12 title" id="topic-title-{{this.id}}">{{this.topic_title}}</h5>
-    <div class="col-12 col-md-8 data-well">
+    <div class="col-12 col-md-7 data-well">
         <h6 class="votes">Total Interest: {{this.topic_interest}}</h6>
         <p class="topic-body" id="topic-body-{{this.id}}">{{this.topic_body}}</p>
     </div>
-    <div class="col-12 col-md-4 text-center">
+    <div class="col-12 col-md-4 btn-div text-center">
         <button class="btn btn-block user-edit-btn" topic-id={{this.id}}>Edit</button>
         <button class="btn btn-block admin-delete-btn" topic-id={{this.id}}>Delete</button>
     </div>
@@ -32,11 +32,11 @@
 {{#each pendingUser}}
 <div class="row myq-rows">
     <h5 class="col-12 title">{{this.topic_title}}</h5>
-    <div class="col-12 col-md-8 data-well">
+    <div class="col-12 col-md-7 data-well">
         <h6 class="votes">Total Interest: {{this.topic_interest}}</h6>
         <p class="topic-body">{{this.topic_body}}</p>
     </div>
-    <div class="col-12 col-md-4 text-center">
+    <div class="col-12 col-md-4 btn-div text-center">
         <button class="btn btn-block answer-btn" topic-id={{this.id}}>Answer</button>
         <button class="btn btn-block remove-btn" topic-id={{this.id}}>Remove</button>
     </div>

@@ -96,6 +96,11 @@ ul.CTAs a {
   color: #ffffff;
 }
 
+.btn-div{
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
 .btn[interest-state="true"]{
   background-color: #63A27C;
   color: #000000;
@@ -123,7 +128,7 @@ ul.CTAs a {
 }
 
 .data-well{
-  min-width: 650px;
+  min-width: 610px;
   width: 60%;
 }
 
