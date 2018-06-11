@@ -18,7 +18,7 @@ A topic or question can have three states: open, pending or closed. Open and pen
 
 Interestingly, the Agile Flow app allows for a user to express `interest` in a topic, or `vote` on an answer. If many users express `interest` in a topic, this means there is a high demand for an answer. If an answer card receives many `votes`, this means the user community is satisfied with a topic's response and considers the answer to be a quality one.
 
-![alt text](./README_imgs/landing_page.gif "Home Screen")
+![alt text](./README_images/landing_page.gif "Home Screen")
 
 The side menu allows for a user to post a question. When a user posts a question, that question's state is 'open'. By way of the navigation bar, a user can also easily view open questions and agile answers. To view `My Questions`, a user must be registered and have claimed an open question (these questions appear as `pending` on the landing page). Another option is the `About Agile` item which displays a description of the application. There are also the `Signup`, `Login`, `Logout` and `Admin` options which are described in another section.
 
