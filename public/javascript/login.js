@@ -11,7 +11,7 @@
 $(document).ready(function () {
   // Getting references to our form and inputs
   var loginForm = $("#login-form");
-  var loginError = $("login-error");
+  var loginError = $("#login-error");
   var emailInput = $("input#login-email");
   var passwordInput = $("input#login-password");
   var loginEmailError = $("#login-email-error");
